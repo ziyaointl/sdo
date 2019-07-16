@@ -18,3 +18,13 @@ class Stage:
     def print_status():
         raise NotImplementedError
 
+class SentinelStage(Stage):
+    def __init__(self):
+        self.previous_stage = self
+        self.name = 'Sentinel'
+
+    def is_done(self):
+        return True
+
+    def print_status():
+        print('I am the sentinel. I am always 100% complete.')
