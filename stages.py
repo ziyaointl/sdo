@@ -66,10 +66,23 @@ class PreFarmStage(Stage):
             self.increment_retries()
 
     def is_done(self):
+        """
+        This stage is done if
+            Previous stage is done
+        AND
+                No tasks are pending or running
+            OR
+                No tasks are pending, no jobs are in slurm queue,
+                but MAX_RETRIES has been reached
+        """
         n_pending = self.queue.status()['ntasks']['Pending']
         n_running = self.queue.status()['ntasks']['Running']
-        return ((n_running == 0 and n_pending == 0) or
-            (n_pending == 0 and get_current_retries() >= MAX_RETRIES))
+        finished_last_retry = (n_pending == 0
+                            and len(self.get_jobs_in_queue()) == 0
+                            and get_current_retries() >= MAX_RETRIES)
+        return (self.previous_stage.is_done() and
+                ((n_running == 0 and n_pending == 0) or finished_last_retry))
+
 
     def get_current_retries(self):
         """Fetch from the database how many retries this stage has performed
