@@ -2,6 +2,8 @@ from settings import *
 import subprocess
 import qdo
 import sqlite3
+import csv
+import io
 
 class Stage:
     def __init__(self, name, previous_stage):
@@ -50,7 +52,18 @@ class PreFarmStage(Stage):
         pass
 
     def attempt_recover(self):
-        pass
+        # Check if previous stage is done and if no jobs are pending/running
+        n_pending = self.queue.status()['ntasks']['Pending']
+        if (self.previous_stage.is_done()
+                and n_pending == 0
+                and len(self.get_jobs_in_queue()) == 0
+                and get_current_retries() < MAX_RETRIES):
+            command = 'qdo recover {}'.format(self.name)
+            output = subprocess.run(command, stdout=subprocess.PIPE,
+                                    stdin=subprocess.PIPE, shell=True).stdout
+            output = output.decode('utf-8')
+            print(output)
+            self.increment_retries()
 
     def is_done(self):
         n_pending = self.queue.status()['ntasks']['Pending']
