@@ -56,7 +56,16 @@ class PreFarmStage(Stage):
             (n_pending == 0 and get_current_retries() >= MAX_RETRIES))
 
     def get_current_retries(self):
+        """Fetch from the database how many retries this stage has performed
+        """
         conn = sqlite3.connect('sdo.db')
         c = conn.cursor()
-        c.execute('SELECT * FROM retries WHERE stage=?', self.name)
-        print(c.fetchone())
+        c.execute('SELECT times FROM retries WHERE stage=?', (self.name,))
+        result = c.fetchone()
+        if result == None:
+            c.execute('INSERT INTO retries VALUES(?, 0)', (self.name, ))
+            result = 0
+        else:
+            result = result[0]
+        conn.close()
+        return result
