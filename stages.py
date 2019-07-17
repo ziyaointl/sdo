@@ -109,3 +109,12 @@ class PreFarmStage(Stage):
             result = result[0]
         conn.close()
         return result
+
+    def increment_retries(self):
+        conn = sqlite3.connect('sdo.db')
+        c = conn.cursor()
+        curr_retries = self.get_current_retries() + 1
+        c.execute('UPDATE retries SET times=? WHERE stage=?',
+                    (curr_retries, self.name))
+        conn.close()
+        return curr_retries
