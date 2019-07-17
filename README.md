@@ -4,6 +4,7 @@ Name stands for slurm do.
 
 ### Requirements
 * Python 3
+* Qdo
 
 ### Usage
 * Run init.py
