@@ -36,20 +36,10 @@ class SentinelStage(Stage):
     def print_status(self):
         print('I am the sentinel. I am always 100% complete.')
 
-class PreFarmStage(Stage):
+class QdoCentricStage(Stage):
     def __init__(self, name, previous_stage):
         self.queue = qdo.connect('name')
         return super().__init__(name, previous_stage)
-    
-    def add_tasks(self):
-        """No need to add tasks
-        Bricks that needs to be processed are manually stored in a qdo queue
-        named self.name
-        """
-        pass
-    
-    def schedule_jobs(self):
-        pass
 
     def attempt_recover(self):
         # Check if previous stage is done and if no jobs are pending/running
@@ -118,3 +108,14 @@ class PreFarmStage(Stage):
                     (curr_retries, self.name))
         conn.close()
         return curr_retries
+
+class PreFarmStage(QdoCentricStage):
+    def add_tasks(self):
+        """No need to add tasks
+        Bricks that needs to be processed are manually stored in a qdo queue
+        named self.name
+        """
+        pass
+    
+    def schedule_jobs(self):
+        raise NotImplementedError
