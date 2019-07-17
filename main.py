@@ -1,8 +1,11 @@
 from settings import *
+from stages import *
 
 def main():
     stages = []
-    # INITIALIZE stages
+    sentinel = SentinelStage()
+    prefarm = PreFarmStage('sdo-prefarm-test', sentinel)
+    stages = [prefarm]
 
     for s in stages:
         if s.is_done():
