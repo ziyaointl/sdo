@@ -83,6 +83,17 @@ class PreFarmStage(Stage):
         return (self.previous_stage.is_done() and
                 ((n_running == 0 and n_pending == 0) or finished_last_retry))
 
+    def get_jobs_in_queue(self):
+        command = 'sacct -X -P --format=JobId,JobName%-30,Elapsed,State'
+        output = subprocess.run(command, stdout=subprocess.PIPE,
+                                stdin=subprocess.PIPE, shell=True).stdout
+        output = output.decode('utf-8')
+        csv_r = csv.DictReader(io.StringIO(str), delimiter='|')
+        jobs = []
+        for row in csv_r:
+            if row['JobName'] == self.name:
+                jobs.append(row)
+        return jobs
 
     def get_current_retries(self):
         """Fetch from the database how many retries this stage has performed
