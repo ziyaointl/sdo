@@ -14,13 +14,13 @@ class Stage:
     def add_tasks(self):
         raise NotImplementedError
 
-    def attempt_recover():
+    def attempt_recover(self):
         raise NotImplementedError
 
-    def schedule_jobs():
+    def schedule_jobs(self):
         raise NotImplementedError
     
-    def print_status():
+    def print_status(self):
         raise NotImplementedError
 
 class SentinelStage(Stage):
@@ -31,7 +31,7 @@ class SentinelStage(Stage):
     def is_done(self):
         return True
 
-    def print_status():
+    def print_status(self):
         print('I am the sentinel. I am always 100% complete.')
 
 class PreFarmStage(Stage):
@@ -47,6 +47,9 @@ class PreFarmStage(Stage):
         pass
     
     def schedule_jobs(self):
+        pass
+
+    def attempt_recover(self):
         pass
 
     def is_done(self):
