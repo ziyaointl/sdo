@@ -1,8 +1,11 @@
 from settings import *
-from util import *
+from util import run_command, parse_timedelta, hours
+from qdo_util import transfer_queue
+from datetime import timedelta
 import math
 import subprocess
 import qdo
+import qdo_util
 import sqlite3
 import csv
 import os
