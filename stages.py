@@ -208,3 +208,11 @@ class PreFarmStage(RunbrickPyStage):
         named self.name
         """
         pass
+
+class PostFarmStage(RunbrickPyStage):
+    def add_tasks(self):
+        """Take tasks that are done from the farm stage and put them in
+        the queue
+        """
+        self.add_tasks_from_previous_queue('Succeeded')
+
