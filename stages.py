@@ -216,3 +216,9 @@ class PostFarmStage(RunbrickPyStage):
         """
         self.add_tasks_from_previous_queue('Succeeded')
 
+class PostFarmScavengerStage(RunbrickPyStage):
+    def add_tasks(self):
+        """Take tasks that failed from the postfarm stage and put them in the queue
+        """
+        self.add_tasks_from_previous_queue('Failed')
+
