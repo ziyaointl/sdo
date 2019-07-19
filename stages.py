@@ -1,14 +1,18 @@
 from settings import *
+from util import *
+import math
 import subprocess
 import qdo
 import sqlite3
 import csv
+import os
 import io
 
 class Stage:
-    def __init__(self, name, previous_stage):
+    def __init__(self, name, previous_stage, tasks_per_nodehr):
         self.name = name
         self.previous_stage = previous_stage
+        self.tasks_per_nodehr = tasks_per_nodehr
 
     def is_done(self):
         raise NotImplementedError
@@ -22,6 +26,9 @@ class Stage:
     def schedule_jobs(self):
         raise NotImplementedError
     
+    def schedule_one_job(self):
+        raise NotImplementedError
+
     def print_status(self):
         raise NotImplementedError
 
@@ -37,9 +44,16 @@ class SentinelStage(Stage):
         print('I am the sentinel. I am always 100% complete.')
 
 class QdoCentricStage(Stage):
-    def __init__(self, name, previous_stage):
-        self.queue = qdo.connect('name')
-        return super().__init__(name, previous_stage)
+    auto_create_queue = False
+
+    def __init__(self, name, previous_stage, tasks_per_nodehr,
+        job_duration=2, max_nodes_per_job=20, max_number_of_jobs=100, cores_per_worker=17):
+        # self.queue = qdo.connect('name')
+        self.cores_per_worker = cores_per_worker
+        self.job_duration = job_duration
+        self.max_nodes_per_job = max_nodes_per_job
+        self.max_number_of_jobs = max_number_of_jobs
+        return super().__init__(name, previous_stage, tasks_per_nodehr)
 
     def attempt_recover(self):
         # Check if previous stage is done and if no jobs are pending/running
