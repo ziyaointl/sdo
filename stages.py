@@ -223,3 +223,12 @@ class PostFarmScavengerStage(RunbrickPyStage):
         """
         self.add_tasks_from_previous_queue('Failed')
 
+class FarmStage(QdoCentricStage):
+    auto_create_queue = True
+    def add_tasks(self):
+        self.add_tasks_from_previous_queue('Succeeded')
+
+    def schedule_one_job(self, nodes, hrs, dryrun=True):
+        raise NotImplementedError
+
+# TODO: Only launch jobs when enough tasks are in the queue
