@@ -163,6 +163,14 @@ class QdoCentricStage(Stage):
         if nodehr_per_job != 0:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
+    
+    def add_tasks_from_previous_queue(self, task_state):
+        """If previous stage is QdoCentricStage, add tasks of a certain state
+        from the previous stage's queue to this stage's queue
+        """
+        assert isinstance(self.previous_stage,
+                QdoCentricStage), "Previous stage is not QdoCentricStage"
+        transfer_queue(self.queue, self.previous_stage.queue, task_state)
 
 class RunbrickPyStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
