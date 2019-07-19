@@ -13,3 +13,9 @@ def parse_timedelta(s):
     s = list(map(lambda x: int(x), s.split(':')))
     return timedelta(days=days, hours=s[0], minutes=s[1], seconds=s[2])
 
+def hours(dtime):
+    """Takes in a timedelta object
+    Returns the number of hours
+    """
+    return dtime.total_seconds() / 3600
+
