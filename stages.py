@@ -44,6 +44,7 @@ class SentinelStage(Stage):
         print('I am the sentinel. I am always 100% complete.')
 
 class QdoCentricStage(Stage):
+    # TODO: auto create qdo queue
     auto_create_queue = False
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
@@ -153,6 +154,7 @@ class PreFarmStage(QdoCentricStage):
     def schedule_nodehrs(self, nodehrs):
         """Schedule a specified number of nodehrs
         """
+        # TODO: Overall job limit
         # Schedule jobs that uses max_nodes_per_job
         nodehr_per_job = self.max_nodes_per_job * self.job_duration
         while nodehrs > nodehr_per_job:
