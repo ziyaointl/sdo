@@ -141,13 +141,15 @@ class PreFarmStage(QdoCentricStage):
         total_time_in_queue = timedelta()
         for j in jobs:
             total_time_in_queue += parse_timedelta(j['TIME_LEFT']) * int(j['NODES'])
-        print(hours(total_time_in_queue), 'hours in queue')
+        print('Node hrs already scheduled, waiting to run: ', hours(total_time_in_queue))
         # Check for number of tasks that are waiting in the queue
         # pending_tasks = self.queue.status()['ntasks']['Pending']
         pending_tasks = 2340
+        print('Pending tasks:', pending_tasks)
         # Estimate how many nodehrs needs to be scheduled
         node_hrs_needed = pending_tasks / self.tasks_per_nodehr
         node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
+        print('Node hrs to schedule:', node_hrs_needed)
         # Schedule new jobs
         self.schedule_nodehrs(node_hrs_to_schedule)
 
