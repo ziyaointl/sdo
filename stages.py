@@ -134,3 +134,17 @@ class PreFarmStage(QdoCentricStage):
         node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
         # Schedule new jobs
         self.schedule_nodehrs(node_hrs_to_schedule)
+
+    def schedule_nodehrs(self, nodehrs):
+        """Schedule a specified number of nodehrs
+        """
+        # Schedule jobs that uses max_nodes_per_job
+        nodehr_per_job = self.max_nodes_per_job * self.job_duration
+        while nodehrs > nodehr_per_job:
+            self.schedule_one_job(self.max_nodes_per_job, self.job_duration)
+            nodehrs -= nodehr_per_job
+        # Schedule a job that uses fewer nodes than max_nodes_per_job
+        if nodehr_per_job != 0:
+            self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
+                                    self.job_duration)
+
