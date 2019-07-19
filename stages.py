@@ -161,27 +161,39 @@ class QdoCentricStage(Stage):
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
 
-class PreFarmStage(QdoCentricStage):
-    def add_tasks(self):
-        """No need to add tasks
-        Bricks that needs to be processed are manually stored in a qdo queue
-        named self.name
-        """
-        pass
-
+class RunbrickPyStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
         """Schedule one job
         """
         if dryrun:
             print('Dry Run: ', end='')
         print('Scheduled {}, {} nodes, {} hrs'.format(self.name, nodes, hrs))
+        # {0} queuename
+        # {1} cores_per_worker
+        # {2} walltime in minutes
+        # {3} script directory
+        # {4} nworkers
+        # {5} profile
+        script_path = os.path.join(SDO_DIR, 'scripts/{}.sh'.format(self.name))
+        profile = 'cori-shifter-knl' if self.arch == 'knl' else 'cori-shifter'
+        cores = 68 if self.arch == 'knl' else 32
+        nworkers = (cores // self.cores_per_worker) * nodes
+        command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
+            '--cores_per_worker {1} --walltime=0:{2}:00 '
+            '--batchqueue=regular --keep_env '
+            '--batchopts "--image=docker:legacysurvey/legacypipe:nersc-dr8.3.2" '
+            '--script "{3}"')
+        command = command.format(self.name, self.cores_per_worker, int(hrs * 60),
+                                    script_path, nworkers, profile)
+        print(command)
         if not dryrun:
-            script_path = os.path.join(SDO_DIR, '{}.sh'.format(self.name))
-            command = ('QDO_BATCH_PROFILE=cori-shifter qdo launch -v {0} 40'
-                '--cores_per_worker {1} --walltime=0:{2}:00'
-                '--batchqueue=regular --keep_env '
-                '--batchopts "--image=docker:legacysurvey/legacypipe:nersc-dr8.3.2"'
-                '--script "{3}"')
-            command = command.format(self.name, self.cores_per_worker, hrs, SDO_DIR, script_path)
             output = run_command(command)
             print(output)
+
+class PreFarmStage(RunbrickPyStage):
+    def add_tasks(self):
+        """No need to add tasks
+        Bricks that needs to be processed are manually stored in a qdo queue
+        named self.name
+        """
+        pass
