@@ -1,5 +1,6 @@
 from datetime import timedelta
 import subprocess
+import re
 
 def parse_timedelta(s):
     """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS"
@@ -27,3 +28,18 @@ def run_command(command):
                                     stderr=subprocess.STDOUT, shell=True).stdout
     output = output.decode('utf-8')
     return output
+
+def make_template_format_friendly(template):
+    """Takes in a script template string, returns a string with all occurances
+    of ${VAR} replaced with ${{VAR}}
+    """
+    p = re.compile(r'\$({[^0-9]+?})')
+    res = p.finditer(template)
+    all_vars = set()
+    for x in res:
+        print(x)
+        all_vars.add(x.group(1))
+    for v in all_vars:
+        print('Replacing', v, 'with', '{' + v + '}')
+        template = template.replace(v, '{' + v + '}')
+    return template
