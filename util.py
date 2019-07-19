@@ -19,3 +19,11 @@ def hours(dtime):
     """
     return dtime.total_seconds() / 3600
 
+def run_command(command):
+    """Takes a command an runs it in the shell
+    Returns stdout and stderr combined
+    """
+    output = subprocess.run(command, stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, shell=True).stdout
+    output = output.decode('utf-8')
+    return output
