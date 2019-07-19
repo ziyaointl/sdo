@@ -116,6 +116,21 @@ class PreFarmStage(QdoCentricStage):
         named self.name
         """
         pass
-    
+
     def schedule_jobs(self):
-        raise NotImplementedError
+        """Calculate the number of hours to schedule and schedules them
+        """
+        # Check for number of unfinished hours in the queue
+        jobs = self.get_jobs_in_queue()
+        total_time_in_queue = timedelta()
+        for j in jobs:
+            total_time_in_queue += parse_timedelta(j['TIME_LEFT']) * int(j['NODES'])
+        print(hours(total_time_in_queue), 'hours in queue')
+        # Check for number of tasks that are waiting in the queue
+        # pending_tasks = self.queue.status()['ntasks']['Pending']
+        pending_tasks = 2340
+        # Estimate how many nodehrs needs to be scheduled
+        node_hrs_needed = pending_tasks / self.tasks_per_nodehr
+        node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
+        # Schedule new jobs
+        self.schedule_nodehrs(node_hrs_to_schedule)
