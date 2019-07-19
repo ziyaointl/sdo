@@ -57,15 +57,13 @@ class QdoCentricStage(Stage):
 
     def attempt_recover(self):
         # Check if previous stage is done and if no jobs are pending/running
-        n_pending = self.queue.status()['ntasks']['Pending']
+        pending_tasks = self.queue.status()['ntasks']['Pending']
         if (self.previous_stage.is_done()
-                and n_pending == 0
+                and pending_tasks == 0
                 and len(self.get_jobs_in_queue()) == 0
                 and get_current_retries() < MAX_RETRIES):
             command = 'qdo recover {}'.format(self.name)
-            output = subprocess.run(command, stdout=subprocess.PIPE,
-                                    stdin=subprocess.PIPE, shell=True).stdout
-            output = output.decode('utf-8')
+            output = run_command(command)
             print(output)
             self.increment_retries()
 
@@ -79,13 +77,13 @@ class QdoCentricStage(Stage):
                 No tasks are pending, no jobs are in slurm queue,
                 but MAX_RETRIES has been reached
         """
-        n_pending = self.queue.status()['ntasks']['Pending']
-        n_running = self.queue.status()['ntasks']['Running']
-        finished_last_retry = (n_pending == 0
+        pending_tasks = self.queue.status()['ntasks']['Pending']
+        runnning_tasks = self.queue.status()['ntasks']['Running']
+        finished_last_retry = (pending_tasks == 0
                             and len(self.get_jobs_in_queue()) == 0
                             and get_current_retries() >= MAX_RETRIES)
         return (self.previous_stage.is_done() and
-                ((n_running == 0 and n_pending == 0) or finished_last_retry))
+                ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
 
     def get_jobs_in_queue(self):
         command = 'sacct -X -P --format=JobId,JobName%-30,Elapsed,State'
