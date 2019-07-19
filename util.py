@@ -1,6 +1,7 @@
 from datetime import timedelta
 import subprocess
 import re
+import os
 
 def parse_timedelta(s):
     """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS"
@@ -42,4 +43,14 @@ def make_template_format_friendly(template):
     for v in all_vars:
         print('Replacing', v, 'with', '{' + v + '}')
         template = template.replace(v, '{' + v + '}')
+    return template
+
+def read_template(name):
+    """Reads in template from the templates folder, make it format friendly, and
+    returns the reusltant string
+    """
+    fin = open(os.path.join('templates/', name), 'r')
+    template = fin.read()
+    template = make_template_format_friendly(template)
+    fin.close()
     return template
