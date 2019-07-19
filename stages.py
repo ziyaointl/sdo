@@ -148,3 +148,18 @@ class PreFarmStage(QdoCentricStage):
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
 
+    def schedule_one_job(self, nodes, hrs, dryrun=True):
+        """Schedule one job
+        """
+        if dryrun:
+            print('Dry Run: ', end='')
+        print('Scheduled {}, {} nodes, {} hrs'.format(self.name, nodes, hrs))
+        if not dryrun:
+            script_path = os.path.join(SDO_DIR, '{}.sh'.format(self.name))
+            command = ('QDO_BATCH_PROFILE=cori-shifter qdo launch -v {0} 40'
+                '--cores_per_worker {1} --walltime=0:{2}:00'
+                '--batchqueue=regular --keep_env '
+                '--batchopts "--image=docker:legacysurvey/legacypipe:nersc-dr8.3.2"'
+                '--script "{3}"')
+            command = command.format(self.name, self.cores_per_worker, hrs, SDO_DIR, script_path)
+            output = run_command(command)
