@@ -185,17 +185,18 @@ class RunbrickPyStage(QdoCentricStage):
         # {3} script directory
         # {4} nworkers
         # {5} profile
-        script_path = os.path.join(SDO_DIR, 'scripts/{}.sh'.format(self.name))
+        # {6} image profile
+        script_path = os.path.join(SDO_SCRIPT_DIR, '/{}.sh'.format(self.name))
         profile = 'cori-shifter-knl' if self.arch == 'knl' else 'cori-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
             '--batchqueue=regular --keep_env '
-            '--batchopts "--image=docker:legacysurvey/legacypipe:nersc-dr8.3.2" '
+            '--batchopts "--image=docker:legacysurvey/legacypipe:{6}" '
             '--script "{3}"')
         command = command.format(self.name, self.cores_per_worker, int(hrs * 60),
-                                    script_path, nworkers, profile)
+                                    script_path, nworkers, profile, IMAGE_TAG)
         print(command)
         if not dryrun:
             output = run_command(command)
