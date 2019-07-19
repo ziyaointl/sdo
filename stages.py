@@ -229,6 +229,12 @@ class FarmStage(QdoCentricStage):
         self.add_tasks_from_previous_queue('Succeeded')
 
     def schedule_one_job(self, nodes, hrs, dryrun=True):
-        raise NotImplementedError
+        script_name = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
+                IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
+        command = 'sbatch {}'.format(os.join(SDO_SCRIPT_DIR, script_name))
+        print(command)
+        if not dryrun:
+            output = run_command(command)
+            print(output)
 
 # TODO: Only launch jobs when enough tasks are in the queue
