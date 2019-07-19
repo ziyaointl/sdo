@@ -125,14 +125,6 @@ class QdoCentricStage(Stage):
         conn.close()
         return curr_retries
 
-class PreFarmStage(QdoCentricStage):
-    def add_tasks(self):
-        """No need to add tasks
-        Bricks that needs to be processed are manually stored in a qdo queue
-        named self.name
-        """
-        pass
-
     def schedule_jobs(self):
         """Calculate the number of hours to schedule and schedules them
         """
@@ -166,6 +158,14 @@ class PreFarmStage(QdoCentricStage):
         if nodehr_per_job != 0:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
+
+class PreFarmStage(QdoCentricStage):
+    def add_tasks(self):
+        """No need to add tasks
+        Bricks that needs to be processed are manually stored in a qdo queue
+        named self.name
+        """
+        pass
 
     def schedule_one_job(self, nodes, hrs, dryrun=True):
         """Schedule one job
