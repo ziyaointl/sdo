@@ -18,6 +18,8 @@
 # assert head_arch == 'knl' or head_arch == 'haswell', 'Architecture not found'
 # head_core_count = 272 if head_arch == 'knl' else 64
 
+import os
+
 script = '#!/bin/bash\n\
 #SBATCH --qos={2}\n\
 #SBATCH --time={1}:00\n\
@@ -43,7 +45,8 @@ srun --pack-group=1 -N {0} -n {0} --cpus-per-task 272 shifter ./launch-worker.sh
 wait\n'
 
 def gen_farm_script(farm_queuename, nodes, minutes, qos, image_tag, working_dir, head_arch, head_core_count):
-    filename = '{}-{}-{}-{}.sh'.format(farm_queuename, nodes, minutes, qos)
+    filename = '{0}-{1}-{2}-{3}/{0}.sh'.format(farm_queuename, nodes, minutes, qos)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     f = open(filename, 'w')
     f.write(script.format(nodes, minutes, qos, image_tag, working_dir, head_arch, head_core_count))
     print('Script generated as ' + filename)
