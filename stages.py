@@ -1,5 +1,5 @@
 from settings import *
-from util import run_command, parse_timedelta, hours
+from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue
 from datetime import timedelta
 from gen_farm_script import gen_farm_script
@@ -104,7 +104,7 @@ class QdoCentricStage(Stage):
 
     def get_jobs_in_queue(self):
         command = 'squeue -u ziyaoz --format=%all'
-        output = run_command(command)
+        output = cached_run_command(command)
         csv_r = csv.DictReader(io.StringIO(output), delimiter='|')
         jobs = []
         for row in csv_r:

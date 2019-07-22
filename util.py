@@ -1,4 +1,5 @@
 from datetime import timedelta
+from functools import lru_cache
 import subprocess
 import re
 import os
@@ -31,6 +32,10 @@ def run_command(command):
     output = output.decode('utf-8')
     print(output)
     return output
+
+@lru_cache(maxsize=None)
+def cached_run_command(command):
+    return run_command(command)
 
 def make_template_format_friendly(template):
     """Takes in a script template string, returns a string with all occurances
