@@ -108,7 +108,7 @@ class QdoCentricStage(Stage):
         csv_r = csv.DictReader(io.StringIO(output), delimiter='|')
         jobs = []
         for row in csv_r:
-            if row['JobName'] == self.name:
+            if row['Name'] == self.name:
                 jobs.append(row)
         return jobs
 
