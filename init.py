@@ -25,7 +25,7 @@ copyfile('templates/farm/mpi_bugfix.sh', 'scripts/mpi_bugfix.sh')
 # Copy launch-worker.sh
 copyfile('templates/farm/launch-worker.sh', 'scripts/launch-worker.sh')
 # Copy qdo_login.sh
-copyfile('/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh', 'scripts/qdo_login.sh')
+copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
 
 # Write scripts
 fout = open('scripts/{}.sh'.format(PREFARM_QNAME), 'w')
