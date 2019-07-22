@@ -19,6 +19,7 @@
 # head_core_count = 272 if head_arch == 'knl' else 64
 
 import os
+from settings import SDO_SCRIPT_DIR
 
 script = '#!/bin/bash\n\
 #SBATCH --qos={2}\n\
@@ -45,10 +46,11 @@ srun --pack-group=1 -N {0} -n {0} --cpus-per-task 272 shifter ./launch-worker.sh
 wait\n'
 
 def gen_farm_script(farm_queuename, nodes, minutes, qos, image_tag, working_dir, head_arch, head_core_count):
-    filename = '{0}-{1}-{2}-{3}/{0}.sh'.format(farm_queuename, nodes, minutes, qos)
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    f = open(filename, 'w')
+    script_path = '{0}-{1}-{2}-{3}/{0}.sh'.format(farm_queuename, nodes, minutes, qos)
+    script_path = os.path.join(SDO_SCRIPT_DIR, script_path)
+    os.makedirs(os.path.dirname(script_path), exist_ok=True)
+    f = open(script_path, 'w')
     f.write(script.format(nodes, minutes, qos, image_tag, working_dir, head_arch, head_core_count))
-    print('Script generated as ' + filename)
+    print('Script generated as ' + script_path)
     f.close()
-    return filename
+    return script_path

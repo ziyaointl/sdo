@@ -250,9 +250,9 @@ class FarmStage(QdoCentricStage):
         self.add_tasks_from_previous_queue('Succeeded')
 
     def schedule_one_job(self, nodes, hrs, dryrun=True):
-        script_name = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
+        script_path = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
                 IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
-        command = 'sbatch {}'.format(os.path.join(SDO_SCRIPT_DIR, script_name))
+        command = 'sbatch {}'.format(script_path)
         if dryrun:
             print(command)
         else:
