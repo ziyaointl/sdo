@@ -252,7 +252,7 @@ class FarmStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
         script_name = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
                 IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
-        command = 'sbatch {}'.format(os.join(SDO_SCRIPT_DIR, script_name))
+        command = 'sbatch {}'.format(os.path.join(SDO_SCRIPT_DIR, script_name))
         if dryrun:
             print(command)
         else:
