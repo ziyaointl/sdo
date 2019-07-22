@@ -60,7 +60,7 @@ ulimit -Sv $usemem
 
 cd /src/legacypipe/py
 
-outdir=${BB}products
+outdir=${BB}
 
 brick="$1"
 
