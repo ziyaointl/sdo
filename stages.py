@@ -151,7 +151,7 @@ class QdoCentricStage(Stage):
         # Estimate how many nodehrs needs to be scheduled
         node_hrs_needed = pending_tasks / self.tasks_per_nodehr
         node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
-        print('Node hrs to schedule:', node_hrs_needed)
+        print('Node hrs to schedule:', node_hrs_to_schedule)
         # Schedule new jobs
         self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=self.previous_stage.is_done())
 
