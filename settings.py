@@ -8,8 +8,8 @@ SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 
 # Queue names
-PREFARM_QNAME = 'prefarm'
-FARM_QNAME = 'farm'
-POSTFARM_QNAME = 'postfarm'
-POSTFARM_SCAVENGER_ONE_QNAME = 'postfarm-scavenger-1'
-POSTFARM_SCAVENGER_TWO_QNAME = 'postfarm-scavenger-2'
+PREFARM_QNAME = 'ziyao-prefarm'
+FARM_QNAME = 'ziyao-farm'
+POSTFARM_QNAME = 'ziyao-postfarm'
+POSTFARM_SCAVENGER_ONE_QNAME = 'ziyao-postfarm-scavenger-1'
+POSTFARM_SCAVENGER_TWO_QNAME = 'ziyao-postfarm-scavenger-2'
