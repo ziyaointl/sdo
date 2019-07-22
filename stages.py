@@ -203,7 +203,7 @@ class RunbrickPyStage(QdoCentricStage):
         # {4} nworkers
         # {5} profile
         # {6} image profile
-        script_path = os.path.join(SDO_SCRIPT_DIR, '/{}.sh'.format(self.name))
+        script_path = os.path.join(SDO_SCRIPT_DIR, '{}.sh'.format(self.name))
         profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
