@@ -9,7 +9,6 @@ def transfer_queue(target_q, source_q, source_state):
     for t in source_q.tasks():
         if t.state == source_state and t.task not in existing:
             to_be_transferred.add(t.task)
-            print(t)
     target_q.add_multiple(to_be_transferred)
     print('Source Queue:', source_q.name)
     print('Target Queue:', target_q.name)
