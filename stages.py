@@ -188,6 +188,10 @@ class QdoCentricStage(Stage):
                 QdoCentricStage), "Previous stage is not QdoCentricStage"
         transfer_queue(self.queue, self.previous_stage.queue, task_state)
 
+    def print_status(self):
+        print('Status for queue', self.queue.name)
+        print(self.queue.status())
+
 class RunbrickPyStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
         """Schedule one job
