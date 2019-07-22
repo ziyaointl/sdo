@@ -155,10 +155,11 @@ class QdoCentricStage(Stage):
         node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
         print('Node hrs to schedule:', node_hrs_needed)
         # Schedule new jobs
-        self.schedule_nodehrs(node_hrs_to_schedule)
+        self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=self.previous_stage.is_done())
 
-    def schedule_nodehrs(self, nodehrs):
+    def schedule_nodehrs(self, nodehrs, schedule_remainder=False):
         """Schedule a specified number of nodehrs
+        schedule_remainder: schedule jobs smaller than max_nodes_per_job
         """
         # TODO: Overall job limit
         # Schedule jobs that uses max_nodes_per_job
@@ -167,7 +168,7 @@ class QdoCentricStage(Stage):
             self.schedule_one_job(self.max_nodes_per_job, self.job_duration)
             nodehrs -= nodehr_per_job
         # Schedule a job that uses fewer nodes than max_nodes_per_job
-        if nodehr_per_job != 0:
+        if nodehr_per_job != 0 and schedule_remainder:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
     
@@ -247,5 +248,3 @@ class FarmStage(QdoCentricStage):
         if not dryrun:
             output = run_command(command)
             print(output)
-
-# TODO: Only launch jobs when enough tasks are in the queue
