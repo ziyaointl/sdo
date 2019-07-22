@@ -167,7 +167,7 @@ class QdoCentricStage(Stage):
             nodehrs -= nodehr_per_job
             curr_jobs_in_queue += 1
         # Schedule a job that uses fewer nodes than max_nodes_per_job
-        if nodehr_per_job != 0 and schedule_remainder and curr_jobs_in_queue < self.max_number_of_jobs:
+        if nodehrs > 0 and schedule_remainder and curr_jobs_in_queue < self.max_number_of_jobs:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration, dryrun=False)
     
