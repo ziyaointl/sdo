@@ -50,13 +50,13 @@ class SentinelStage(Stage):
 class QdoCentricStage(Stage):
     # TODO: Move cores_per_worker and arch to RunbrickPyStage
     auto_create_queue = False
+    max_nodes_per_job = 20
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
-        job_duration=2, max_nodes_per_job=20, max_number_of_jobs=100,
+        job_duration=2, max_number_of_jobs=100,
         cores_per_worker=17, arch='knl'):        
         self.cores_per_worker = cores_per_worker
         self.job_duration = job_duration
-        self.max_nodes_per_job = max_nodes_per_job
         self.max_number_of_jobs = max_number_of_jobs
         self.arch=arch
         try:
@@ -234,6 +234,8 @@ class PostFarmScavengerStage(RunbrickPyStage):
 
 class FarmStage(QdoCentricStage):
     auto_create_queue = True
+    max_nodes_per_job = 24
+
     def add_tasks(self):
         self.add_tasks_from_previous_queue('Succeeded')
 
