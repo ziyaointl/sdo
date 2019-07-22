@@ -201,7 +201,7 @@ class RunbrickPyStage(QdoCentricStage):
         # {5} profile
         # {6} image profile
         script_path = os.path.join(SDO_SCRIPT_DIR, '/{}.sh'.format(self.name))
-        profile = 'cori-shifter-knl' if self.arch == 'knl' else 'cori-shifter'
+        profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
