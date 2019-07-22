@@ -78,7 +78,7 @@ class QdoCentricStage(Stage):
         if (self.previous_stage.is_done()
                 and pending_tasks == 0
                 and len(self.get_jobs_in_queue()) == 0
-                and get_current_retries() < MAX_RETRIES):
+                and self.get_current_retries() < MAX_RETRIES):
             command = 'qdo recover {}'.format(self.name)
             output = run_command(command)
             print(output)
@@ -98,7 +98,7 @@ class QdoCentricStage(Stage):
         runnning_tasks = self.queue.status()['ntasks']['Running']
         finished_last_retry = (pending_tasks == 0
                             and len(self.get_jobs_in_queue()) == 0
-                            and get_current_retries() >= MAX_RETRIES)
+                            and self.get_current_retries() >= MAX_RETRIES)
         return (self.previous_stage.is_done() and
                 ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
 
