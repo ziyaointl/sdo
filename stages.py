@@ -109,7 +109,7 @@ class QdoCentricStage(Stage):
         jobs = []
         for row in csv_r:
             print(row)
-            if row['Name'] == self.name:
+            if row['NAME'] == self.name:
                 jobs.append(row)
         return jobs
 
