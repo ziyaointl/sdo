@@ -214,10 +214,10 @@ class RunbrickPyStage(QdoCentricStage):
             '--script "{3}"')
         command = command.format(self.name, self.cores_per_worker, int(hrs * 60),
                                     script_path, nworkers, profile, IMAGE_TAG)
-        print(command)
-        if not dryrun:
-            output = run_command(command)
-            print(output)
+        if dryrun:
+            print(command)
+        else:
+            run_command(command)
 
 class PreFarmStage(RunbrickPyStage):
     def add_tasks(self):
@@ -253,10 +253,10 @@ class FarmStage(QdoCentricStage):
         script_name = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
                 IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
         command = 'sbatch {}'.format(os.join(SDO_SCRIPT_DIR, script_name))
-        print(command)
-        if not dryrun:
-            output = run_command(command)
-            print(output)
+        if dryrun:
+            print(command)
+        else:
+            run_command(command)
 
     def number_of_jobs_in_queue(self):
         return len(self.get_jobs_in_queue()) / 2

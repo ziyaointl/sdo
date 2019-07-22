@@ -25,9 +25,11 @@ def run_command(command):
     """Takes a command an runs it in the shell
     Returns stdout and stderr combined
     """
+    print(command)
     output = subprocess.run(command, stdout=subprocess.PIPE,
                                     stderr=subprocess.STDOUT, shell=True).stdout
     output = output.decode('utf-8')
+    print(output)
     return output
 
 def make_template_format_friendly(template):
