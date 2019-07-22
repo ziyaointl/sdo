@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from shutil import copyfile
 from settings import *
 from util import *
 
@@ -10,17 +11,35 @@ c.execute('CREATE TABLE retries (stage VARCHAR NOT NULL, times INT)')
 conn.commit()
 conn.close()
 
-# Initialize scripts
+# Initialize scripts folder
 if not os.path.exists('scripts'):
     os.makedirs('scripts')
 
 # Read templates
-fin = open('templates/runbrick/runbrick-shifter.sh', 'r')
-runbrick_script = fin.read()
-runbrick_script = make_template_format_friendly(runbrick_script)
-fin.close()
+runbrick_script = read_template('runbrick/runbrick-shifter.sh')
+launch_farm_script = read_template('farm/launch-farm.sh')
+launch_worker_script = read_template('farm/launch-worker.sh')
+
+# Copy mpi_bugfix.sh
+copyfile('templates/farm/mpi_bugfix.sh', 'scripts/mpi_bugfix.sh')
+# Copy launch-worker.sh
+copyfile('templates/farm/launch-worker.sh', 'scripts/launch-worker.sh')
+# Copy qdo_login.sh
+copyfile('/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh', 'scripts/qdo_login.sh')
 
 # Write scripts
-fout = open('scripts/prefarm.sh', 'w')
+fout = open('scripts/{}.sh'.format(PREFARM_QNAME), 'w')
 fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 17, 'srcs'))
+fout.close()
+fout = open('scripts/launch-farm.sh', 'w')
+fout.write(launch_farm_script.format(LEGACY_SURVEY_DIR, FARM_QNAME, SDO_SCRIPT_DIR))
+fout.close()
+fout = open('scripts/{}.sh'.format(POSTFARM_QNAME), 'w')
+fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 17, 'writecat'))
+fout.close()
+fout = open('scripts/{}.sh'.format(POSTFARM_SCAVENGER_ONE_QNAME), 'w')
+fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 8, 'writecat'))
+fout.close()
+fout = open('scripts/{}.sh'.format(POSTFARM_SCAVENGER_TWO_QNAME), 'w')
+fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 1, 'writecat'))
 fout.close()
