@@ -54,7 +54,11 @@ class QdoCentricStage(Stage):
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
         job_duration=2, max_number_of_jobs=100,
-        cores_per_worker=17, arch='knl'):        
+        cores_per_worker=17, arch='knl'):
+        """name: name of the qdo queue; also used for calling the default
+        job scheudling script and for distinguishing jobs scheduled by
+        different stages
+        """
         self.cores_per_worker = cores_per_worker
         self.job_duration = job_duration
         self.max_number_of_jobs = max_number_of_jobs
