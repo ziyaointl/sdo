@@ -7,6 +7,7 @@
 # {0}: LEGACY_SURVEY_DIR
 # {1}: ncores
 # {2}: stage and write-stage
+# {3}: run argument / telescope
 
 # export LEGACY_SURVEY_DIR=/global/cscratch1/sd/ziyaoz/farm-playground
 export LEGACY_SURVEY_DIR={0}
@@ -97,7 +98,7 @@ python -O legacypipe/runbrick.py \
      --ps-t0 $(date "+%s") \
      --write-stage {2} \
      --stage {2} \
-     --run decam \
+     --run {3} \
     >> $log 2>&1
 
 #     --cache-dir $cachedir \

@@ -5,6 +5,7 @@ SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo"
 IMAGE_TAG = "nersc-dr8.3.2"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
+TELESCOPE = '90prime-mosaic' # or decam
 
 # Queue names
 PREFARM_QNAME = 'ziyao-prefarm'
