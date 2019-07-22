@@ -13,12 +13,12 @@ def main():
     stages = [prefarm, farm, postfarm, postfarm_scavenger_one, postfarm_scavenger_two]
 
     for s in stages:
-        print('Stage:', s.name)
         s.add_tasks()
-        if s.is_done():
+        is_done = s.is_done()
+        print('Stage:', s.name, 'Done?', is_done)
+        if is_done:
             continue
-        if s.previous_stage.is_done():
-            s.attempt_recover()
+        s.attempt_recover()
         s.schedule_jobs()
         s.print_status()
 
