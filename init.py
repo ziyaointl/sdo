@@ -7,7 +7,10 @@ from util import *
 # Initialize database
 conn = sqlite3.connect('sdo.db')
 c = conn.cursor()
-c.execute('CREATE TABLE retries (stage VARCHAR NOT NULL, times INT)')
+try:
+    c.execute('CREATE TABLE retries (stage VARCHAR NOT NULL, times INT)')
+except sqlite3.OperationalError:
+    print('SQL table already exists, skipping')
 conn.commit()
 conn.close()
 
