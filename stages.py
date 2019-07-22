@@ -2,6 +2,7 @@ from settings import *
 from util import run_command, parse_timedelta, hours
 from qdo_util import transfer_queue
 from datetime import timedelta
+from gen_farm_script import gen_farm_script
 import math
 import subprocess
 import qdo
@@ -47,18 +48,24 @@ class SentinelStage(Stage):
         print('I am the sentinel. I am always 100% complete.')
 
 class QdoCentricStage(Stage):
-    # TODO: auto create qdo queue
+    # TODO: Move cores_per_worker and arch to RunbrickPyStage
     auto_create_queue = False
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
         job_duration=2, max_nodes_per_job=20, max_number_of_jobs=100,
-        cores_per_worker=17, arch='knl'):
-        # self.queue = qdo.connect('name')
+        cores_per_worker=17, arch='knl'):        
         self.cores_per_worker = cores_per_worker
         self.job_duration = job_duration
         self.max_nodes_per_job = max_nodes_per_job
         self.max_number_of_jobs = max_number_of_jobs
         self.arch=arch
+        try:
+            self.queue = qdo.connect(name)
+        except ValueError:
+            if self.auto_create_queue:
+                self.queue = qdo.create(name)
+            else:
+                raise
         return super().__init__(name, previous_stage, tasks_per_nodehr)
 
     def attempt_recover(self):
@@ -211,6 +218,7 @@ class PreFarmStage(RunbrickPyStage):
         pass
 
 class PostFarmStage(RunbrickPyStage):
+    auto_create_queue = True
     def add_tasks(self):
         """Take tasks that are done from the farm stage and put them in
         the queue
@@ -218,6 +226,7 @@ class PostFarmStage(RunbrickPyStage):
         self.add_tasks_from_previous_queue('Succeeded')
 
 class PostFarmScavengerStage(RunbrickPyStage):
+    auto_create_queue = True
     def add_tasks(self):
         """Take tasks that failed from the postfarm stage and put them in the queue
         """
