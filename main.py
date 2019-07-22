@@ -13,6 +13,7 @@ def main():
     stages = [prefarm, farm, postfarm, postfarm_scavenger_one, postfarm_scavenger_two]
 
     for s in stages:
+        print('Stage:', s.name)
         s.add_tasks()
         if s.is_done():
             continue
