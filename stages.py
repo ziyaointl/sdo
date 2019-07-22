@@ -161,17 +161,21 @@ class QdoCentricStage(Stage):
         """Schedule a specified number of nodehrs
         schedule_remainder: schedule jobs smaller than max_nodes_per_job
         """
-        # TODO: Overall job limit
         # Schedule jobs that uses max_nodes_per_job
         nodehr_per_job = self.max_nodes_per_job * self.job_duration
-        while nodehrs > nodehr_per_job:
+        curr_jobs_in_queue = self.number_of_jobs_in_queue()
+        while nodehrs > nodehr_per_job and curr_jobs_in_queue < self.max_number_of_jobs:
             self.schedule_one_job(self.max_nodes_per_job, self.job_duration)
             nodehrs -= nodehr_per_job
+            curr_jobs_in_queue += 1
         # Schedule a job that uses fewer nodes than max_nodes_per_job
-        if nodehr_per_job != 0 and schedule_remainder:
+        if nodehr_per_job != 0 and schedule_remainder and curr_jobs_in_queue < self.max_number_of_jobs:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration)
     
+    def number_of_jobs_in_queue(self):
+        return len(self.get_jobs_in_queue())
+
     def add_tasks_from_previous_queue(self, task_state):
         """If previous stage is QdoCentricStage, add tasks of a certain state
         from the previous stage's queue to this stage's queue
@@ -248,3 +252,6 @@ class FarmStage(QdoCentricStage):
         if not dryrun:
             output = run_command(command)
             print(output)
+
+    def number_of_jobs_in_queue(self):
+        return len(self.get_jobs_in_queue()) / 2
