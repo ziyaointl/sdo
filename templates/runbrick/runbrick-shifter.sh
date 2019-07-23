@@ -90,7 +90,7 @@ python -O legacypipe/runbrick.py \
      --skip \
      --skip-calibs \
      --threads ${ncores} \
-     --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
+     --checkpoint ${outdir}/checkpoints/checkpoint-${brick}.pickle \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --unwise-coadds \
      --outdir $outdir \
