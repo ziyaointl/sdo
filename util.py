@@ -5,7 +5,7 @@ import re
 import os
 
 def parse_timedelta(s):
-    """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS"
+    """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS" or "MM:SS"
     Returns a timedelta object
     """
     if '-' in s:
@@ -14,7 +14,9 @@ def parse_timedelta(s):
     else:
         days = 0
     s = list(map(lambda x: int(x), s.split(':')))
-    return timedelta(days=days, hours=s[0], minutes=s[1], seconds=s[2])
+    if len(s) == 3:
+        return timedelta(days=days, hours=s[0], minutes=s[1], seconds=s[2])
+    return timedelta(days=days, hours=0, minutes=s[0], seconds=s[1])
 
 def hours(dtime):
     """Takes in a timedelta object
