@@ -153,7 +153,8 @@ class QdoCentricStage(Stage):
         node_hrs_to_schedule = node_hrs_needed - hours(total_time_in_queue)
         print('Node hrs to schedule:', node_hrs_to_schedule)
         # Schedule new jobs
-        self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=self.previous_stage.is_done())
+        self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=(self.previous_stage.is_done()
+                and self.number_of_jobs_in_queue() == 0))
 
     def schedule_nodehrs(self, nodehrs, schedule_remainder=False):
         """Schedule a specified number of nodehrs
@@ -170,7 +171,7 @@ class QdoCentricStage(Stage):
         if nodehrs > 0 and schedule_remainder and curr_jobs_in_queue < self.max_number_of_jobs:
             self.schedule_one_job(math.ceil(nodehrs / self.job_duration),
                                     self.job_duration, dryrun=False)
-    
+
     def number_of_jobs_in_queue(self):
         return len(self.get_jobs_in_queue())
 
