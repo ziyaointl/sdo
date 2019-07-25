@@ -3,7 +3,7 @@ from stages import *
 
 def main():
     sentinel = SentinelStage()
-    prefarm = PreFarmStage(PREFARM_QNAME, sentinel, 8)
+    prefarm = PreFarmStage(PREFARM_QNAME, sentinel, 8, job_duration=4)
     farm = FarmStage(FARM_QNAME, prefarm, 8)
     postfarm = PostFarmStage(POSTFARM_QNAME, farm, 12)
     postfarm_scavenger_one = PostFarmScavengerStage(POSTFARM_SCAVENGER_ONE_QNAME,
