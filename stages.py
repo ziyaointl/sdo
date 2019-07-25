@@ -134,6 +134,7 @@ class QdoCentricStage(Stage):
         c.execute('UPDATE retries SET times=? WHERE stage=?',
                     (curr_retries, self.name))
         conn.close()
+        print('Retries incremented to', curr_retries)
         return curr_retries
 
     def schedule_jobs(self):
