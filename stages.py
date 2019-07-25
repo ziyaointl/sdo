@@ -91,8 +91,7 @@ class QdoCentricStage(Stage):
         AND
                 No tasks are pending or running
             OR
-                No tasks are pending, no jobs are in slurm queue,
-                but MAX_RETRIES has been reached
+                All jobs have finished and maximum retry reached
         """
         pending_tasks = self.queue.status()['ntasks']['Pending']
         runnning_tasks = self.queue.status()['ntasks']['Running']
