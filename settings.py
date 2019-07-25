@@ -1,5 +1,5 @@
 import os
-MAX_RETRIES = 3 # Number of times to run qdo recover when pending tasks reaches 0
+MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
 LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/sdo-test"
 SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo"
 IMAGE_TAG = "nersc-dr8.3.2"
