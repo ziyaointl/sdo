@@ -11,3 +11,11 @@ def transfer_queue(target_q, source_q, source_state):
             to_be_transferred.add(t.task)
     target_q.add_multiple(to_be_transferred)
     print('Transferred', len(to_be_transferred), 'tasks')
+
+def set_all_tasks_with_state(queue, source_state, target_state):
+    n = 0
+    for t in queue.tasks():
+        if t.state == source_state:
+            t.set_state(target_state)
+            n += 1
+    print('Setting', n, 'tasks from', source_state, 'to', target_state)
