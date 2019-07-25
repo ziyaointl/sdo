@@ -122,6 +122,7 @@ class QdoCentricStage(Stage):
         if result == None:
             c.execute('INSERT INTO retries VALUES(?, 0)', (self.name, ))
             result = 0
+            conn.commit()
         else:
             result = result[0]
         conn.close()
@@ -133,6 +134,7 @@ class QdoCentricStage(Stage):
         curr_retries = self.get_current_retries() + 1
         c.execute('UPDATE retries SET times=? WHERE stage=?',
                     (curr_retries, self.name))
+        conn.commit()
         conn.close()
         print('Retries incremented to', curr_retries)
         return curr_retries
