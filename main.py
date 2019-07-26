@@ -5,7 +5,7 @@ def main():
     sentinel = SentinelStage()
     prefarm = PreFarmStage(PREFARM_QNAME, sentinel, 8, job_duration=4)
     farm = FarmStage(FARM_QNAME, prefarm, 8)
-    postfarm = PostFarmStage(POSTFARM_QNAME, farm, 12)
+    postfarm = PostFarmStage(POSTFARM_QNAME, farm, 2)
     postfarm_scavenger_one = PostFarmScavengerStage(POSTFARM_SCAVENGER_ONE_QNAME,
         postfarm, 1, job_duration=4, cores_per_worker=32, arch='haswell')
     postfarm_scavenger_two = PostFarmScavengerStage(POSTFARM_SCAVENGER_TWO_QNAME,
