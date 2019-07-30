@@ -40,11 +40,14 @@ def render(stages):
         p.xgrid.grid_line_color = None
 
         # Jobs
-        name, jobid, time_limit, qos, nodes, used_time, state, submit_time, work_dir = zip(*[(j['NAME'], j['JOBID'], j['TIME_LIMIT'], j['QOS'], j['NODES'], j['TIME'], j['STATE'], j['SUBMIT_TIME'], j['WORK_DIR']) for j in jobs])
-        d = {}
-        for column in ['name', 'jobid', 'time_limit', 'qos', 'nodes', 'used_time', 'state', 'submit_time', 'work_dir']:
-            d[column] = locals()[column]
-        source = ColumnDataSource(data=d)
+        if len(jobs) != 0:
+            name, jobid, time_limit, qos, nodes, used_time, state, submit_time, work_dir = zip(*[(j['NAME'], j['JOBID'], j['TIME_LIMIT'], j['QOS'], j['NODES'], j['TIME'], j['STATE'], j['SUBMIT_TIME'], j['WORK_DIR']) for j in jobs])
+            d = {}
+            for column in ['name', 'jobid', 'time_limit', 'qos', 'nodes', 'used_time', 'state', 'submit_time', 'work_dir']:
+                d[column] = locals()[column]
+            source = ColumnDataSource(data=d)
+        else:
+            source = ColumnDataSource()
         columns = [
                 TableColumn(field="jobid", title="ID"),
                 TableColumn(field="name", title="Name"),
@@ -59,8 +62,11 @@ def render(stages):
         jobs_table = DataTable(source=source, columns=columns, height=200, sizing_mode='stretch_both')
 
         # Tasks
-        name, state = zip(*[(t.task, t.state) for t in tasks])
-        source = ColumnDataSource(data=dict(name=name, state=state))
+        if len(tasks) != 0:
+            name, state = zip(*[(t.task, t.state) for t in tasks])
+            source = ColumnDataSource(data=dict(name=name, state=state))
+        else:
+            source = ColumnDataSource()
         columns = [
                 TableColumn(field="name", title="Name"),
                 TableColumn(field="state", title="State")
