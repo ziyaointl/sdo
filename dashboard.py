@@ -44,3 +44,8 @@ p.min_border = 50
 p.xgrid.grid_line_color = None
 p.legend.orientation = "horizontal"
 p.legend.location = "top_center"
+
+script, divs = components(p)
+print(script)
+with open('reports/index.html', 'w') as f:
+    f.write(template.render(plot=divs[0], script=script, retries=1, done=False, stage=queue_name), jobs=divs[1], tasks=divs[2])
