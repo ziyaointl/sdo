@@ -76,3 +76,4 @@ def render(stages):
                                     stage=queue_name,
                                     jobs=divs[1],
                                     tasks=divs[2]))
+        print('Written {}.html'.format(queue_name))
