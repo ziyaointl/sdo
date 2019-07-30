@@ -19,6 +19,7 @@ def render(stages):
         # Initialize variables
         queue_state = s.queue.status()['ntasks']
         jobs = s.get_jobs_in_queue(clear_cache=True)
+        print(jobs)
         tasks = s.queue.tasks()
         queue_name = s.name
 
