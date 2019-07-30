@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="viewport" ="width=device-width, initial-scale=1">
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.js"
       integrity="sha256-ig5/XS1E1XCqcjk1C1M4FgNQJl2Th/WBpD3TLvGI4Mg="
@@ -16,9 +17,7 @@
       integrity="sha256-4sbSwl0EsfSe2iOqQCoSc/aFzV56TNi8UrPppulEg7c="
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.min.js"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh-tables.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.2.0/bokeh.min.css"
@@ -35,32 +34,38 @@
       integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk="
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="templates/styles.css"
-    >
-    {{ script }}
+    <link rel="stylesheet" href="templates/styles.css" />
+    {{
+      script
+    }}
   </head>
-  <body>
+  <body class="content">
     <div class="columns is-desktop">
       <div class="column is-4-desktop plot">
         {{ plot }}
       </div>
-      <div class="column is-8-desktop content">
-          <h3>{{ stage }}</h3>
-          <p>Retries: {{ retries }} <br>
-          Done: {{ done }} <br>
-          Jobs in Queue: {{ jobs | length }} <br>
-          Node Hours in queue: {{ hours_in_queue }} <br>
+      <div class="column is-1-desktop">
+      </div>
+      <div class="column is-7-desktop">
+        <h3>{{ stage }}</h3>
+        <p>
+          Retries: {{ retries }} <br />
+          Done: {{ done }} <br />
+          Jobs in Queue: {{ jobs | length }} <br />
+          Node Hours in queue: {{ hours_in_queue }} <br />
           Node Hours not Scheduled: {{ hours_to_schedule }}
         </p>
       </div>
     </div>
-    <div class="columns content">
-      <h3>Jobs</h3>
+    <div class="columns">
+      <div class="column"><h3>Jobs</h3>
+      {{ jobs }}</div>
     </div>
     <div class="columns">
-      {{ jobs }}
+      <div class="column">
+        <h3>Tasks</h3>
+        {{ tasks }}
+      </div>
     </div>
   </body>
 </html>
