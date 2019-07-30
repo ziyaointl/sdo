@@ -53,7 +53,16 @@ columns = [
 ]
 jobs_table = DataTable(source=source, columns=columns)
 
-script, divs = components((p, jobs_table))
-print(script)
+# Tasks
+name, state = zip(*[(t['name'], t['state']) for t in tasks])
+source = ColumnDataSource(data=dict(name=name, state=state))
+columns = [
+        TableColumn(field="name", title="Name"),
+        TableColumn(field="state", title="State")
+]
+tasks_table = DataTable(source=source, columns=columns, height=200, sizing_mode='stretch_both')
+
+script, divs = components((p, jobs_table, tasks_table))
+
 with open('reports/index.html', 'w') as f:
     f.write(template.render(plot=divs[0], script=script, retries=1, done=False, stage=queue_name), jobs=divs[1], tasks=divs[2])
