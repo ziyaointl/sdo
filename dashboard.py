@@ -40,11 +40,9 @@ colors = ['#4390ca', '#32bdb2', '#99d593', '#d53e4f']
 source = ColumnDataSource(data=dict(states=states, counts=counts, color=colors))
 hover = HoverTool(tooltips=[('State', '@states'), ('Count', '@counts')])
 p = figure(x_range=states, y_range=(0, max(counts)*1.5), plot_height=400, title=queue_name, toolbar_location=None, tools=[hover], sizing_mode='scale_width')
-p.vbar(x='states', top='counts', color='color', legend='states', width = 0.9, source=source)
+p.vbar(x='states', top='counts', color='color', width = 0.9, source=source)
 p.min_border = 50
 p.xgrid.grid_line_color = None
-p.legend.orientation = "horizontal"
-p.legend.location = "top_center"
 
 # Jobs
 name, duration = zip(*[(j['name'], j['duration']) for j in jobs])
