@@ -12,13 +12,21 @@ body {
     border-width: 1px;
     border-color: #999999;
     border-style: solid;
-}
-
-.content {
-    margin-left: 20px;
-    margin-top: 20px;
+    background-color: white;
 }
 
 .bk-data-table {
     margin: 0 !important;
+}
+
+.bk-root {
+    overflow: auto;
+}
+
+.columns {
+    margin: 0;
+}
+
+.columns:not(:last-child) {
+    margin-bottom: 10px;
 }
