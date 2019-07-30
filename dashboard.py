@@ -24,3 +24,12 @@ env = Environment(
     loader=FileSystemLoader('reports/templates')
 )
 template = env.get_template('index.html')
+
+# Dummy variables
+queue_state = {'Pending': 35, 'Running': 10, 'Succeeded': 20, 'Failed': 2}
+jobs = [{'name': 'prefarm.sh', 'duration': '2:00:00'}]
+tasks = [{'name': '1234p567', 'state': 'Running'},
+        {'name': '1334p567', 'state': 'Pending'},
+        {'name': '1434p567', 'state': 'Failed'}]
+queue_name = "Prefarm"
+
