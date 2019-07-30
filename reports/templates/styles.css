@@ -18,3 +18,7 @@ body {
     margin-left: 20px;
     margin-top: 20px;
 }
+
+.bk-data-table {
+    margin: 0 !important;
+}

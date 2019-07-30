@@ -45,7 +45,16 @@ p.xgrid.grid_line_color = None
 p.legend.orientation = "horizontal"
 p.legend.location = "top_center"
 
-script, divs = components(p)
+# Jobs
+name, duration = zip(*[(j['name'], j['duration']) for j in jobs])
+source = ColumnDataSource(data=dict(name=name, duration=duration))
+columns = [
+        TableColumn(field="name", title="Name"),
+        TableColumn(field="duration", title="Duration")
+]
+jobs_table = DataTable(source=source, columns=columns)
+
+script, divs = components((p, jobs_table))
 print(script)
 with open('reports/index.html', 'w') as f:
     f.write(template.render(plot=divs[0], script=script, retries=1, done=False, stage=queue_name), jobs=divs[1], tasks=divs[2])
