@@ -51,7 +51,7 @@ columns = [
         TableColumn(field="name", title="Name"),
         TableColumn(field="duration", title="Duration")
 ]
-jobs_table = DataTable(source=source, columns=columns)
+jobs_table = DataTable(source=source, columns=columns, height=200, sizing_mode='stretch_both')
 
 # Tasks
 name, state = zip(*[(t['name'], t['state']) for t in tasks])
@@ -65,4 +65,4 @@ tasks_table = DataTable(source=source, columns=columns, height=200, sizing_mode=
 script, divs = components((p, jobs_table, tasks_table))
 
 with open('reports/index.html', 'w') as f:
-    f.write(template.render(plot=divs[0], script=script, retries=1, done=False, stage=queue_name), jobs=divs[1], tasks=divs[2])
+    f.write(template.render(plot=divs[0], script=script, retries=1, done=False, stage=queue_name, jobs=divs[1], tasks=divs[2]))
