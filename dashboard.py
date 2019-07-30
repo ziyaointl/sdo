@@ -1,8 +1,12 @@
 from settings import *
-import bokeh
+from jinja2 import Environment, select_autoescape, FileSystemLoader
+from bokeh.io import show
+from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.plotting import figure
+from bokeh.embed import components
 
 def plot(stages):
-    """Takes in a list of stages and generates a report in the plot/ directory
+    """Takes in a list of stages and generates a report in the reports/ directory
     Assumes the total number of tasks = the number of tasks in the first stage
     Also assumes all stages are QdoCentricStages
     """
@@ -14,4 +18,9 @@ def plot(stages):
         # Print the number of retries & done?
         # Print a table of associated tasks
         # Optional: include logs
+        return
 
+env = Environment(
+    loader=FileSystemLoader('reports/templates')
+)
+template = env.get_template('index.html')
