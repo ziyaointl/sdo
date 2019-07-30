@@ -2,6 +2,7 @@ from settings import *
 from jinja2 import Environment, select_autoescape, FileSystemLoader
 from bokeh.io import show
 from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
 from bokeh.embed import components
 
@@ -27,10 +28,10 @@ template = env.get_template('index.html')
 
 # Dummy variables
 queue_state = {'Pending': 35, 'Running': 10, 'Succeeded': 20, 'Failed': 2}
-jobs = [{'name': 'prefarm.sh', 'duration': '2:00:00'}]
+jobs = [{'name': 'prefarm.sh', 'duration': '2:00:00'}]*30
 tasks = [{'name': '1234p567', 'state': 'Running'},
         {'name': '1334p567', 'state': 'Pending'},
-        {'name': '1434p567', 'state': 'Failed'}]
+        {'name': '1434p567', 'state': 'Failed'}]*10
 queue_name = "Prefarm"
 
 # Status Plot
