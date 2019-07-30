@@ -6,7 +6,7 @@ from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
 from bokeh.embed import components
 
-def plot(stages):
+def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
     Assumes the total number of tasks = the number of tasks in the first stage
     Also assumes all stages are QdoCentricStages

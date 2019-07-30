@@ -1,5 +1,6 @@
 from settings import *
 from stages import *
+from dashboard import render
 
 def main():
     sentinel = SentinelStage()
@@ -22,5 +23,6 @@ def main():
         s.attempt_recover()
         s.schedule_jobs()
         s.print_status()
+    render(stages)
 
 main()
