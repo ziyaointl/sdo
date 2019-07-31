@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh.min.js"
-      integrity="sha256-ig5/XS1E1XCqcjk1C1M4FgNQJl2Th/WBpD3TLvGI4Mg="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-widgets.min.js"
-      integrity="sha256-gA2MBXx7foNScSZPGq1wEdxvRkFP9wEcKY6iuBjnr7A="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-api.min.js"
-      integrity="sha256-4sbSwl0EsfSe2iOqQCoSc/aFzV56TNi8UrPppulEg7c="
-      crossorigin="anonymous"
-    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-widgets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-api.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-tables.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh.min.css"
-      integrity="sha256-HvNRJAo41cZdDpLcwMNoslu/1tvP6sLpvdcTJTZfiq0="
-      crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
@@ -31,8 +17,6 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
-      integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk="
-      crossorigin="anonymous"
     />
     <link rel="stylesheet" href="templates/styles.css" />
     {{
@@ -44,8 +28,7 @@
       <div class="column is-4-desktop plot">
         {{ plot }}
       </div>
-      <div class="column is-1-desktop">
-      </div>
+      <div class="column is-1-desktop"></div>
       <div class="column is-7-desktop">
         <h3>{{ stage }}</h3>
         <p>
@@ -58,8 +41,10 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column"><h3>Jobs</h3>
-      {{ jobs }}</div>
+      <div class="column">
+        <h3>Jobs</h3>
+        {{ jobs }}
+      </div>
     </div>
     <div class="columns">
       <div class="column">
