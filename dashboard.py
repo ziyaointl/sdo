@@ -22,7 +22,8 @@ def render(stages):
 
     for s in stages:
         # Initialize variables
-        queue_state = s.queue.status()['ntasks']
+        queue_state = dict(s.queue.status()['ntasks'])
+        queue_state.pop('Waiting')
         jobs = s.get_jobs_in_queue()
         tasks = s.queue.tasks()
         queue_name = s.name
