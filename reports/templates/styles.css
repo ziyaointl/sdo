@@ -2,8 +2,9 @@ html {
     background-color: #eeeeee
 }
 
-body {
-    margin: 30px;
+html, body
+{
+    height: 100%;
 }
 
 .plot {
@@ -29,4 +30,58 @@ body {
 
 .columns:not(:last-child) {
     margin-bottom: 10px;
+}
+
+.main {
+    margin: 0;
+    height: 100%;
+}
+
+.index-columns {
+    height: 100%;
+    padding: 30px;
+}
+
+#column {
+    /* background-color: #dddddd; */
+    /* background-clip: content-box; */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #999999;
+    text-align: center;
+    padding: 0;
+}
+
+.column-content {
+    text-align: center;
+}
+
+.is-vertical-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}  
+
+#arrow {
+    margin: auto;
+}
+
+.h-10 {
+    height: 10%;
+}
+
+.h-20 {
+    height: 20%;
+}
+
+.h-80 {
+    height: 80%;
+}
+
+.h-90 {
+    height: 90%;
+}
+
+.column-title {
+    padding: 20px;
 }
