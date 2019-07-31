@@ -104,10 +104,8 @@ class QdoCentricStage(Stage):
         return (self.previous_stage.is_done() and
                 ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
 
-    def get_jobs_in_queue(self, clear_cache=False):
+    def get_jobs_in_queue(self):
         command = 'squeue -u ziyaoz --format=%all'
-        if clear_cache:
-            cached_run_command.cache_clear()
         output = cached_run_command(command)
         csv_r = csv.DictReader(io.StringIO(output), delimiter='|')
         jobs = []

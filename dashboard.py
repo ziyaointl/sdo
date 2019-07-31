@@ -1,4 +1,5 @@
 from settings import *
+from util import cached_run_command
 from jinja2 import Environment, select_autoescape, FileSystemLoader
 from bokeh.io import show
 from bokeh.models import ColumnDataSource, HoverTool
@@ -15,11 +16,11 @@ def render(stages):
         raise RuntimeError("Stage list empty")
     env = Environment(loader=FileSystemLoader('reports/templates'))
     template = env.get_template('index.html')
+    cached_run_command.cache_clear()
     for s in stages:
         # Initialize variables
         queue_state = s.queue.status()['ntasks']
-        jobs = s.get_jobs_in_queue(clear_cache=True)
-        print(jobs)
+        jobs = s.get_jobs_in_queue()
         tasks = s.queue.tasks()
         queue_name = s.name
 
