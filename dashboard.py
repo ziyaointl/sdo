@@ -76,12 +76,13 @@ def render(stages):
 
         script, divs = components((p, jobs_table, tasks_table))
 
-        with open('reports/{}.html'.format(queue_name), 'w') as f:
+        with open('reports/generated/{}.html'.format(queue_name), 'w') as f:
             f.write(template.render(plot=divs[0],
                                     script=script,
                                     retries=1,
                                     done=False,
                                     stage=queue_name,
                                     jobs=divs[1],
-                                    tasks=divs[2]))
+                                    tasks=divs[2],
+                                    hours_in_quue=s.get_time_in_queue()))
         print('Written {}.html'.format(queue_name))

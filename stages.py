@@ -141,14 +141,20 @@ class QdoCentricStage(Stage):
         print('Retries incremented to', curr_retries)
         return curr_retries
 
-    def schedule_jobs(self):
-        """Calculate the number of hours to schedule and schedules them
+    def get_time_in_queue(self):
+        """Returns the total time scheduled, in timedelta
         """
-        # Check for number of unfinished hours in the queue
         jobs = self.get_jobs_in_queue()
         total_time_in_queue = timedelta()
         for j in jobs:
             total_time_in_queue += parse_timedelta(j['TIME_LEFT']) * int(j['NODES'])
+        return total_time_in_queue
+
+    def schedule_jobs(self):
+        """Calculate the number of hours to schedule and schedules them
+        """
+        # Check for number of unfinished hours in the queue
+        total_time_in_queue = self.get_time_in_queue()
         print('Node hrs already scheduled, waiting to run: ', hours(total_time_in_queue))
         # Check for number of tasks that are waiting in the queue
         pending_tasks = self.queue.status()['ntasks']['Pending']
