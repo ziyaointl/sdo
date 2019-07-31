@@ -84,5 +84,5 @@ def render(stages):
                                     stage=queue_name,
                                     jobs=divs[1],
                                     tasks=divs[2],
-                                    hours_in_quue=hours(s.get_time_in_queue())))
+                                    hours_in_queue=hours(s.get_time_in_queue())))
         print('Written {}.html'.format(queue_name))
