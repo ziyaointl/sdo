@@ -17,6 +17,9 @@ def render(stages):
     env = Environment(loader=FileSystemLoader('reports/templates'))
     template = env.get_template('stage.html')
     cached_run_command.cache_clear()
+
+    status_plots = []
+
     for s in stages:
         # Initialize variables
         queue_state = s.queue.status()['ntasks']
@@ -39,6 +42,7 @@ def render(stages):
         p.vbar(x='states', top='counts', color='color', width = 0.9, source=source)
         p.min_border = 50
         p.xgrid.grid_line_color = None
+        status_plots.append(p)
 
         # Jobs
         if len(jobs) != 0:
@@ -84,5 +88,19 @@ def render(stages):
                                     stage=queue_name,
                                     jobs=divs[1],
                                     tasks=divs[2],
-                                    hours_in_queue=hours(s.get_time_in_queue())))
+                                    hours_in_queue=hours(s.get_time_in_queue()),
+                                    bokeh_version='1.0.4'
+                                    ))
         print('Written {}.html'.format(queue_name))
+
+    # Copy css file
+
+    # Generate index.html
+    script, divs = components(status_plots)
+    template = env.get_template('index.html')
+    with open('reports/generated/index.html', 'w') as f:
+        f.write(template.render(script=script,
+                                prefarm_plot=divs[0],
+                                bokeh_version='1.0.4'
+                                ))
+    print('Written index.html'.format(queue_name))
