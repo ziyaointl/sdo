@@ -35,7 +35,7 @@ def render(stages):
         p = figure(x_range=states,
                     y_range=(0, max(counts)*1.5),
                     plot_height=400,
-                    title=queue_name,
+                    # title=queue_name,
                     toolbar_location=None,
                     tools=[hover],
                     sizing_mode='scale_width')
@@ -96,6 +96,8 @@ def render(stages):
     # Copy css file
 
     # Generate index.html
+    status_plots[0].background_fill_alpha = 0
+    status_plots[0].min_border = 0
     script, divs = components((status_plots[0],))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
