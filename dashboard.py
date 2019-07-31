@@ -96,7 +96,7 @@ def render(stages):
     # Copy css file
 
     # Generate index.html
-    script, divs = components(status_plots)
+    script, divs = components((status_plots[0],))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
         f.write(template.render(script=script,
