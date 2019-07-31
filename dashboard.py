@@ -1,5 +1,5 @@
 from settings import *
-from util import cached_run_command
+from util import cached_run_command, hours
 from jinja2 import Environment, select_autoescape, FileSystemLoader
 from bokeh.io import show
 from bokeh.models import ColumnDataSource, HoverTool
@@ -84,5 +84,5 @@ def render(stages):
                                     stage=queue_name,
                                     jobs=divs[1],
                                     tasks=divs[2],
-                                    hours_in_quue=s.get_time_in_queue()))
+                                    hours_in_quue=hours(s.get_time_in_queue())))
         print('Written {}.html'.format(queue_name))
