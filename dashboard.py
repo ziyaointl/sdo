@@ -15,7 +15,7 @@ def render(stages):
     if len(stages) == 0:
         raise RuntimeError("Stage list empty")
     env = Environment(loader=FileSystemLoader('reports/templates'))
-    template = env.get_template('index.html')
+    template = env.get_template('stage.html')
     cached_run_command.cache_clear()
     for s in stages:
         # Initialize variables
