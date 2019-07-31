@@ -97,7 +97,7 @@ def render(stages):
 
     # Generate index.html
     status_plots[0].background_fill_alpha = 0
-    status_plots[0].axis.background_fill_alpha = 0
+    status_plots[0].border_fill_alpha = 0
     status_plots[0].min_border = 0
     script, divs = components((status_plots[0],))
     template = env.get_template('index.html')
