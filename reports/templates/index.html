@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-widgets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-api.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-tables.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bokeh/1.0.4/bokeh-tables.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+  <link rel="stylesheet" href="templates/styles.css" />
+  {{ script }}
+</head>
+
+<body>
+  <div class="content main">
+    <div class="columns index-columns">
+      <div class="column is-vertical-center" id="column">
+        <div class="column-title h-10">
+          <h3>Prefarm</h3>
+          <p>67% Complete</p>
+        </div>
+        <div class="column-content h-90 is-vertical-center">
+          <p>{{ prefarm_plot }}</p>
+        </div>
+      </div>
+      <div class="column is-vertical-center">
+        <div class="column-content">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+            fill-rule="evenodd" clip-rule="evenodd" id="arrow">
+            <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+          </svg>
+          <p>
+            10% (2143/15432) <br />
+            Tasks Transferred
+          </p>
+        </div>
+      </div>
+      <div class="column is-vertical-center" id="column">
+        <div class="column-title h-10">
+          <h3>Farm</h3>
+          <p>55% Complete</p>
+        </div>
+        <div class="column-content h-90 is-vertical-center">
+          <p>Hi</p>
+        </div>
+      </div>
+      <div class="column is-vertical-center">
+        <div class="column-content">
+          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+            fill-rule="evenodd" clip-rule="evenodd" id="arrow">
+            <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+          </svg>
+          <p>
+            50% (1123/2143) <br />
+            Tasks Transferred
+          </p>
+        </div>
+      </div>
+      <div class="column is-vertical-center" id="column">
+        <div class="column-title h-10">
+          <h3>Postfarm</h3>
+          <p>21% Complete</p>
+        </div>
+        <div class="column-content h-90 is-vertical-center">
+          <p>Hi</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
