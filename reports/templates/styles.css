@@ -91,8 +91,8 @@ html, body
 }
 
 .timestamp {
-    position: absolute;
-    bottom: 0px;
+    position: fixed;
+    bottom: 6px;
     font-size: 12px;
     right: 6px;
 }
