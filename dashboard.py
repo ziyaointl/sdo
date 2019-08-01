@@ -108,7 +108,6 @@ def render(stages):
         p.min_border = 10
         p.yaxis.visible = False
         p.plot_height = 350
-        p.glyph.width = 0.5
         return p
 
     script, divs = components(tuple(process_plot(p) for p in status_plots))
