@@ -108,7 +108,8 @@ def render(stages):
         p.min_border = 10
         p.yaxis.visible = False
         return p
-    script, divs = components((process_plot(p) for p in status_plots[:2]))
+
+    script, divs = components(tuple(process_plot(p) for p in status_plots[:2]))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
         f.write(template.render(script=script,
