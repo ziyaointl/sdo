@@ -94,7 +94,7 @@ def render(stages):
             f.write(template.render(plot=divs[0],
                                     script=script,
                                     retries=1,
-                                    done=False,
+                                    done=s.is_done(),
                                     stage=queue_name,
                                     jobs=jobs,
                                     jobs_table=divs[1],
