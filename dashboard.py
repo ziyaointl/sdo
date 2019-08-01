@@ -18,6 +18,8 @@ def render(stages):
     template = env.get_template('stage.html')
     cached_run_command.cache_clear()
 
+    total_tasks = len(stages[0].tasks())
+    succeeded_tasks = []
     status_plots = []
 
     for s in stages:
@@ -27,6 +29,9 @@ def render(stages):
         jobs = s.get_jobs_in_queue()
         tasks = s.queue.tasks()
         queue_name = s.name
+
+        # Track progress
+        succeeded_tasks.append(int(queue_state['Succeeded']))
 
         # Status Plot
         states, counts = zip(*queue_state.items())
@@ -103,6 +108,7 @@ def render(stages):
 
     # Generate index.html
     def process_plot(p):
+        # Adjust style
         p.background_fill_alpha = 0
         p.border_fill_alpha = 0
         p.min_border = 10
@@ -124,6 +130,9 @@ def render(stages):
                                 postfarm1_name = POSTFARM_QNAME,
                                 postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
                                 postfarm3_name = POSTFARM_SCAVENGER_TWO_QNAME,
+                                prefarm_progress = succeeded_tasks[0] / total_tasks,
+                                farm_progress = succeeded_tasks[1] / total_tasks,
+                                postfarm_progress = sum(succeeded_tasks[2:]) / total_tasks,
                                 bokeh_version='1.0.4'
                                 ))
     print('Written index.html'.format(queue_name))
