@@ -109,12 +109,15 @@ def render(stages):
         p.yaxis.visible = False
         return p
 
-    script, divs = components(tuple(process_plot(p) for p in status_plots[:2]))
+    script, divs = components(tuple(process_plot(p) for p in status_plots))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
         f.write(template.render(script=script,
                                 prefarm_plot=divs[0],
                                 farm_plot=divs[1],
+                                postfarm1_plot=divs[2],
+                                postfarm2_plot=divs[3],
+                                postfarm3_plot=divs[4],
                                 bokeh_version='1.0.4'
                                 ))
     print('Written index.html'.format(queue_name))
