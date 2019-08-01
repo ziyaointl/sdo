@@ -5,8 +5,8 @@ from bokeh.io import show
 from bokeh.models import ColumnDataSource, HoverTool, LabelSet
 from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
+from bokeh.resources import CDN
 from bokeh.embed import components
-import bokeh
 
 def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
@@ -101,7 +101,7 @@ def render(stages):
                                     jobs=divs[1],
                                     tasks=divs[2],
                                     hours_in_queue=hours(s.get_time_in_queue()),
-                                    bokeh_version=bokeh.__version__
+                                    bokeh=CDN.render()
                                     ))
         print('Written {}.html'.format(queue_name))
 
@@ -134,6 +134,6 @@ def render(stages):
                                 prefarm_progress = "{0:.2f}".format(succeeded_tasks[0] / total_tasks * 100),
                                 farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
                                 postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
-                                bokeh_version=bokeh.__version__
+                                bokeh=CDN.render()
                                 ))
     print('Written index.html'.format(queue_name))
