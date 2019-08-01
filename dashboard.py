@@ -47,7 +47,7 @@ def render(stages):
 
         # Labels
         labels = LabelSet(x='states', y='counts', text='counts', level='glyph',
-         x_offset=0, y_offset=0, source=source)
+         x_offset=0, y_offset=0, source=source, text_align='center')
         p.add_layout(labels)
 
         # Jobs
