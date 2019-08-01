@@ -30,7 +30,7 @@ def render(stages):
 
         # Status Plot
         states, counts = zip(*queue_state.items())
-        colors = ['#f2e38d', '#4390ca', '#32bdb2', '#99d593', '#d53e4f']
+        colors = ['#4390ca', '#32bdb2', '#99d593', '#d53e4f']
         source = ColumnDataSource(data=dict(states=states, counts=counts, color=colors))
         hover = HoverTool(tooltips=[('State', '@states'), ('Count', '@counts')])
         p = figure(x_range=states,
