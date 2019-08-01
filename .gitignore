@@ -3,3 +3,9 @@ scripts/
 __pycache__
 *.pyc
 sdo.db
+reports/current
+reports/history
+.vscode/
+.ipynb_checkpoints/
+Bokeh.ipynb
+
