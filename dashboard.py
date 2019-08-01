@@ -107,6 +107,8 @@ def render(stages):
         p.border_fill_alpha = 0
         p.min_border = 10
         p.yaxis.visible = False
+        p.plot_height = 350
+        p.vbar.width = 0.5
         return p
 
     script, divs = components(tuple(process_plot(p) for p in status_plots))
