@@ -7,6 +7,7 @@ from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import components
+import datetime
 
 def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
@@ -100,7 +101,8 @@ def render(stages):
                                     jobs_table=divs[1],
                                     tasks_table=divs[2],
                                     hours_in_queue=hours(s.get_time_in_queue()),
-                                    bokeh=CDN.render()
+                                    bokeh=CDN.render(),
+                                    timenow=datetime.datetime.utcnow
                                     ))
         print('Written {}.html'.format(queue_name))
 

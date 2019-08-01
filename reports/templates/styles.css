@@ -89,3 +89,10 @@ html, body
     color: #4a4a4a;
     text-decoration: underline;
 }
+
+.timestamp {
+    position: absolute;
+    bottom: 0px;
+    font-size: 12px;
+    right: 6px;
+}
