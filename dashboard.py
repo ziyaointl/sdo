@@ -18,7 +18,7 @@ def render(stages):
     template = env.get_template('stage.html')
     cached_run_command.cache_clear()
 
-    total_tasks = len(stages[0].tasks())
+    total_tasks = len(stages[0].queue.tasks())
     succeeded_tasks = []
     status_plots = []
 
