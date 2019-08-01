@@ -102,15 +102,18 @@ def render(stages):
     # Copy css file
 
     # Generate index.html
-    status_plots[0].background_fill_alpha = 0
-    status_plots[0].border_fill_alpha = 0
-    status_plots[0].min_border = 10
-    status_plots[0].yaxis.visible = False
-    script, divs = components((status_plots[0],))
+    def process_plot(p):
+        p.background_fill_alpha = 0
+        p.border_fill_alpha = 0
+        p.min_border = 10
+        p.yaxis.visible = False
+        return p
+    script, divs = components((process_plot(p) for p in status_plots[:2]))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
         f.write(template.render(script=script,
                                 prefarm_plot=divs[0],
+                                farm_plot=divs[1],
                                 bokeh_version='1.0.4'
                                 ))
     print('Written index.html'.format(queue_name))
