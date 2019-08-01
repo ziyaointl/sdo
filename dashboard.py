@@ -2,7 +2,7 @@ from settings import *
 from util import cached_run_command, hours
 from jinja2 import Environment, select_autoescape, FileSystemLoader
 from bokeh.io import show
-from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.models import ColumnDataSource, HoverTool, LabelSet
 from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
 from bokeh.embed import components
@@ -44,6 +44,11 @@ def render(stages):
         p.min_border = 50
         p.xgrid.grid_line_color = None
         status_plots.append(p)
+
+        # Labels
+        labels = LabelSet(x='states', y='counts', text='counts', level='glyph',
+         x_offset=0, y_offset=0, source=source)
+        p.add_layout(labels)
 
         # Jobs
         if len(jobs) != 0:
