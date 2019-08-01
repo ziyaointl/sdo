@@ -43,7 +43,7 @@ def render(stages):
                     plot_height=400,
                     # title=queue_name,
                     toolbar_location=None,
-                    tools=None,
+                    tools=[None],
                     sizing_mode='scale_width')
         p.vbar(x='states', top='counts', color='color', width = 0.5, source=source)
         p.min_border = 50
