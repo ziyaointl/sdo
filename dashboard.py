@@ -130,9 +130,9 @@ def render(stages):
                                 postfarm1_name = POSTFARM_QNAME,
                                 postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
                                 postfarm3_name = POSTFARM_SCAVENGER_TWO_QNAME,
-                                prefarm_progress = succeeded_tasks[0] / total_tasks,
-                                farm_progress = succeeded_tasks[1] / total_tasks,
-                                postfarm_progress = sum(succeeded_tasks[2:]) / total_tasks,
+                                prefarm_progress = "{0:.2f}".format(succeeded_tasks[0] / total_tasks * 100),
+                                farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
+                                postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
                                 bokeh_version='1.0.4'
                                 ))
     print('Written index.html'.format(queue_name))
