@@ -120,6 +120,10 @@ def render(stages):
                                 postfarm2_plot=divs[3],
                                 postfarm3_plot=divs[4],
                                 prefarm_name = PREFARM_QNAME,
+                                farm_name = FARM_QNAME,
+                                postfarm1_name = POSTFARM_QNAME,
+                                postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
+                                postfarm3_name = POSTFARM_SCAVENGER_TWO_QNAME,
                                 bokeh_version='1.0.4'
                                 ))
     print('Written index.html'.format(queue_name))
