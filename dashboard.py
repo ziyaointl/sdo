@@ -40,7 +40,7 @@ def render(stages):
                     toolbar_location=None,
                     tools=[hover],
                     sizing_mode='scale_width')
-        p.vbar(x='states', top='counts', color='color', width = 0.9, source=source)
+        p.vbar(x='states', top='counts', color='color', width = 0.5, source=source)
         p.min_border = 50
         p.xgrid.grid_line_color = None
         status_plots.append(p)
@@ -107,7 +107,7 @@ def render(stages):
         p.border_fill_alpha = 0
         p.min_border = 10
         p.yaxis.visible = False
-        p.plot_height = 350
+        p.plot_height = 300
         return p
 
     script, divs = components(tuple(process_plot(p) for p in status_plots))
