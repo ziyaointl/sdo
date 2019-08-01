@@ -7,7 +7,7 @@ from bokeh.models.widgets import DataTable, TableColumn
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import components
-import datetime
+from time import localtime
 
 def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
@@ -102,7 +102,7 @@ def render(stages):
                                     tasks_table=divs[2],
                                     hours_in_queue=hours(s.get_time_in_queue()),
                                     bokeh=CDN.render(),
-                                    timenow=datetime.datetime.utcnow
+                                    timenow=localtime()
                                     ))
         print('Written {}.html'.format(queue_name))
 
@@ -136,6 +136,6 @@ def render(stages):
                                 farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
                                 postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
                                 bokeh=CDN.render(),
-                                timenow=str(datetime.datetime.utcnow)
+                                timenow=localtime()
                                 ))
     print('Written index.html'.format(queue_name))

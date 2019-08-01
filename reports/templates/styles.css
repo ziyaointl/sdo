@@ -28,12 +28,9 @@ html, body
     margin: 0;
 }
 
-.columns:not(:last-child) {
-    margin-bottom: 10px;
-}
-
 .main {
     margin: 0;
+    margin-bottom: 0;
     height: 100%;
 }
 
