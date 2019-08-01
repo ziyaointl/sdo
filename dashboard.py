@@ -41,7 +41,7 @@ def render(stages):
         p = figure(x_range=states,
                     y_range=(0, max(counts)*1.5),
                     plot_height=400,
-                    # title=queue_name,
+                    tools='',
                     toolbar_location=None,
                     sizing_mode='scale_width')
         p.vbar(x='states', top='counts', color='color', width = 0.5, source=source)
