@@ -25,6 +25,8 @@ def render(stages):
     succeeded_tasks = []
     status_plots = []
     timenow = strftime('%Y-%m-%d_%H:%M:%S')
+    os.makedirs('reports/history', exist_ok=True)
+    os.makedirs('reports/current', exist_ok=True)
 
     for s in stages:
         # Initialize variables
@@ -93,7 +95,6 @@ def render(stages):
 
         script, divs = components((p, jobs_table, tasks_table))
         filename = 'reports/current/{}.html'.format(queue_name)
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w') as f:
             f.write(template.render(plot=divs[0],
                                     script=script,
@@ -127,7 +128,6 @@ def render(stages):
     script, divs = components(tuple(process_plot(p) for p in status_plots))
     template = env.get_template('index.html')
     filename = 'reports/current/index.html'
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w') as f:
         f.write(template.render(script=script,
                                 prefarm_plot=divs[0],
