@@ -104,7 +104,8 @@ def render(stages):
     # Generate index.html
     status_plots[0].background_fill_alpha = 0
     status_plots[0].border_fill_alpha = 0
-    status_plots[0].min_border = 10
+    status_plots[0].min_border = 5
+    status_plots[0].min_border_left = 20
     script, divs = components((status_plots[0],))
     template = env.get_template('index.html')
     with open('reports/generated/index.html', 'w') as f:
