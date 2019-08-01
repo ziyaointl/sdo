@@ -93,7 +93,7 @@ def render(stages):
         with open('reports/generated/{}.html'.format(queue_name), 'w') as f:
             f.write(template.render(plot=divs[0],
                                     script=script,
-                                    retries=1,
+                                    retries=s.get_current_retries(),
                                     done=s.is_done(),
                                     stage=queue_name,
                                     jobs=jobs,
