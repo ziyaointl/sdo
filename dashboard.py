@@ -8,6 +8,7 @@ from bokeh.plotting import figure
 from bokeh.resources import CDN
 from bokeh.embed import components
 from time import strftime
+from shutil import copyfile
 
 def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
@@ -23,6 +24,7 @@ def render(stages):
     total_tasks = len(stages[0].queue.tasks())
     succeeded_tasks = []
     status_plots = []
+    timenow = strftime('%Y-%m-%d_%H:%M:%S')
 
     for s in stages:
         # Initialize variables
@@ -90,8 +92,8 @@ def render(stages):
         tasks_table = DataTable(source=source, columns=columns, height=200, sizing_mode='stretch_both')
 
         script, divs = components((p, jobs_table, tasks_table))
-
-        with open('reports/generated/{}.html'.format(queue_name), 'w') as f:
+        filename = 'reports/current/{}.html'.format(queue_name)
+        with open(filename, 'w') as f:
             f.write(template.render(plot=divs[0],
                                     script=script,
                                     retries=s.get_current_retries(),
@@ -102,11 +104,14 @@ def render(stages):
                                     tasks_table=divs[2],
                                     hours_in_queue=hours(s.get_time_in_queue()),
                                     bokeh=CDN.render(),
-                                    timenow=strftime('%Y-%m-%d %H:%M:%S')
+                                    timenow=timenow
                                     ))
+        copyfile(filename, 'reports/history/{}-{}.html'.format(queue_name, timenow))
         print('Written {}.html'.format(queue_name))
 
     # Copy css file
+    copyfile('reports/templates/styles.css', 'reports/current/styles.css')
+    copyfile('reports/templates/styles.css', 'reports/history/styles.css')
 
     # Generate index.html
     def process_plot(p):
@@ -120,7 +125,8 @@ def render(stages):
 
     script, divs = components(tuple(process_plot(p) for p in status_plots))
     template = env.get_template('index.html')
-    with open('reports/generated/index.html', 'w') as f:
+    filename = 'reports/current/index.html'
+    with open(filename, 'w') as f:
         f.write(template.render(script=script,
                                 prefarm_plot=divs[0],
                                 farm_plot=divs[1],
@@ -136,6 +142,7 @@ def render(stages):
                                 farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
                                 postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
                                 bokeh=CDN.render(),
-                                timenow=strftime('%Y-%m-%d %H:%M:%S')
+                                timenow=timenow
                                 ))
+    copyfile(filename, 'reports/history/index-{}.html'.format(timenow))
     print('Written index.html'.format(queue_name))
