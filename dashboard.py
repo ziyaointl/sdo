@@ -98,8 +98,9 @@ def render(stages):
                                     retries=1,
                                     done=False,
                                     stage=queue_name,
-                                    jobs=divs[1],
-                                    tasks=divs[2],
+                                    jobs=jobs,
+                                    jobs_table=divs[1],
+                                    tasks_table=divs[2],
                                     hours_in_queue=hours(s.get_time_in_queue()),
                                     bokeh=CDN.render()
                                     ))

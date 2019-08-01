@@ -21,20 +21,21 @@
         Retries: {{ retries }} <br />
         Done: {{ done }} <br />
         Jobs in Queue: {{ jobs | length }} <br />
-        Node Hours in Queue: {{ hours_in_queue }}
+        Node Hours in Queue: {{ hours_in_queue }} <br />
+
       </p>
     </div>
   </div>
   <div class="columns">
     <div class="column">
       <h3>Tasks</h3>
-      {{ tasks }}
+      {{ tasks_table }}
     </div>
   </div>
   <div class="columns">
     <div class="column">
       <h3>Jobs</h3>
-      {{ jobs }}
+      {{ jobs_table }}
     </div>
   </div>
 </body>
