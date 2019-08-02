@@ -212,6 +212,7 @@ class QdoCentricStage(Stage):
             c.execute('INSERT INTO jobs VALUES(?, ?)', (self.name, jobid))
             conn.commit()
             conn.close()
+            print('Recorded jobid', jobid)
 
 class RunbrickPyStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
