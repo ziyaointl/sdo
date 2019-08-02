@@ -109,11 +109,13 @@ def render(stages):
                                     timenow=timenow
                                     ))
         copyfile(filename, 'reports/history/{}-{}.html'.format(queue_name, timenow))
+        copyfile(filename, '/project/projectdirs/desi/www/users/ziyaoz/sdo/{}.html'.format(queue_name))
         print('Written {}.html'.format(queue_name))
 
     # Copy css file
     copyfile('reports/templates/styles.css', 'reports/current/styles.css')
     copyfile('reports/templates/styles.css', 'reports/history/styles.css')
+    copyfile('reports/templates/styles.css', '/project/projectdirs/desi/www/users/ziyaoz/sdo/styles.css')
 
     # Generate index.html
     def process_plot(p):
@@ -147,4 +149,5 @@ def render(stages):
                                 timenow=timenow
                                 ))
     copyfile(filename, 'reports/history/index-{}.html'.format(timenow))
+    copyfile(filename, '/project/projectdirs/desi/www/users/ziyaoz/sdo/index.html')
     print('Written index.html'.format(queue_name))
