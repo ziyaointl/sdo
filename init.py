@@ -10,7 +10,11 @@ c = conn.cursor()
 try:
     c.execute('CREATE TABLE retries (stage VARCHAR NOT NULL, times INT)')
 except sqlite3.OperationalError:
-    print('SQL table already exists, skipping')
+    print('retries TABLE already exists, skipping')
+try:
+    c.execute('CREATE TABLE jobs (stage VARCHAR NOT NULL, jobid INT)')
+except sqlite3.OperationalError:
+    print('jobs TABLE already exists, skipping')
 conn.commit()
 conn.close()
 

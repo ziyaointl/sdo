@@ -11,6 +11,7 @@ import sqlite3
 import csv
 import os
 import io
+import re
 
 class Stage:
     def __init__(self, name, previous_stage, tasks_per_nodehr):
@@ -198,6 +199,19 @@ class QdoCentricStage(Stage):
         print('Status for queue', self.queue.name)
         print(self.queue.status())
         print('='*40)
+    
+    def record_job(self, command_output):
+        """Record the scheduled job id into database
+        """
+        p = re.compile('Submitted batch job (\d+)')
+        m = p.search(command_output)
+        if m:
+            jobid = m.group(1)
+            conn = sqlite3.connect('sdo.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO jobs VALUES(?, ?)', (self.name, jobid))
+            conn.commit()
+            conn.close()
 
 class RunbrickPyStage(QdoCentricStage):
     def schedule_one_job(self, nodes, hrs, dryrun=True):
@@ -227,7 +241,8 @@ class RunbrickPyStage(QdoCentricStage):
         if dryrun:
             print(command)
         else:
-            run_command(command)
+            output = run_command(command)
+            self.record_job(output)
 
 class PreFarmStage(RunbrickPyStage):
     def add_tasks(self):
@@ -266,7 +281,8 @@ class FarmStage(QdoCentricStage):
         if dryrun:
             print(command)
         else:
-            run_command(command)
+            output = run_command(command)
+            self.record_job(output)
 
     def number_of_jobs_in_queue(self):
         return len(self.get_jobs_in_queue()) / 2
