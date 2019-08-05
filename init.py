@@ -12,7 +12,7 @@ try:
 except sqlite3.OperationalError:
     print('retries TABLE already exists, skipping')
 try:
-    c.execute('CREATE TABLE jobs (stage VARCHAR NOT NULL, jobid INT)')
+    c.execute("CREATE TABLE jobs (stage VARCHAR NOT NULL, jobid INT, creationTime DATETIME NOT NULL DEFAULT(DATETIME('now')))")
 except sqlite3.OperationalError:
     print('jobs TABLE already exists, skipping')
 conn.commit()

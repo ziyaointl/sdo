@@ -209,7 +209,7 @@ class QdoCentricStage(Stage):
             jobid = m.group(1)
             conn = sqlite3.connect('sdo.db')
             c = conn.cursor()
-            c.execute('INSERT INTO jobs VALUES(?, ?)', (self.name, jobid))
+            c.execute('INSERT INTO jobs(stage, jobid) VALUES(?, ?)', (self.name, jobid))
             conn.commit()
             conn.close()
             print('Recorded jobid', jobid)
