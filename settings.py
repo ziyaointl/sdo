@@ -7,7 +7,7 @@ SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = '90prime-mosaic' # or decam
 PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/sdo/'
-            # In addition to storing reports to reports/history and reports/,
+            # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 
 # Queue names
