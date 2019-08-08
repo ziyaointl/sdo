@@ -27,6 +27,7 @@ def render(stages):
     timenow = strftime('%Y-%m-%d_%H:%M:%S')
     os.makedirs('reports/history', exist_ok=True)
     os.makedirs('reports/current', exist_ok=True)
+    os.makedirs(PUBLIC_REPORT_PATH, exist_ok=True)
 
     for s in stages:
         # Initialize variables
