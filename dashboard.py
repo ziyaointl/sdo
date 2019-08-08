@@ -9,6 +9,7 @@ from bokeh.resources import CDN
 from bokeh.embed import components
 from time import strftime
 from shutil import copyfile
+from itertools import zip_longest
 
 def render(stages):
     """Takes in a list of stages and generates a report in the reports/ directory
@@ -134,26 +135,42 @@ def render(stages):
         return p
 
     script, divs = components(tuple(process_plot(p) for p in status_plots))
-    template = env.get_template('index.html')
     filename = 'reports/current/index.html'
-    with open(filename, 'w') as f:
-        f.write(template.render(script=script,
-                                prefarm_plot=divs[0],
-                                farm_plot=divs[1],
-                                postfarm1_plot=divs[2],
-                                postfarm2_plot=divs[3],
-                                postfarm3_plot=divs[4],
-                                prefarm_name = PREFARM_QNAME,
-                                farm_name = FARM_QNAME,
-                                postfarm1_name = POSTFARM_QNAME,
-                                postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
-                                postfarm3_name = POSTFARM_SCAVENGER_TWO_QNAME,
-                                prefarm_progress = "{0:.2f}".format(succeeded_tasks[0] / total_tasks * 100),
-                                farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
-                                postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
-                                bokeh=CDN.render(),
-                                timenow=timenow
-                                ))
+    if SUMMARY_FORMAT == 'classic':
+        template = env.get_template('index.html')
+        with open(filename, 'w') as f:
+            f.write(template.render(script=script,
+                                    prefarm_plot=divs[0],
+                                    farm_plot=divs[1],
+                                    postfarm1_plot=divs[2],
+                                    postfarm2_plot=divs[3],
+                                    postfarm3_plot=divs[4],
+                                    prefarm_name = PREFARM_QNAME,
+                                    farm_name = FARM_QNAME,
+                                    postfarm1_name = POSTFARM_QNAME,
+                                    postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
+                                    postfarm3_name = POSTFARM_SCAVENGER_TWO_QNAME,
+                                    prefarm_progress = "{0:.2f}".format(succeeded_tasks[0] / total_tasks * 100),
+                                    farm_progress = "{0:.2f}".format(succeeded_tasks[1] / total_tasks * 100),
+                                    postfarm_progress = "{0:.2f}".format(sum(succeeded_tasks[2:]) / total_tasks * 100),
+                                    bokeh=CDN.render(),
+                                    timenow=timenow
+                                    ))
+    elif SUMMARY_FORMAT == 'simple':
+        template = env.get_template('index_simple.html')
+        names = [PREFARM_QNAME, FARM_QNAME, POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
+        names = [('name', n) for n in names]
+        plots = [('plot', d) for d in divs]
+        simple_stages = [dict(d) for d in zip(names, plots)]
+        # Passes the same iterator three times to zip_longest
+        # https://stackoverflow.com/questions/1624883/alternative-way-to-split-a-list-into-groups-of-n
+        stages_in_rows = zip_longest(*(iter(simple_stages),)*3)
+        with open(filename, 'w') as f:
+            f.write(template.render(script=script,
+                                    bokeh=CDN.render(),
+                                    timenow=timenow,
+                                    stages_in_rows=stages_in_rows
+            ))
     copyfile(filename, 'reports/history/index-{}.html'.format(timenow))
     copyfile(filename, os.path.join(PUBLIC_REPORT_PATH, 'index.html'))
     print('Written index.html'.format(queue_name))
