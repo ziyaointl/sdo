@@ -62,9 +62,9 @@ def render(stages):
 
         # Jobs
         if len(jobs) != 0:
-            name, jobid, time_limit, qos, nodes, used_time, state, submit_time, work_dir = zip(*[(j['NAME'], j['JOBID'], j['TIME_LIMIT'], j['QOS'], j['NODES'], j['TIME'], j['STATE'], j['SUBMIT_TIME'], j['WORK_DIR']) for j in jobs])
+            name, jobid, time_limit, qos, nodes, used_time, state, submit_time, work_dir, account = zip(*[(j['NAME'], j['JOBID'], j['TIME_LIMIT'], j['QOS'], j['NODES'], j['TIME'], j['STATE'], j['SUBMIT_TIME'], j['WORK_DIR'], j['ACCOUNT']) for j in jobs])
             d = {}
-            for column in ['name', 'jobid', 'time_limit', 'qos', 'nodes', 'used_time', 'state', 'submit_time', 'work_dir']:
+            for column in ['name', 'jobid', 'time_limit', 'qos', 'nodes', 'used_time', 'state', 'submit_time', 'work_dir', 'account']:
                 d[column] = locals()[column]
             source = ColumnDataSource(data=d)
         else:
@@ -78,7 +78,8 @@ def render(stages):
                 TableColumn(field="qos", title="QOS"),
                 TableColumn(field="nodes", title="Nodes"),
                 TableColumn(field="submit_time", title="Submit Time"),
-                TableColumn(field="work_dir", title="Working Directory")
+                TableColumn(field="work_dir", title="Working Directory"),
+                TableColumn(field="account", title="Account")
         ]
         jobs_table = DataTable(source=source, columns=columns, height=200, sizing_mode='stretch_both')
 
