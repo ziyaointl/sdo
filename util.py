@@ -5,9 +5,12 @@ import re
 import os
 
 def parse_timedelta(s):
-    """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS" or "MM:SS"
+    """Takes in a string in the form of "HH:MM:SS" or "D-HH:MM:SS" or "MM:SS" or
+    'INVALID'
     Returns a timedelta object
     """
+    if s == 'INVALID':
+        return timedelta(0)
     if '-' in s:
         s = s.split('-')
         days, s = int(s[0]), s[1]
