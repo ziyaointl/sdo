@@ -13,6 +13,8 @@ PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/sdo/'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
+HASWELL_MEM = 125000000
+KNL_MEM = 93750000
 
 # Queue names
 PREFARM_QNAME = 'ziyao-prefarm'

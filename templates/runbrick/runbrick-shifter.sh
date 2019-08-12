@@ -8,6 +8,7 @@
 # {1}: ncores
 # {2}: stage and write-stage
 # {3}: run argument / telescope
+# {4}: maxmem, in KB (93750000 total for knl, 125000000 total for haswell)
 
 # export LEGACY_SURVEY_DIR=/global/cscratch1/sd/ziyaoz/farm-playground
 export LEGACY_SURVEY_DIR={0}
@@ -49,10 +50,7 @@ export KMP_AFFINITY=disabled
 # 16 is the default for both Edison and Cori: it corresponds
 # to 3 and 4 bricks per node respectively.
 ncores={1}
-# 96 GB / Cori KNL node = 100663296 kbytes
-maxmem=90663296
-let usemem=${maxmem}*${ncores}/68
-ulimit -Sv $usemem
+ulimit -Sv {4}
 
 # Reduce the number of cores so that a task doesn't use too much memory.
 # Using more threads than the number of physical cores usually causes the
