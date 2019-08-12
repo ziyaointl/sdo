@@ -46,7 +46,7 @@ def render(stages):
         colors = ['#4390ca', '#32bdb2', '#99d593', '#d53e4f']
         source = ColumnDataSource(data=dict(states=states, counts=counts, color=colors))
         p = figure(x_range=states,
-                    y_range=(0, max(counts)*1.5 or 1),
+                    y_range=(0, max(total_tasks)*1.5 or 1),
                     plot_height=400,
                     tools='',
                     toolbar_location=None,
