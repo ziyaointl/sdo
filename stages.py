@@ -108,6 +108,8 @@ class QdoCentricStage(Stage):
     def get_jobs_in_queue(self):
         command = 'squeue -u ziyaoz --format=%all'
         output = cached_run_command(command)
+        if 'error' in output:
+            raise RuntimeError('Slurm not available')
         csv_r = csv.DictReader(io.StringIO(output), delimiter='|')
         jobs = []
         for row in csv_r:
