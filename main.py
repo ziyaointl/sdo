@@ -10,7 +10,7 @@ def main():
     postfarm_scavenger_one = PostFarmScavengerStage(POSTFARM_SCAVENGER_ONE_QNAME,
         postfarm, 1/4, job_duration=4, cores_per_worker=34, arch='knl')
     postfarm_scavenger_two = PostFarmScavengerStage(POSTFARM_SCAVENGER_TWO_QNAME,
-        postfarm_scavenger_one, 1/6, job_duration=6, cores_per_worker=32, arch='haswell')
+        postfarm_scavenger_one, 1/3, job_duration=6, cores_per_worker=32, arch='haswell')
     stages = [prefarm, farm, postfarm, postfarm_scavenger_one, postfarm_scavenger_two]
 
     for s in stages:
