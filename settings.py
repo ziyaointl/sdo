@@ -24,5 +24,5 @@ POSTFARM_SCAVENGER_ONE_QNAME = 'ziyao-postfarm-scavenger-1'
 POSTFARM_SCAVENGER_TWO_QNAME = 'ziyao-postfarm-scavenger-2'
 
 # Allocations
-KNL_ACCT = 'desi'
+KNL_ACCT = 'm3431'
 HASWELL_ACCT = 'desi'
