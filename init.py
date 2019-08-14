@@ -36,7 +36,7 @@ copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
 
 # Write scripts
 fout = open('scripts/{}.sh'.format(PREFARM_QNAME), 'w')
-fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 8, 'srcs', TELESCOPE, KNL_MEM // 8))
+fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, 17, 'srcs', TELESCOPE, KNL_MEM // 4))
 fout.close()
 fout = open('scripts/launch-farm.sh', 'w')
 fout.write(launch_farm_script.format(LEGACY_SURVEY_DIR, FARM_QNAME, SDO_SCRIPT_DIR))
