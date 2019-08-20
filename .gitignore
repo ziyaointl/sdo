@@ -9,3 +9,4 @@ reports/history
 .ipynb_checkpoints/
 Bokeh.ipynb
 timelapse/screenshots
+node_modules/
