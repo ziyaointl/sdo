@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
     await page.setViewport({
         width: 1920,
@@ -24,7 +24,6 @@ const puppeteer = require('puppeteer');
         let [name, url] = pair;
         await page.goto(url);
         await page.screenshot({path: 'screenshots/' + String(i).padStart(4, '0') + '.png'});
-        await page.goBack();
         i += 1;
     }
     await browser.close();
