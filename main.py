@@ -8,7 +8,8 @@ def main():
     """
     sentinel = SentinelStage()
     prefarm = PreFarmStage(PREFARM_QNAME, sentinel, 8, job_duration=4, cores_per_worker=17)
-    farm = FarmStage(FARM_QNAME, prefarm, 4.5)
+    prefarm_scavenger = PreFarmScavengerStage(PREFARM_SCAVENGER_QNAME, prefarm, 1, job_duration=12, cores_per_worker=17)
+    farm = FarmStage(FARM_QNAME, prefarm_scavenger, 4.5)
     postfarm = PostFarmStage(POSTFARM_QNAME, farm, 2)
     postfarm_scavenger_one = PostFarmScavengerStage(POSTFARM_SCAVENGER_ONE_QNAME,
         postfarm, 1/4, job_duration=4, cores_per_worker=34, arch='knl')

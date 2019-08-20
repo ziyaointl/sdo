@@ -256,6 +256,11 @@ class PreFarmStage(RunbrickPyStage):
         """
         pass
 
+class PreFarmScavengerStage(RunbrickPyStage):
+    auto_create_queue = True
+    def add_tasks(self):
+        self.add_tasks_from_previous_queue('Failed')
+
 class PostFarmStage(RunbrickPyStage):
     auto_create_queue = True
     def add_tasks(self):

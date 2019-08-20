@@ -140,12 +140,14 @@ def render(stages):
         template = env.get_template('index.html')
         with open(filename, 'w') as f:
             f.write(template.render(script=script,
-                                    prefarm_plot=divs[0],
-                                    farm_plot=divs[1],
-                                    postfarm1_plot=divs[2],
-                                    postfarm2_plot=divs[3],
-                                    postfarm3_plot=divs[4],
-                                    prefarm_name = PREFARM_QNAME,
+                                    prefarm1_plot=divs[0],
+                                    prefarm2_plot=divs[1],
+                                    farm_plot=divs[2],
+                                    postfarm1_plot=divs[3],
+                                    postfarm2_plot=divs[4],
+                                    postfarm3_plot=divs[5],
+                                    prefarm1_name = PREFARM_QNAME,
+                                    prefarm2_name = PREFARM_SCAVENGER_QNAME,
                                     farm_name = FARM_QNAME,
                                     postfarm1_name = POSTFARM_QNAME,
                                     postfarm2_name = POSTFARM_SCAVENGER_ONE_QNAME,
@@ -158,7 +160,7 @@ def render(stages):
                                     ))
     elif SUMMARY_FORMAT == 'simple':
         template = env.get_template('index_simple.html')
-        names = [PREFARM_QNAME, FARM_QNAME, POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
+        names = [PREFARM_QNAME, PREFARM_SCAVENGER_QNAME, FARM_QNAME, POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
         names = [('name', n) for n in names]
         plots = [('plot', d) for d in divs]
         simple_stages = [dict(d) for d in zip(names, plots)]
