@@ -21,6 +21,8 @@ for row in c.execute('SELECT * FROM jobs'):
             times[stage] = times.get(stage, timedelta()) + (parse_timedelta(row['Elapsed']) * int(row['ReqNodes']))
             print('Parsed', row['JobID'])
 # Display results
+total_hours = hours(sum(times.values(), timedelta()))
 for k, dt in times.items():
-    print(k, hours(dt), 'hours')
-print('Total', hours(sum(times.values(), timedelta())), 'hours')
+    stage_hours = hours(dt)
+    print(k, stage_hours, 'hours', (stage_hours / total_hours) * 100, '%')
+print('Total', total_hours, 'hours')
