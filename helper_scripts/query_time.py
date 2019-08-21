@@ -21,3 +21,4 @@ for row in c.execute('SELECT * FROM jobs'):
             print('Parsed', row['JobID'])
 for k, dt in times.items():
     print(k, hours(dt), 'hours')
+    print('Total', sum(times.values(), timedelta), 'hours')
