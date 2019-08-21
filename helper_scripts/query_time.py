@@ -7,7 +7,7 @@ from util import run_command, parse_timedelta
 from datetime import timedelta
 from util import hours
 
-conn = sqlite3.connect('sdo.db')
+conn = sqlite3.connect('../sdo.db')
 c = conn.cursor()
 times = {}
 for row in c.execute('SELECT * FROM jobs'):
