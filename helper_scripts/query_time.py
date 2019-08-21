@@ -20,4 +20,4 @@ for row in c.execute('SELECT * FROM jobs'):
             times[stage] = times.get(stage, timedelta()) + parse_timedelta(row['Elapsed'])
             print('Parsed', row['JobID'])
 for k, dt in times.items():
-    print(k, hours(dt))
+    print(k, hours(dt), 'hours')
