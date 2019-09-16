@@ -1,6 +1,7 @@
+![UI](Readme.png)
 # sdo
 Task scheduler for the legacy survey pipeline.
-Name stands for slurm do.
+Name stands for [slurm](https://slurm.schedmd.com/) do.
 
 ### Requirements
 * Python 3
