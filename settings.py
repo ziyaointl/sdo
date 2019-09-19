@@ -1,5 +1,5 @@
 # Every time this settings file is changed
-# It's a *really* good idea to run cleanup.sh and init.py
+# Please run cleanup.sh and init.py
 
 import os
 MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
