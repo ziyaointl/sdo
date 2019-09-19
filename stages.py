@@ -71,7 +71,7 @@ class QdoCentricStage(Stage):
                 self.queue = qdo.create(name)
             else:
                 raise
-        return super().__init__(name, previous_stage, tasks_per_nodehr)
+        super().__init__(name, previous_stage, tasks_per_nodehr)
 
     def attempt_recover(self):
         # Check if previous stage is done and if no jobs are pending/running
