@@ -17,13 +17,14 @@ HASWELL_MEM = 125000000
 KNL_MEM = 93750000
 
 # Queue names
-PREFARM_QNAME = 'ziyao-prefarm'
-PREFARM_SCAVENGER_ONE_QNAME = 'ziyao-prefarm-scavenger-1'
-PREFARM_SCAVENGER_TWO_QNAME = 'ziyao-prefarm-scavenger-2'
-FARM_QNAME = 'ziyao-farm'
-POSTFARM_QNAME = 'ziyao-postfarm'
-POSTFARM_SCAVENGER_ONE_QNAME = 'ziyao-postfarm-scavenger-1'
-POSTFARM_SCAVENGER_TWO_QNAME = 'ziyao-postfarm-scavenger-2'
+PREFIX='ziyao-'
+PREFARM_QNAME = PREFIX + 'prefarm'
+PREFARM_SCAVENGER_ONE_QNAME = PREFIX + 'prefarm-scavenger-1'
+PREFARM_SCAVENGER_TWO_QNAME = PREFIX + 'prefarm-scavenger-2'
+FARM_QNAME = PREFIX + 'farm'
+POSTFARM_QNAME = PREFIX + 'postfarm'
+POSTFARM_SCAVENGER_ONE_QNAME = PREFIX + 'postfarm-scavenger-1'
+POSTFARM_SCAVENGER_TWO_QNAME = PREFIX + 'postfarm-scavenger-2'
 
 # Allocations
 KNL_ACCT = 'm3431'
