@@ -193,9 +193,15 @@ class QdoCentricStage(Stage):
         """If previous stage is QdoCentricStage, add tasks of a certain state
         from the previous stage's queue to this stage's queue
         """
-        assert isinstance(self.previous_stage,
+        self.add_tasks_from_previous_queues(self, 1, task_state)
+
+    def add_tasks_from_previous_queues(self, queues, task_state):
+        prev_stage = self.previous_stage
+        for _ in range(queues):
+            assert isinstance(self.previous_stage,
                 QdoCentricStage), "Previous stage is not QdoCentricStage"
-        transfer_queue(self.queue, self.previous_stage.queue, task_state)
+            transfer_queue(self.queue, prev_stage.queue, task_state)
+            prev_stage = prev_stage.previous_stage
 
     def print_status(self):
         print('Status for queue', self.queue.name)
