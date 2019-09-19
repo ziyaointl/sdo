@@ -11,7 +11,7 @@ def main():
     prefarm_scavenger_one = PreFarmScavengerStage(PREFARM_SCAVENGER_ONE_QNAME, prefarm, 8, job_duration=4, cores_per_worker=17)
     prefarm_scavenger_two = PreFarmScavengerStage(PREFARM_SCAVENGER_TWO_QNAME, prefarm, 1, job_duration=12, cores_per_worker=17)
     farm = FarmStage(FARM_QNAME, prefarm_scavenger_two, 4.5)
-    postfarm = PostFarmStage(POSTFARM_QNAME, farm, 2)
+    postfarm = PostFarmStage(POSTFARM_QNAME, farm, 4, cores_per_worker=8)
     postfarm_scavenger_one = PostFarmScavengerStage(POSTFARM_SCAVENGER_ONE_QNAME,
         postfarm, 1/4, job_duration=4, cores_per_worker=34, arch='knl')
     postfarm_scavenger_two = PostFarmScavengerStage(POSTFARM_SCAVENGER_TWO_QNAME,
