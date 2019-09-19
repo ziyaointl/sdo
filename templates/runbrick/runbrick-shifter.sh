@@ -22,8 +22,8 @@ fi
 
 catdir=/global/cscratch1/sd/landriau/dr8/alldata
 export DUST_DIR=${catdir}/dust_v0.1
-export UNWISE_COADDS_DIR=${catdir}/unwise_coadds_4:${catdir}/unwise_coadds_1
-export UNWISE_COADDS_TIMERESOLVED_DIR=${catdir}/unwise_timeresolved_coadds
+export UNWISE_COADDS_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/project/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
+export UNWISE_COADDS_TIMERESOLVED_DIR=/global/projecta/projectdirs/cosmo/work/wise/outputs/merge/neo4
 export GAIA_CAT_DIR=${catdir}/chunks-gaia-dr2-astrom-2
 export GAIA_CAT_VER=2
 export TYCHO2_KD_DIR=${catdir}/tycho2
