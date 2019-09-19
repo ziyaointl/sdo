@@ -193,7 +193,7 @@ class QdoCentricStage(Stage):
         """If previous stage is QdoCentricStage, add tasks of a certain state
         from the previous stage's queue to this stage's queue
         """
-        self.add_tasks_from_previous_queues(self, 1, task_state)
+        self.add_tasks_from_previous_queues(1, task_state)
 
     def add_tasks_from_previous_queues(self, queues, task_state):
         prev_stage = self.previous_stage
