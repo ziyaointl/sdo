@@ -18,7 +18,8 @@ KNL_MEM = 93750000
 
 # Queue names
 PREFARM_QNAME = 'ziyao-prefarm'
-PREFARM_SCAVENGER_QNAME = 'ziyao-prefarm-scavenger'
+PREFARM_SCAVENGER_ONE_QNAME = 'ziyao-prefarm-scavenger-1'
+PREFARM_SCAVENGER_TWO_QNAME = 'ziyao-prefarm-scavenger-2'
 FARM_QNAME = 'ziyao-farm'
 POSTFARM_QNAME = 'ziyao-postfarm'
 POSTFARM_SCAVENGER_ONE_QNAME = 'ziyao-postfarm-scavenger-1'

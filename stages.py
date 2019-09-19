@@ -288,7 +288,7 @@ class FarmStage(QdoCentricStage):
     max_nodes_per_job = 24
 
     def add_tasks(self):
-        self.add_tasks_from_previous_queue('Succeeded')
+        self.add_tasks_from_previous_queues(3, 'Succeeded')
 
     def schedule_one_job(self, nodes, hrs, dryrun=True):
         script_path = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
