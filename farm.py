@@ -137,7 +137,6 @@ import multiprocessing as mp
 import queue
 import zmq
 
-from astrometry.util.fits import merge_tables
 from legacypipe.runbrick import _blob_iter, _write_checkpoint
 
 import logging
@@ -670,8 +669,11 @@ def get_blob_iter(skipblobs=None,
                   bands=None, ps=None, tims=None,
                   survey=None,
                   plots=False, plots2=False,
+                  mp=None,
                   max_blobsize=None,
-                  simul_opt=False, use_ceres=True, mp=None,
+                  use_ceres=True,
+                  reoptimize=False,
+                  iterative=True,
                   refstars=None,
                   rex=False,
                   T_clusters=None,
@@ -696,8 +698,10 @@ def get_blob_iter(skipblobs=None,
         refmap = np.zeros((int(HH), int(WW)), np.uint8)
 
     # Create the iterator over blobs to process
-    blobiter = _blob_iter(brickname, blobslices, blobsrcs, blobs, targetwcs, tims,
-                          cat, bands, plots, ps, simul_opt, use_ceres,
+    blobiter = _blob_iter(brickname, blobslices, blobsrcs, blobs,
+                          targetwcs, tims,
+                          cat, bands, plots, ps,
+                          reoptimize, iterative, use_ceres,
                           refmap, brick, rex,
                           max_blobsize=max_blobsize, custom_brick=custom_brick,
                           skipblobs=skipblobs)
@@ -770,7 +774,6 @@ def queue_work(brickname, inqueue, bigqueue, checkpointqueue, opt):
 
     # (brickname is in the kwargs read from the pickle!)
     assert(kwargs['brickname'] == brickname)
-    kwargs.update(rex=True)
     blobiter = get_blob_iter(**kwargs)
 
     big_npix = opt.big_pix
@@ -795,7 +798,7 @@ def queue_work(brickname, inqueue, bigqueue, checkpointqueue, opt):
         priority = -(blobw*blobh)
 
         if opt.big == 'drop' and blobw*blobh > big_npix:
-            print('Dropping a blob of size', blobw, 'x', blobh, 'from', br, iblob)
+            print('Dropping a blob of size', blobw, 'x', blobh)
             continue
 
         dest_queue = inqueue
@@ -817,6 +820,7 @@ def queue_work(brickname, inqueue, bigqueue, checkpointqueue, opt):
     return nchk + nq
 
 def input_thread(queuename, inqueue, bigqueue, checkpointqueue, blobsizes, opt, input_num):
+
     try:
         import setproctitle
         setproctitle.setproctitle('farm: input_%i' % input_num)
