@@ -10,3 +10,4 @@ reports/history
 Bokeh.ipynb
 timelapse/screenshots
 node_modules/
+slurm*
