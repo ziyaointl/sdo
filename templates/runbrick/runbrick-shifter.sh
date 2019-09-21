@@ -20,17 +20,18 @@ else
   BB=$DW_PERSISTENT_STRIPED_DR8
 fi
 
-catdir=/global/cscratch1/sd/landriau/dr8/alldata
-export DUST_DIR=${catdir}/dust_v0.1
-export UNWISE_COADDS_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/project/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
-export UNWISE_COADDS_TIMERESOLVED_DIR=/global/projecta/projectdirs/cosmo/work/wise/outputs/merge/neo4
-export GAIA_CAT_DIR=${catdir}/chunks-gaia-dr2-astrom-2
-export GAIA_CAT_VER=2
-export TYCHO2_KD_DIR=${catdir}/tycho2
-export LARGEGALAXIES_DIR=${catdir}/largegalaxies_v2.0
 UNWISE_PSF_DIR=/src/unwise_psf
 export WISE_PSF_DIR=${UNWISE_PSF_DIR}/etc
-export PS1CAT_DIR=${catdir}/ps1cat
+
+export DUST_DIR=/global/project/projectdirs/cosmo/data/dust/v0_1
+export UNWISE_COADDS_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/project/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
+export UNWISE_COADDS_TIMERESOLVED_DIR=/global/projecta/projectdirs/cosmo/work/wise/outputs/merge/neo4
+export GAIA_CAT_DIR=/global/project/projectdirs/cosmo/work/gaia/chunks-gaia-dr2-astrom-2
+export GAIA_CAT_VER=2
+export TYCHO2_KD_DIR=/global/project/projectdirs/cosmo/staging/tycho2
+export LARGEGALAXIES_DIR=/global/project/projectdirs/cosmo/staging/largegalaxies/v2.0
+export PS1CAT_DIR=/global/project/projectdirs/cosmo/work/ps1/cats/chunks-qz-star-v3
+
 
 export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python3.6/dist-packages:.:${UNWISE_PSF_DIR}/py
 
