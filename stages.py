@@ -101,7 +101,10 @@ class QdoCentricStage(Stage):
                             and len(self.get_jobs_in_queue()) == 0
                             and self.get_current_retries() >= MAX_RETRIES)
         if finished_last_retry:
-            set_all_tasks_with_state(self.queue, 'Running', 'Failed')
+            if isinstance(self, QdoCentricStage):
+                set_all_tasks_with_state(self.queue, 'Running', 'Succeeded')
+            else:
+                set_all_tasks_with_state(self.queue, 'Running', 'Failed')
         return (self.previous_stage.is_done() and
                 ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
 
