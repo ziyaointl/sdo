@@ -1,6 +1,6 @@
 from settings import *
 from util import run_command, cached_run_command, parse_timedelta, hours
-from qdo_util import transfer_queue, set_all_tasks_with_state
+from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state
 from datetime import timedelta
 from gen_farm_script import gen_farm_script
 import math
@@ -101,6 +101,9 @@ class QdoCentricStage(Stage):
                             and len(self.get_jobs_in_queue()) == 0
                             and self.get_current_retries() >= MAX_RETRIES)
         if finished_last_retry:
+            if isinstance(self, FarmStage):
+                # Add failed tasks to db
+                record_all_tasks_with_state(self.queue, 'Running', 'farm_timeouts')
             set_all_tasks_with_state(self.queue, 'Running', 'Failed')
         return (self.previous_stage.is_done() and
                 ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
