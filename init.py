@@ -15,6 +15,10 @@ try:
     c.execute("CREATE TABLE jobs (stage VARCHAR NOT NULL, jobid INT, creationTime DATETIME NOT NULL DEFAULT(DATETIME('now')))")
 except sqlite3.OperationalError:
     print('jobs TABLE already exists, skipping')
+try:
+    c.execute("CREATE TABLE farm_timeouts (brick VARCHAR NOT NULL)")
+except sqlite3.OperationalError:
+    print('farm_timeouts TABLE already exists, skipping')
 conn.commit()
 conn.close()
 
