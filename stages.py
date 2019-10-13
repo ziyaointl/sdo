@@ -273,6 +273,15 @@ class PostFarmStage(RunbrickPyStage):
         """Take tasks that are done from the farm stage and put them in
         the queue
         """
+        def is_timed_out_brick(brick):
+            """Check in the database to see if a brick was marked as timed-out
+            """
+            conn = sqlite3.connect('sdo.db')
+            c = conn.cursor()
+            c.execute("SELECT * FROM farm_timeouts WHERE brick=?", (brick))
+            matches = c.fetchall()
+            return len(matches) > 0
+
         self.add_tasks_from_previous_queue('Succeeded')
 
 class PostFarmScavengerStage(RunbrickPyStage):
