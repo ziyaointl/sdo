@@ -1,4 +1,5 @@
 import qdo
+import sqlite3
 
 def transfer_queue(target_q, source_q, source_state):
     """If previous stage is QdoCentricStage, add tasks of a certain state
@@ -19,3 +20,13 @@ def set_all_tasks_with_state(queue, source_state, target_state):
             t.set_state(target_state)
             n += 1
     print('Setting', n, 'tasks from', source_state, 'to', target_state)
+
+def record_all_tasks_with_state(queue, state, table):
+    conn = sqlite3.connect('sdo.db')
+    c = conn.cursor()
+    for t in queue.tasks():
+        if t.state == state:
+            c.execute('INSERT INTO {} VALUES (?)'.format(table),
+                (t.task))
+    conn.commit()
+    conn.close()
