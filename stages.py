@@ -192,18 +192,18 @@ class QdoCentricStage(Stage):
     def number_of_jobs_in_queue(self):
         return len(self.get_jobs_in_queue())
 
-    def add_tasks_from_previous_queue(self, task_state):
+    def add_tasks_from_previous_queue(self, task_state, condition=lambda x: True):
         """If previous stage is QdoCentricStage, add tasks of a certain state
         from the previous stage's queue to this stage's queue
         """
-        self.add_tasks_from_previous_queues(1, task_state)
+        self.add_tasks_from_previous_queues(1, task_state, condition)
 
-    def add_tasks_from_previous_queues(self, queues, task_state):
+    def add_tasks_from_previous_queues(self, queues, task_state, condition=lambda x: True):
         prev_stage = self.previous_stage
         for _ in range(queues):
             assert isinstance(self.previous_stage,
                 QdoCentricStage), "Previous stage is not QdoCentricStage"
-            transfer_queue(self.queue, prev_stage.queue, task_state)
+            transfer_queue(self.queue, prev_stage.queue, task_state, condition)
             prev_stage = prev_stage.previous_stage
 
     def print_status(self):
@@ -286,6 +286,7 @@ class PostFarmStage(RunbrickPyStage):
             return len(matches) > 0
 
         self.add_tasks_from_previous_queue('Succeeded')
+        self.add_tasks_from_previous_queue('Failed', is_timed_out_brick)
 
 class PostFarmScavengerStage(RunbrickPyStage):
     max_nodes_per_job = 1
