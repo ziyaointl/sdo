@@ -21,17 +21,16 @@ else
 fi
 
 UNWISE_PSF_DIR=/src/unwise_psf
-export WISE_PSF_DIR=${UNWISE_PSF_DIR}/etc
-
+BLOB_MASK_DIR=/global/project/projectdirs/cosmo/work/legacysurvey/dr8/south
 export DUST_DIR=/global/project/projectdirs/cosmo/data/dust/v0_1
 export UNWISE_COADDS_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/project/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
-export UNWISE_COADDS_TIMERESOLVED_DIR=/global/projecta/projectdirs/cosmo/work/wise/outputs/merge/neo4
+export UNWISE_COADDS_TIMERESOLVED_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5
 export GAIA_CAT_DIR=/global/project/projectdirs/cosmo/work/gaia/chunks-gaia-dr2-astrom-2
 export GAIA_CAT_VER=2
 export TYCHO2_KD_DIR=/global/project/projectdirs/cosmo/staging/tycho2
 export LARGEGALAXIES_DIR=/global/project/projectdirs/cosmo/staging/largegalaxies/v2.0
+export LARGEGALAXIES_CAT=/global/project/projectdirs/cosmo/staging/largegalaxies/v3.0/LSLGA-v3.0.kd.fits
 export PS1CAT_DIR=/global/project/projectdirs/cosmo/work/ps1/cats/chunks-qz-star-v3
-
 
 export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python3.6/dist-packages:.:${UNWISE_PSF_DIR}/py
 
@@ -97,6 +96,7 @@ python -O legacypipe/runbrick.py \
      --ps-t0 $(date "+%s") \
      --write-stage {2} \
      --stage {2} \
+     --blob-mask-dir ${BLOB_MASK_DIR} \
      --run {3} \
     >> $log 2>&1
 
