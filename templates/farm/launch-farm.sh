@@ -12,9 +12,9 @@ source {2}/qdo_login.sh
 ###
 
 ###OPTIONS
-# FARM_SCRIPT='/src/legacypipe/py/legacypipe/farm.py'
+FARM_SCRIPT='/src/legacypipe/py/legacypipe/farm.py'
 # This is a temporary solution. Package farm.py with container!
-FARM_SCRIPT='{3}/farm.py'
+# FARM_SCRIPT='{3}/farm.py'
 FARM_OUTDIR='{0}/checkpoints/checkpoint-%(brick)s.pickle'
 FARM_INDIR='{0}/pickles/%(brick).3s/runbrick-%(brick)s-srcs.pickle'
 QNAME='{1}'
