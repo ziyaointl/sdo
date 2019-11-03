@@ -86,6 +86,7 @@ echo "--------------------------------------------------------------------------
 python -O legacypipe/runbrick.py \
      --brick $brick \
      --skip \
+     --skip-calibs \
      --threads ${ncores} \
      --checkpoint ${outdir}/checkpoints/checkpoint-${brick}.pickle \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
