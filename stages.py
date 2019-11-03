@@ -281,7 +281,7 @@ class PostFarmStage(RunbrickPyStage):
             """
             conn = sqlite3.connect('sdo.db')
             c = conn.cursor()
-            c.execute("SELECT * FROM farm_timeouts WHERE brick=?", (brick))
+            c.execute("SELECT * FROM farm_timeouts WHERE brick=?", (brick,))
             matches = c.fetchall()
             return len(matches) > 0
 
