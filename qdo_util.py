@@ -28,6 +28,6 @@ def record_all_tasks_with_state(queue, state, table):
     for t in queue.tasks():
         if t.state == state:
             c.execute('INSERT INTO {} VALUES (?)'.format(table),
-                (t.task))
+                (t.task,))
     conn.commit()
     conn.close()
