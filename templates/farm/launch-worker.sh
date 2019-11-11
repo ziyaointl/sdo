@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ###Options
-# This is a temporary solution
-# Package new worker.py with container!
-WORKER_SCRIPT='/global/cscratch1/sd/ziyaoz/sdo/worker.py'
+WORKER_SCRIPT='/src/legacypipe/py/legacypipe/worker.py'
 ###
 
 ###Input Validation
