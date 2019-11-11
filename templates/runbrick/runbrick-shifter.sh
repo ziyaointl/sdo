@@ -98,6 +98,7 @@ python -O legacypipe/runbrick.py \
      --stage {2} \
      --blob-mask-dir ${BLOB_MASK_DIR} \
      --run {3} \
+     $2 \
     >> $log 2>&1
 
 #     --cache-dir $cachedir \
