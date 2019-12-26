@@ -20,7 +20,6 @@ else
   BB=$DW_PERSISTENT_STRIPED_DR8
 fi
 
-UNWISE_PSF_DIR=/src/unwise_psf
 BLOB_MASK_DIR=/global/project/projectdirs/cosmo/work/legacysurvey/dr8/south
 export DUST_DIR=/global/project/projectdirs/cosmo/data/dust/v0_1
 export UNWISE_COADDS_DIR=/global/project/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/project/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
@@ -32,7 +31,7 @@ export LARGEGALAXIES_DIR=/global/project/projectdirs/cosmo/staging/largegalaxies
 export LARGEGALAXIES_CAT=/global/project/projectdirs/cosmo/staging/largegalaxies/v3.0/LSLGA-v3.0.kd.fits
 export PS1CAT_DIR=/global/project/projectdirs/cosmo/work/ps1/cats/chunks-qz-star-v3
 
-export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python3.6/dist-packages:.:${UNWISE_PSF_DIR}/py
+export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python3.6/dist-packages:/src/unwise_psf/py:.
 
 # Don't add ~/.local/ to Python's sys.path
 export PYTHONNOUSERSITE=1
