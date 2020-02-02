@@ -27,5 +27,5 @@ POSTFARM_SCAVENGER_ONE_QNAME = PREFIX + 'postfarm-scavenger-1'
 POSTFARM_SCAVENGER_TWO_QNAME = PREFIX + 'postfarm-scavenger-2'
 
 # Allocations
-KNL_ACCT = 'm3431'
-HASWELL_ACCT = 'desi'
+KNL_ACCT = 'm3592'
+HASWELL_ACCT = 'm3592'

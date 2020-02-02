@@ -54,7 +54,7 @@ class QdoCentricStage(Stage):
     max_nodes_per_job = 20
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
-        job_duration=2, max_number_of_jobs=100,
+        job_duration=2, max_number_of_jobs=1000,
         cores_per_worker=17, arch='knl'):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
@@ -289,7 +289,7 @@ class PostFarmStage(RunbrickPyStage):
         self.add_tasks_from_previous_queue('Failed', is_timed_out_brick)
 
 class PostFarmScavengerStage(RunbrickPyStage):
-    max_nodes_per_job = 1
+    max_nodes_per_job = 20
     auto_create_queue = True
     def add_tasks(self):
         """Take tasks that failed from the postfarm stage and put them in the queue
