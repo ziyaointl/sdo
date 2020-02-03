@@ -12,15 +12,7 @@
 
 # export LEGACY_SURVEY_DIR=/global/cscratch1/sd/ziyaoz/farm-playground
 export LEGACY_SURVEY_DIR={0}
-
-# Burst-buffer!
-if [ x$DW_PERSISTENT_STRIPED_DR9 == x ]; then
-  # No burst buffer -- use scratch
-  BB=${LEGACY_SURVEY_DIR}/
-else
-  # Use "DR9" burst buffer.
-  outdir=$DW_PERSISTENT_STRIPED_DR9/south
-fi
+BB=${LEGACY_SURVEY_DIR}/
 
 BLOB_MASK_DIR=/global/project/projectdirs/cosmo/work/legacysurvey/dr8/south
 export DUST_DIR=/global/project/projectdirs/cosmo/data/dust/v0_1
