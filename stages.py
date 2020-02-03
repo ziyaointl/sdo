@@ -245,7 +245,7 @@ class RunbrickPyStage(QdoCentricStage):
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image=docker:legacysurvey/legacypipe:{} --account={}".format(IMAGE_TAG, account)
-        batchopts += " bbf={}".format(BBF) if BURST_BUFFER else "" 
+        batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
             '--batchqueue=regular --keep_env '
@@ -309,7 +309,7 @@ class FarmStage(QdoCentricStage):
         script_path = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
                 IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
         command = 'sbatch {}'.format(script_path)
-        command += " bbf={}".format(BBF) if BURST_BUFFER else ""
+        command += " --bbf={}".format(BBF) if BURST_BUFFER else ""
         if dryrun:
             print(command)
         else:
