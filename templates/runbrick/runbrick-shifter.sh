@@ -14,10 +14,12 @@
 export LEGACY_SURVEY_DIR={0}
 
 # Burst-buffer!
-if [ x$DW_PERSISTENT_STRIPED_DR8 == x ]; then
+if [ x$DW_PERSISTENT_STRIPED_DR9 == x ]; then
+  # No burst buffer -- use scratch
   BB=${LEGACY_SURVEY_DIR}/
 else
-  BB=$DW_PERSISTENT_STRIPED_DR8
+  # Use "DR9" burst buffer.
+  outdir=$DW_PERSISTENT_STRIPED_DR9/south
 fi
 
 BLOB_MASK_DIR=/global/project/projectdirs/cosmo/work/legacysurvey/dr8/south
