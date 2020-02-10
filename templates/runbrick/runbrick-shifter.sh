@@ -21,7 +21,7 @@ export UNWISE_COADDS_TIMERESOLVED_DIR=/global/cfs/projectdirs/cosmo/work/wise/ou
 export GAIA_CAT_DIR=/global/cfs/projectdirs/cosmo/work/gaia/chunks-gaia-dr2-astrom-2
 export GAIA_CAT_VER=2
 export TYCHO2_KD_DIR=/global/cfs/projectdirs/cosmo/staging/tycho2
-export LARGEGALAXIES_CAT=/global/cfs/projectdirs/cosmo/staging/largegalaxies/v4.0/LSLGA-v4.0.kd.fits
+export LARGEGALAXIES_CAT=/global/cfs/projectdirs/cosmo/staging/largegalaxies/v5.0/LSLGA-model-v5.0.kd.fits
 export PS1CAT_DIR=/global/cfs/projectdirs/cosmo/work/ps1/cats/chunks-qz-star-v3
 
 export PYTHONPATH=/usr/local/lib/python:/usr/local/lib/python3.6/dist-packages:/src/unwise_psf/py:.
