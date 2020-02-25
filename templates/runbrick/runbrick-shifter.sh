@@ -14,7 +14,7 @@
 export LEGACY_SURVEY_DIR={0}
 BB=${LEGACY_SURVEY_DIR}/
 
-BLOB_MASK_DIR=/global/cfs/projectdirs/cosmo/work/legacysurvey/dr8/south
+BLOB_MASK_DIR=/global/cfs/projectdirs/cosmo/work/legacysurvey/dr8/{3}
 export DUST_DIR=/global/cfs/projectdirs/cosmo/data/dust/v0_1
 export UNWISE_COADDS_DIR=/global/cfs/projectdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/cfs/projectdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
 export UNWISE_COADDS_TIMERESOLVED_DIR=/global/cfs/projectdirs/cosmo/work/wise/outputs/merge/neo5
