@@ -100,9 +100,19 @@ python -O legacypipe/runbrick.py \
 
 status=$?
 #cat $tmplog >> $log
-
 #python legacypipe/rmckpt.py --brick $brick --outdir $outdir
 
+# enter cleanup if in last stage & cleanup not disabled
+if [ "{2}" = "writecat" ] && [ ! -f /global/cscratch1/sd/ziyaoz/disable-cleanup ]; then
+    # tractor file exists and program exited normally
+    if [ -f ${outdir}/tractor/${bri}/brick-${brick}.sha256sum ] && [ $status -eq 0 ]; then
+        echo "$brick finished, removing checkpoints"
+        python /src/legacypipe/py/legacypipe/rmckpt.py --brick $brick --outdir $outdir
+    else
+        echo "$brick did not finish, runbrick error code $status"
+        status=-1 # In case status -eq 0 but tractor file not found
+    fi
+fi
 exit $status
 
 
