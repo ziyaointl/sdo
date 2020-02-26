@@ -278,6 +278,9 @@ class PostFarmStage(RunbrickPyStage):
         """Take tasks that are done from the farm stage and put them in
         the queue
         """
+        if isinstance(self.previous_stage, SentinelStage):
+            return
+
         def is_timed_out_brick(brick):
             """Check in the database to see if a brick was marked as timed-out
             """
