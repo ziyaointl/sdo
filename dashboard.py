@@ -162,7 +162,7 @@ def render(stages):
                                     ))
     elif SUMMARY_FORMAT == 'simple':
         template = env.get_template('index_simple.html')
-        names = [PREFARM_QNAME, PREFARM_SCAVENGER_ONE_QNAME, PREFARM_SCAVENGER_TWO_QNAME, FARM_QNAME, POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
+        names = [POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
         names = [('name', n) for n in names]
         plots = [('plot', d) for d in divs]
         simple_stages = [dict(d) for d in zip(names, plots)]
