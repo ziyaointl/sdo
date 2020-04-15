@@ -3,13 +3,13 @@
 
 import os
 MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
-LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9e4/north"
-SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9e4-north"
-IMAGE_TAG = "dr9e4"
+LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9f/north"
+SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9f-north"
+IMAGE_TAG = "dr9.3.4"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = 'north' # south or north
-PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/dr9e4/north'
+PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/dr9f/north'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
@@ -17,7 +17,7 @@ HASWELL_MEM = 125000000
 KNL_MEM = 93750000
 
 # Queue names
-PREFIX='ziyao-dr9e4-north-'
+PREFIX='ziyao-dr9f-north-'
 PREFARM_QNAME = PREFIX + 'prefarm'
 PREFARM_SCAVENGER_ONE_QNAME = PREFIX + 'prefarm-scavenger-1'
 PREFARM_SCAVENGER_TWO_QNAME = PREFIX + 'prefarm-scavenger-2'
