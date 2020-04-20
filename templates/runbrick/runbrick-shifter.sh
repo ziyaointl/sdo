@@ -14,7 +14,6 @@
 export LEGACY_SURVEY_DIR={0}
 BB=${LEGACY_SURVEY_DIR}/
 
-BLOB_MASK_DIR=/global/cfs/cdirs/cosmo/work/legacysurvey/dr8/{3}
 export DUST_DIR=/global/cfs/cdirs/cosmo/data/dust/v0_1
 export UNWISE_COADDS_DIR=/global/cfs/cdirs/cosmo/work/wise/outputs/merge/neo5/fulldepth:/global/cfs/cdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
 export UNWISE_COADDS_TIMERESOLVED_DIR=/global/cfs/cdirs/cosmo/work/wise/outputs/merge/neo5
@@ -90,7 +89,6 @@ python -O legacypipe/runbrick.py \
      --no-galaxy-forcepsf \
      --less-masking \
      --stage {2} \
-     --blob-mask-dir ${BLOB_MASK_DIR} \
      --run {3} \
      $2 \
     >> $log 2>&1
