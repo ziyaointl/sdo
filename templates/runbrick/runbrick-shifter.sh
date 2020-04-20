@@ -83,8 +83,6 @@ python -O legacypipe/runbrick.py \
      --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
-     --ps "${outdir}/metrics/${bri}/ps-${brick}-${SLURM_JOB_ID}.fits" \
-     --ps-t0 $(date "+%s") \
      --write-stage {2} \
      --no-galaxy-forcepsf \
      --less-masking \
