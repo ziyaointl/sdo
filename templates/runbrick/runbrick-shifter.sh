@@ -83,10 +83,8 @@ python -O legacypipe/runbrick.py \
      --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
-     --write-stage {2} \
      --no-galaxy-forcepsf \
      --less-masking \
-     --stage {2} \
      --run {3} \
      $2 \
     >> $log 2>&1
