@@ -41,7 +41,7 @@ copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
 # Write scripts
 def write_runbrick(qname, ncores, stage, mem):
     fout = open('scripts/{}.sh'.format(qname), 'w')
-    fout.write(runbric_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS))
+    fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS))
     fout.close()
 
 write_runbrick(PREFARM_QNAME, 8, 'srcs', KNL_MEM // 8)
