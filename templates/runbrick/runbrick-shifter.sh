@@ -9,6 +9,7 @@
 # {2}: stage and write-stage
 # {3}: run argument / telescope
 # {4}: maxmem, in KB (93750000 total for knl, 125000000 total for haswell)
+# {5}: additional params
 
 # export LEGACY_SURVEY_DIR=/global/cscratch1/sd/ziyaoz/farm-playground
 export LEGACY_SURVEY_DIR={0}
@@ -83,7 +84,7 @@ python -O legacypipe/runbrick.py \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
      --run {3} \
-     $2 \
+     {5} $2 \
     >> $log 2>&1
 
 #     --cache-dir $cachedir \

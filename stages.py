@@ -21,7 +21,7 @@ class Stage:
 
     def is_done(self):
         raise NotImplementedError
-    
+
     def add_tasks(self):
         raise NotImplementedError
 
@@ -30,7 +30,7 @@ class Stage:
 
     def schedule_jobs(self):
         raise NotImplementedError
-    
+
     def schedule_one_job(self):
         raise NotImplementedError
 
@@ -210,7 +210,7 @@ class QdoCentricStage(Stage):
         print('Status for queue', self.queue.name)
         print(self.queue.status())
         print('='*40)
-    
+
     def record_job(self, command_output):
         """Record the scheduled job id into database
         """

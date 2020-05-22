@@ -15,6 +15,7 @@ PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/dr9i/nor
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
 HASWELL_MEM = 125000000
 KNL_MEM = 93750000
+EXTRA_PARAMS = '--release 9004' # Additional parameter to be passed to runbrick ONLY
 
 # Queue names
 PREFIX='ziyao-dr9i-north-'
