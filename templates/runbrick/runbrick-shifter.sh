@@ -84,6 +84,7 @@ python -O legacypipe/runbrick.py \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
      --run {3} \
+     --less-masking \
      {5} $2 \
     >> $log 2>&1
 
