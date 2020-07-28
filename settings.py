@@ -3,22 +3,22 @@
 
 import os
 MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
-LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9i/south"
-SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9i-south"
-IMAGE_TAG = "DR9.5-rc5"
+LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9k/north"
+SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9k-north"
+IMAGE_TAG = "DR9.5.9"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
-TELESCOPE = 'south'
+TELESCOPE = 'north'
 PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9k/north'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
 HASWELL_MEM = 125000000
 KNL_MEM = 93750000
-EXTRA_PARAMS = '--release 9004' # Additional parameter to be passed to runbrick ONLY
+EXTRA_PARAMS = '--release 9009' # Additional parameter to be passed to runbrick ONLY
 
 # Queue names
-PREFIX='ziyao-dr9i-south-'
+PREFIX='ziyao-dr9k-north-'
 PREFARM_QNAME = PREFIX + 'prefarm'
 PREFARM_SCAVENGER_ONE_QNAME = PREFIX + 'prefarm-scavenger-1'
 PREFARM_SCAVENGER_TWO_QNAME = PREFIX + 'prefarm-scavenger-2'
