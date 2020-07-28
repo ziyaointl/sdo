@@ -9,7 +9,7 @@ IMAGE_TAG = "DR9.5-rc5"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = 'south'
-PUBLIC_REPORT_PATH = '/global/project/projectdirs/desi/www/users/ziyaoz/dr9i/south'
+PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9k/north'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
