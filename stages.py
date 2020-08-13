@@ -73,6 +73,12 @@ class QdoCentricStage(Stage):
                 raise
         super().__init__(name, previous_stage, tasks_per_nodehr)
 
+    def all_jobs_pending():
+        for j in self.get_jobs_in_queue():
+            if j['STATE'] != 'PENDING':
+                return False
+        return True
+
     def attempt_recover(self):
         # Check if previous stage is done and if no jobs are pending/running
         pending_tasks = self.queue.status()['ntasks']['Pending']
