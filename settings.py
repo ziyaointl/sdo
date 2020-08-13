@@ -5,7 +5,7 @@ import os
 MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
 LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9m/north"
 SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9m-north"
-IMAGE_TAG = "DR9.6.1"
+IMAGE_TAG = "DR9.6.2"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = 'north'

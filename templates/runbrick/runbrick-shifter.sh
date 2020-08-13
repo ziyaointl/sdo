@@ -80,6 +80,7 @@ python -O legacypipe/runbrick.py \
      --skip \
      --skip-calibs \
      --threads ${ncores} \
+     --write-stage srcs \
      --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
