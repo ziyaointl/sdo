@@ -73,15 +73,20 @@ class QdoCentricStage(Stage):
                 raise
         super().__init__(name, previous_stage, tasks_per_nodehr)
 
-    def all_jobs_pending():
+    def all_jobs_pending(self):
         for j in self.get_jobs_in_queue():
             if j['STATE'] != 'PENDING':
                 return False
         return True
 
     def attempt_recover(self):
-        # Check if previous stage is done and if no jobs are pending/running
         pending_tasks = self.queue.status()['ntasks']['Pending']
+        # Cancel all jobs if all jobs are pending and no bricks are pending
+        if self.all_jobs_pending() and pending_tasks == 0:
+            for j in self.get_jobs_in_queue():
+                output = run_command("scancel {}".format(j['JOBID']))
+                print(output)
+        # Check if previous stage is done and if no jobs are pending/running
         if (self.previous_stage.is_done()
                 and pending_tasks == 0
                 and len(self.get_jobs_in_queue()) == 0
