@@ -79,17 +79,17 @@ class QdoCentricStage(Stage):
                 return False
         return True
 
+    def cancel_all_jobs(self):
+        for j in self.get_jobs_in_queue():
+            output = run_command("scancel {}".format(j['JOBID']))
+            print(output)
+
     def attempt_recover(self):
         pending_tasks = self.queue.status()['ntasks']['Pending']
-        # Cancel all jobs if all jobs are pending and no bricks are pending
-        if self.all_jobs_pending() and pending_tasks == 0:
-            for j in self.get_jobs_in_queue():
-                output = run_command("scancel {}".format(j['JOBID']))
-                print(output)
         # Check if previous stage is done and if no jobs are pending/running
         if (self.previous_stage.is_done()
                 and pending_tasks == 0
-                and len(self.get_jobs_in_queue()) == 0
+                and self.all_jobs_pending()
                 and self.get_current_retries() < MAX_RETRIES):
             command = 'qdo recover {}'.format(self.name)
             output = run_command(command)
@@ -107,15 +107,16 @@ class QdoCentricStage(Stage):
         """
         pending_tasks = self.queue.status()['ntasks']['Pending']
         runnning_tasks = self.queue.status()['ntasks']['Running']
-        finished_last_retry = (pending_tasks == 0 # Pending tasks = 0 indicates
-                                                  # no new jobs will be scheduled
-                            and len(self.get_jobs_in_queue()) == 0
+        finished_last_retry = (self.previous_stage.is_done()
+                            and pending_tasks == 0
+                            and self.all_jobs_pending()
                             and self.get_current_retries() >= MAX_RETRIES)
         if finished_last_retry:
             if isinstance(self, FarmStage):
                 # Add failed tasks to db
                 record_all_tasks_with_state(self.queue, 'Running', 'farm_timeouts')
             set_all_tasks_with_state(self.queue, 'Running', 'Failed')
+            self.cancel_all_jobs()
         return (self.previous_stage.is_done() and
                 ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
 
