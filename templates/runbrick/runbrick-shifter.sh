@@ -24,7 +24,7 @@ export GAIA_CAT_VER=2
 export TYCHO2_KD_DIR=/global/cfs/cdirs/cosmo/staging/tycho2
 export LARGEGALAXIES_CAT=/global/cfs/cdirs/cosmo/staging/largegalaxies/v3.0/SGA-ellipse-v3.0.kd.fits
 export PS1CAT_DIR=/global/cfs/cdirs/cosmo/work/ps1/cats/chunks-qz-star-v3
-export SKY_TEMPLATE_DIR=/global/cfs/cdirs/cosmo/work/legacysurvey/dr9k/calib/sky_pattern
+export SKY_TEMPLATE_DIR=/global/cfs/cdirs/cosmo/work/legacysurvey/dr9m/calib/sky_pattern
 
 # Don't add ~/.local/ to Python's sys.path
 export PYTHONNOUSERSITE=1
