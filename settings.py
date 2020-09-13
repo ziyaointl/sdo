@@ -2,10 +2,10 @@
 # Please run cleanup.sh and init.py
 
 import os
-MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
+MAX_RETRIES = 2 # Number of times to run qdo recover when pending tasks reaches 0
 LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9m/south"
 SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9m-south"
-IMAGE_TAG = "DR9.6.4"
+IMAGE_TAG = "DR9.6.5"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = 'south'

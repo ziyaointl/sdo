@@ -53,7 +53,7 @@ class QdoCentricStage(Stage):
     auto_create_queue = False
 
     def __init__(self, name, previous_stage, tasks_per_nodehr,
-        job_duration=2, max_number_of_jobs=1500,
+        job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
