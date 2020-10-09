@@ -38,5 +38,5 @@ HASWELL_ACCT = 'desi'
 # 3. Point LEGACY_SURVEY_DIR to that directory (should be an environment variable + folder)
 # 4. Flip the following BURST_BUFFER variable to True
 # 5. Update burst file config file location if neccessary
-BURST_BUFFER = False
+BURST_BUFFER = True
 BBF = '/global/homes/z/ziyaoz/bbf.conf'

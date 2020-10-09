@@ -82,7 +82,7 @@ python -O legacypipe/runbrick.py \
      --threads ${ncores} \
      --write-stage srcs \
      --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
-     --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
+     --pickle "$DW_PERSISTENT_STRIPED_DR9m/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \
      --run {3} \
      --read-serial \
@@ -104,11 +104,13 @@ if [ "{2}" = "writecat" ] && [ ! -f /global/cscratch1/sd/ziyaoz/disable-cleanup 
     if [ -f ${outdir}/tractor/${bri}/brick-${brick}.sha256sum ] && [ $status -eq 0 ]; then
         echo "$brick finished, removing checkpoints"
         python /src/legacypipe/py/legacypipe/rmckpt.py --brick $brick --outdir $outdir
+        rm $DW_PERSISTENT_STRIPED_DR9m/${bri}/runbrick-$brick*
     else
         echo "$brick did not finish, runbrick error code $status"
         #status=-1 # In case status -eq 0 but tractor file not found
     fi
 fi
+
 exit $status
 
 
