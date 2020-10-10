@@ -101,7 +101,6 @@ def render(stages):
         with open(filename, 'w') as f:
             f.write(template.render(plot=divs[0],
                                     script=script,
-                                    retries=s.get_current_retries(),
                                     done=s.is_done(),
                                     cores_per_worker=s.cores_per_worker,
                                     arch=s.arch,

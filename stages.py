@@ -121,33 +121,6 @@ class QdoCentricStage(Stage):
                 jobs.append(row)
         return jobs
 
-    def get_current_retries(self):
-        """Fetch from the database how many retries this stage has performed
-        """
-        conn = sqlite3.connect('sdo.db')
-        c = conn.cursor()
-        c.execute('SELECT times FROM retries WHERE stage=?', (self.name,))
-        result = c.fetchone()
-        if result == None:
-            c.execute('INSERT INTO retries VALUES(?, 0)', (self.name, ))
-            result = 0
-            conn.commit()
-        else:
-            result = result[0]
-        conn.close()
-        return result
-
-    def increment_retries(self):
-        conn = sqlite3.connect('sdo.db')
-        c = conn.cursor()
-        curr_retries = self.get_current_retries() + 1
-        c.execute('UPDATE retries SET times=? WHERE stage=?',
-                    (curr_retries, self.name))
-        conn.commit()
-        conn.close()
-        print('Retries incremented to', curr_retries)
-        return curr_retries
-
     def get_time_in_queue(self):
         """Returns the total time scheduled, in timedelta
         """
