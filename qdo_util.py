@@ -16,18 +16,19 @@ def transfer_queue(target_q, source_q, source_state, condition=lambda x: True):
 
 def set_all_tasks_with_state(queue, source_state, target_state):
     n = 0
-    for t in queue.tasks():
-        if t.state == source_state:
-            t.set_state(target_state)
-            n += 1
+    for t in get_tasks_with_state(queue, source_state):
+        t.set_state(target_state)
+        n += 1
     print('Setting', n, 'tasks from', source_state, 'to', target_state)
+
+def get_tasks_with_state(queue, state):
+    return [t for t in queue.tasks() if t.state == state]
 
 def record_all_tasks_with_state(queue, state, table):
     conn = sqlite3.connect('sdo.db')
     c = conn.cursor()
-    for t in queue.tasks():
-        if t.state == state:
-            c.execute('INSERT INTO {} VALUES (?)'.format(table),
+    for t in get_tasks_with_state(queue, state):
+        c.execute('INSERT INTO {} VALUES (?)'.format(table),
                 (t.task,))
     conn.commit()
     conn.close()
