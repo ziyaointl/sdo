@@ -117,7 +117,7 @@ def render(stages):
                                     ))
         copyfile(filename, 'reports/history/{}-{}.html'.format(queue_name, timenow))
         copyfile(filename, os.path.join(PUBLIC_REPORT_PATH, '{}.html'.format(queue_name)))
-        print('Written {}.html'.format(queue_name))
+        print('Wrote {}.html'.format(queue_name))
 
     # Copy css file
     copyfile('reports/templates/styles.css', 'reports/current/styles.css')
@@ -177,4 +177,4 @@ def render(stages):
             ))
     copyfile(filename, 'reports/history/index-{}.html'.format(timenow))
     copyfile(filename, os.path.join(PUBLIC_REPORT_PATH, 'index.html'))
-    print('Written index.html'.format(queue_name))
+    print('Wrote index.html'.format(queue_name))
