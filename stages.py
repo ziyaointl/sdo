@@ -90,24 +90,19 @@ class QdoCentricStage(Stage):
         This stage is done if
             Previous stage is done
         AND
-                No tasks are pending or running
-            OR
-                All jobs have finished and maximum retry reached
+            No tasks are pending or running or killed
+
+        Note: One may want to run revive_or_archive before running this function to clean up killed tasks
         """
-        pending_tasks = self.queue.status()['ntasks']['Pending']
-        runnning_tasks = self.queue.status()['ntasks']['Running']
-        finished_last_retry = (self.previous_stage.is_done()
-                            and pending_tasks == 0
-                            and self.all_jobs_pending()
-                            and self.get_current_retries() >= MAX_RETRIES)
-        if finished_last_retry:
-            if isinstance(self, FarmStage):
-                # Add failed tasks to db
-                record_all_tasks_with_state(self.queue, 'Running', 'farm_timeouts')
-            set_all_tasks_with_state(self.queue, 'Running', 'Failed')
+        tasks = self.queue.status()['ntasks']
+        n_pending = tasks['Pending']
+        n_running = tasks['Running']
+        n_killed = tasks['Killed']
+
+        done = (self.previous_stage.is_done() and n_pending == 0 and n_running == 0 and n_killed == 0)
+        if done:
             self.cancel_all_jobs()
-        return (self.previous_stage.is_done() and
-                ((runnning_tasks == 0 and pending_tasks == 0) or finished_last_retry))
+        return done
 
     def get_jobs_in_queue(self):
         command = 'squeue -u ziyaoz --format=%all'
