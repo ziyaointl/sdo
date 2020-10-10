@@ -27,7 +27,6 @@ def main():
               ', Retries:', s.get_current_retries())
         if is_done:
             continue
-        s.attempt_recover()
         s.schedule_jobs()
         s.print_status()
     render(stages)

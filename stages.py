@@ -22,10 +22,10 @@ class Stage:
     def is_done(self):
         raise NotImplementedError
 
-    def add_tasks(self):
+    def revive_or_archive(self):
         raise NotImplementedError
 
-    def attempt_recover(self):
+    def add_tasks(self):
         raise NotImplementedError
 
     def schedule_jobs(self):
@@ -84,17 +84,6 @@ class QdoCentricStage(Stage):
             output = run_command("scancel {}".format(j['JOBID']))
             print(output)
 
-    def attempt_recover(self):
-        pending_tasks = self.queue.status()['ntasks']['Pending']
-        # Check if previous stage is done and if no jobs are pending/running
-        if (self.previous_stage.is_done()
-                and pending_tasks == 0
-                and self.all_jobs_pending()
-                and self.get_current_retries() < MAX_RETRIES):
-            command = 'qdo recover {}'.format(self.name)
-            output = run_command(command)
-            print(output)
-            self.increment_retries()
 
     def is_done(self):
         """
