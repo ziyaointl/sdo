@@ -35,7 +35,6 @@ def run_command(command):
     output = subprocess.run(command, stdout=subprocess.PIPE,
                                     stderr=subprocess.STDOUT, shell=True).stdout
     output = output.decode('utf-8')
-    print(output)
     return output
 
 @lru_cache(maxsize=None)
