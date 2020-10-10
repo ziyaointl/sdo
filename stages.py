@@ -163,6 +163,9 @@ class QdoCentricStage(Stage):
     def schedule_jobs(self):
         """Calculate the number of hours to schedule and schedules them
         """
+        if self.is_done():
+            return
+
         # Check for number of unfinished hours in the queue
         total_time_in_queue = self.get_time_in_queue()
         print('Node hrs already scheduled, waiting to run: ', hours(total_time_in_queue))
