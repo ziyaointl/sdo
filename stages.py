@@ -1,6 +1,6 @@
 from settings import *
 from util import run_command, cached_run_command, parse_timedelta, hours
-from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state
+from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
 from gen_farm_script import gen_farm_script
 import math
@@ -84,6 +84,40 @@ class QdoCentricStage(Stage):
             output = run_command("scancel {}".format(j['JOBID']))
             print(output)
 
+    def revive_or_archive(self):
+        """Either revive or archive killed tasks
+        """
+        # Move running tasks to killed if no jobs are running
+        # Not sure how often this happens, so this code is currently commented out
+        #if self.all_jobs_pending():
+        #    set_all_tasks_with_state(self.queue, 'Running', 'Killed')
+
+        def retry_count(task):
+            conn = sqlite3.connect('sdo.db')
+            c = conn.cursor()
+            c.execute('SELECT count FROM retries WHERE stage=? AND brick=?', (self.name, task.task))
+            count = c.fetchone()
+            conn.close()
+            return count
+
+        def increment_retry_count(task):
+            conn = sqlite3.connect('sdo.db')
+            c = conn.cursor()
+            c.execute('UPDATE retries SET count = count + 1 WHERE stage=? AND brick=?', (self.name, task.task))
+            conn.commit()
+            conn.close()
+
+        for t in get_tasks_with_state(self.queue, 'Killed'):
+            # Move killed tasks that exceeded retry count to failed
+            if retry_count(t) >= MAX_RETRIES:
+                t.set_state('Failed')
+            else: # Add 1 to the retry count of remaning killed tasks
+                increment_retry_count(t)
+
+        # Move all killed tasks to pending with higher priority
+        # Notice that tasks could get killed before executing the next line, causing a somewhat harmless(?) race
+        # One potential solution is to supply a taskfilter to revive
+        self.queue.revive(priority=2)
 
     def is_done(self):
         """

@@ -22,12 +22,8 @@ def main():
 
     for s in stages:
         s.add_tasks()
-        is_done = s.is_done()
-        print('Stage:', s.name, ', Done?', is_done,
-              ', Retries:', s.get_current_retries())
-        if is_done:
-            continue
         s.schedule_jobs()
+        s.revive_or_archive() # Revive killed tasks or move them to failed
         s.print_status()
     render(stages)
 
