@@ -1,11 +1,13 @@
 from settings import *
 from stages import *
 from dashboard import render
+from init import init
 
 def main():
     """Here, cores_per_worker indicates how many cores are allocated to each worker.
     For the actual number of cores (processes) used, refer to init.py
     """
+    init()
     sentinel = SentinelStage()
     #prefarm = PreFarmStage(PREFARM_QNAME, sentinel, 16, job_duration=4, cores_per_worker=8)
     #prefarm_scavenger_one = PreFarmScavengerStage(PREFARM_SCAVENGER_ONE_QNAME, prefarm, 8, job_duration=4, cores_per_worker=17)
