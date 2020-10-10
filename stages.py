@@ -3,6 +3,7 @@ from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
 from gen_farm_script import gen_farm_script
+from pprint import pprint
 import math
 import subprocess
 import qdo
@@ -212,9 +213,7 @@ class QdoCentricStage(Stage):
             prev_stage = prev_stage.previous_stage
 
     def print_status(self):
-        print('Status for queue', self.queue.name)
-        print(self.queue.status())
-        print('='*40)
+        pprint(self.queue.status())
 
     def record_job(self, command_output):
         """Record the scheduled job id into database

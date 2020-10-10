@@ -21,10 +21,15 @@ def main():
     stages = [postfarm, postfarm_scavenger_one, postfarm_scavenger_two]
 
     for s in stages:
-        s.add_tasks()
-        s.schedule_jobs()
+        print('='*40)
+        print(s.name)
+        print('-'*40)
+
+        s.add_tasks() # Add tasks from previous stage
         s.revive_or_archive() # Revive killed tasks or move them to failed
+        s.schedule_jobs() # Schedule new jobs if needed
         s.print_status()
+        print('='*40 + '\n')
     render(stages)
 
 main()
