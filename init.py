@@ -8,10 +8,6 @@ def init():# Initialize database
     conn = sqlite3.connect('sdo.db')
     c = conn.cursor()
     try:
-        c.execute('CREATE TABLE retries (stage VARCHAR NOT NULL, times INT)')
-    except sqlite3.OperationalError:
-        print('retries TABLE already exists, skipping')
-    try:
         c.execute("CREATE TABLE jobs (stage VARCHAR NOT NULL, jobid INT, creationTime DATETIME NOT NULL DEFAULT(DATETIME('now')))")
     except sqlite3.OperationalError:
         print('jobs TABLE already exists, skipping')
@@ -19,6 +15,10 @@ def init():# Initialize database
         c.execute("CREATE TABLE farm_timeouts (brick VARCHAR NOT NULL)")
     except sqlite3.OperationalError:
         print('farm_timeouts TABLE already exists, skipping')
+    try:
+        c.execute("CREATE TABLE retries (stage VARCHAR NOT NULL, brick VARCHAR NOT NULL, count INT DEFAULT 0)")
+    except sqlite3.OperationalError:
+        print('retries TABLE already exists, skipping')
     conn.commit()
     conn.close()
 
