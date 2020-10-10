@@ -43,7 +43,7 @@ def render(stages):
 
         # Status Plot
         states, counts = zip(*queue_state.items())
-        colors = ['#4390ca', '#32bdb2', '#99d593', '#d53e4f']
+        colors = ['#4390ca', '#32bdb2', '#99d593', '#d53e4f', '#fcb603']
         source = ColumnDataSource(data=dict(states=states, counts=counts, color=colors))
         p = figure(x_range=states,
                     y_range=(0, total_tasks*1.3 or 1),
