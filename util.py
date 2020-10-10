@@ -42,7 +42,7 @@ def run_command(command):
 def cached_run_command(command):
     return run_command(command)
 
-def make_template_format_friendly(template):
+def make_template_format_friendly(template, verbose=False):
     """Takes in a script template string, returns a string with all occurances
     of ${VAR} replaced with ${{VAR}}
     """
@@ -50,10 +50,12 @@ def make_template_format_friendly(template):
     res = p.finditer(template)
     all_vars = set()
     for x in res:
-        print(x)
+        if verbose:
+            print(x)
         all_vars.add(x.group(1))
     for v in all_vars:
-        print('Replacing', v, 'with', '{' + v + '}')
+        if verbose:
+            print('Replacing', v, 'with', '{' + v + '}')
         template = template.replace(v, '{' + v + '}')
     return template
 
