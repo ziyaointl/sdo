@@ -93,12 +93,22 @@ class QdoCentricStage(Stage):
         #if self.all_jobs_pending():
         #    set_all_tasks_with_state(self.queue, 'Running', 'Killed')
 
+        def create(task):
+            conn = sqlite3.connect('sdo.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO retries (stage, brick) VALUES(?,?)', (self.name, task.task))
+            conn.commit()
+            conn.close()
+
         def retry_count(task):
             conn = sqlite3.connect('sdo.db')
             c = conn.cursor()
             c.execute('SELECT count FROM retries WHERE stage=? AND brick=?', (self.name, task.task))
             count = c.fetchone()
             conn.close()
+            if count is None:
+                create(task)
+                return 0
             return count
 
         def increment_retry_count(task):
