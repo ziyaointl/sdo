@@ -53,7 +53,7 @@ class QdoCentricStage(Stage):
     # TODO: Move cores_per_worker and arch to RunbrickPyStage
     auto_create_queue = False
 
-    def __init__(self, name, previous_stage, tasks_per_nodehr,
+    def __init__(self, name, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20):
         """name: name of the qdo queue; also used for calling the default
