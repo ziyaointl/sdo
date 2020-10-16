@@ -121,8 +121,10 @@ class QdoCentricStage(Stage):
         for t in get_tasks_with_state(self.queue, 'Killed'):
             # Move killed tasks that exceeded retry count to failed
             if retry_count(t) >= MAX_RETRIES:
+                print('Moving', t.task, 'to failed')
                 t.set_state('Failed')
             else: # Add 1 to the retry count of remaning killed tasks
+                print('Incrementing retry count for', t.task)
                 increment_retry_count(t)
 
         # Move all killed tasks to pending with higher priority
