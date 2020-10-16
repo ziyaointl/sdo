@@ -3,13 +3,13 @@
 
 import os
 MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 0
-LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9m/south"
-SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9m-south"
+LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr9m2/south"
+SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr9m2-south"
 IMAGE_TAG = "DR9.6.7"
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
 QDO_LOGIN_PATH = '/global/cscratch1/sd/ziyaoz/farm/qdo_login.sh'
 TELESCOPE = 'south'
-PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9m/south'
+PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9m2/south'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
