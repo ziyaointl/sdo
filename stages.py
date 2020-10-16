@@ -275,6 +275,7 @@ class RunbrickPyStage(QdoCentricStage):
         else:
             output = run_command(command)
             self.record_job(output)
+            print(output)
 
 class PreFarmStage(RunbrickPyStage):
     def add_tasks(self):
