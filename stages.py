@@ -109,7 +109,7 @@ class QdoCentricStage(Stage):
             if count is None:
                 create(task)
                 return 0
-            return count
+            return count[0]
 
         def increment_retry_count(task):
             conn = sqlite3.connect('sdo.db')
