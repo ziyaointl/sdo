@@ -14,16 +14,6 @@ PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9m2/south'
             # also copy them to this location
 EXTRA_PARAMS = '--release 9010' # Additional parameter to be passed to runbrick ONLY
 
-# Queue names
-PREFIX='ziyao-dr9m-south-'
-PREFARM_QNAME = PREFIX + 'prefarm'
-PREFARM_SCAVENGER_ONE_QNAME = PREFIX + 'prefarm-scavenger-1'
-PREFARM_SCAVENGER_TWO_QNAME = PREFIX + 'prefarm-scavenger-2'
-FARM_QNAME = PREFIX + 'farm'
-POSTFARM_QNAME = PREFIX + '1'
-POSTFARM_SCAVENGER_ONE_QNAME = PREFIX + '2'
-POSTFARM_SCAVENGER_TWO_QNAME = PREFIX + '3'
-
 # Allocations
 KNL_ACCT = 'desi'
 HASWELL_ACCT = 'desi'

@@ -137,8 +137,7 @@ def render(stages):
     filename = 'reports/current/index.html'
 
     template = env.get_template('index_simple.html')
-    names = [POSTFARM_QNAME, POSTFARM_SCAVENGER_ONE_QNAME, POSTFARM_SCAVENGER_TWO_QNAME]
-    names = [('name', n) for n in names]
+    names = [('name', s.name) for s in stages]
     plots = [('plot', d) for d in divs]
     simple_stages = [dict(d) for d in zip(names, plots)]
     # Passes the same iterator three times to zip_longest
