@@ -24,32 +24,44 @@ def gen_stages(stages_def, default_def):
 
     return stages_list
 
-prefix = 'ziyao-dr9m-south-'
+# Constants
+PREFIX = 'ziyao-dr9m-south-'
+HASWELL_MEM = 125000000
+KNL_MEM = 93750000
+
+# Generate stage instances
+# TODO: Writecat
 stage_instances = gen_stages(
     [{
-        'name': prefix + '1',
+        'name': PREFIX + '1',
         'prev_stage': None,
         'tasks_per_nodehr': 3.5,
         'cores_per_worker': 17,
+        'cores_per_worker_actual': 17,
+        'mem_per_worker': KNL_MEM // 4,
         'job_duration': 4,
         'arch': 'knl',
         'max_nodes_per_job': 80,
     },
     {
-        'name': prefix + '2',
-        'prev_stage': prefix + '1',
+        'name': PREFIX + '2',
+        'prev_stage': PREFIX + '1',
         'tasks_per_nodehr': 1/4,
-        'job_duration': 4,
         'cores_per_worker': 34,
+        'cores_per_worker_actual': 34,
+        'mem_per_worker': KNL_MEM // 4,
+        'job_duration': 4,
         'arch': 'knl',
         'max_nodes_per_job': 80,
     },
     {
-        'name': prefix + '3',
-        'prev_stage': prefix + '2',
+        'name': PREFIX + '3',
+        'prev_stage': PREFIX + '2',
         'tasks_per_nodehr': 1/6,
-        'job_duration': 6,
         'cores_per_worker': 32,
+        'cores_per_worker_actual': 8,
+        'mem_per_worker': HASWELL_MEM // 4,
+        'job_duration': 6,
         'arch': 'haswell',
         'max_nodes_per_job': 80,
     }],

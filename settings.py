@@ -13,8 +13,6 @@ PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9m2/south'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
 SUMMARY_FORMAT = 'simple' # Choice between classic and simple
-HASWELL_MEM = 125000000
-KNL_MEM = 93750000
 EXTRA_PARAMS = '--release 9010' # Additional parameter to be passed to runbrick ONLY
 
 # Queue names

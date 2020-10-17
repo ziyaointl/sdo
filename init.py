@@ -3,8 +3,10 @@ import os
 from shutil import copyfile
 from settings import *
 from util import *
+from stage_instances import stage_instances
 
-def init():# Initialize database
+def init():
+    # Initialize database
     conn = sqlite3.connect('sdo.db')
     c = conn.cursor()
     try:
@@ -38,19 +40,17 @@ def init():# Initialize database
     # Copy qdo_login.sh
     copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
 
-    # Write scripts
+    fout = open('scripts/launch-farm.sh', 'w')
+    fout.write(launch_farm_script.format(LEGACY_SURVEY_DIR, FARM_QNAME, SDO_SCRIPT_DIR, SDO_DIR))
+    fout.close()
+
+    # Write runbrick script
     def write_runbrick(qname, ncores, stage, mem):
         fout = open('scripts/{}.sh'.format(qname), 'w')
         fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS))
         fout.close()
 
-    write_runbrick(PREFARM_QNAME, 8, 'srcs', KNL_MEM // 8)
-    write_runbrick(PREFARM_SCAVENGER_ONE_QNAME, 17, 'srcs', KNL_MEM // 4)
-    write_runbrick(PREFARM_SCAVENGER_TWO_QNAME, 17, 'srcs', KNL_MEM // 4)
-    fout = open('scripts/launch-farm.sh', 'w')
-    fout.write(launch_farm_script.format(LEGACY_SURVEY_DIR, FARM_QNAME, SDO_SCRIPT_DIR, SDO_DIR))
-    fout.close()
-    write_runbrick(POSTFARM_QNAME, 17, 'writecat', KNL_MEM // 4)
-    write_runbrick(POSTFARM_SCAVENGER_ONE_QNAME, 34, 'writecat', KNL_MEM // 2)
-    write_runbrick(POSTFARM_SCAVENGER_TWO_QNAME, 8, 'writecat', HASWELL_MEM)
+    for s in stage_instances:
+        write_runbrick(s.name, s.cores_per_worker_actual, 'writecat', s.mem_per_worker)
+
     run_command('chmod +x -v scripts/*')

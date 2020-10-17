@@ -55,7 +55,8 @@ class QdoCentricStage(Stage):
 
     def __init__(self, name, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
-        cores_per_worker=17, arch='knl', max_nodes_per_job=20):
+        cores_per_worker=17, arch='knl', max_nodes_per_job=20,
+        cores_per_worker_actual=17, mem_per_worker=93750000):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
@@ -65,6 +66,8 @@ class QdoCentricStage(Stage):
         self.max_number_of_jobs = max_number_of_jobs
         self.arch=arch
         self.max_nodes_per_job = max_nodes_per_job
+        self.cores_per_worker_actual = cores_per_worker_actual
+        self.mem_per_worker = mem_per_worker
         try:
             self.queue = qdo.connect(name)
         except ValueError:
