@@ -222,6 +222,8 @@ class QdoCentricStage(Stage):
     def add_tasks_from_previous_queues(self, queues, task_state, condition=lambda x: True):
         prev_stage = self.previous_stage
         for _ in range(queues):
+            if isinstance(self.previous_stage, SentinelStage):
+                return
             assert isinstance(self.previous_stage,
                 QdoCentricStage), "Previous stage is not QdoCentricStage"
             transfer_queue(self.queue, prev_stage.queue, task_state, condition)
@@ -298,9 +300,6 @@ class PostFarmStage(RunbrickPyStage):
         """Take tasks that are done from the farm stage and put them in
         the queue
         """
-        if isinstance(self.previous_stage, SentinelStage):
-            return
-
         def is_timed_out_brick(brick):
             """Check in the database to see if a brick was marked as timed-out
             """
