@@ -2,7 +2,6 @@ from settings import *
 from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
-from gen_farm_script import gen_farm_script
 from pprint import pprint
 import math
 import subprocess
@@ -303,17 +302,8 @@ class PostFarmStage(RunbrickPyStage):
         """Take tasks that are done from the farm stage and put them in
         the queue
         """
-        def is_timed_out_brick(brick):
-            """Check in the database to see if a brick was marked as timed-out
-            """
-            conn = sqlite3.connect('sdo.db')
-            c = conn.cursor()
-            c.execute("SELECT * FROM farm_timeouts WHERE brick=?", (brick,))
-            matches = c.fetchall()
-            return len(matches) > 0
-
         self.add_tasks_from_previous_queue('Succeeded')
-        self.add_tasks_from_previous_queue('Failed', is_timed_out_brick)
+        self.add_tasks_from_previous_queue('Failed')
 
 class PostFarmScavengerStage(RunbrickPyStage):
     auto_create_queue = True
@@ -321,23 +311,3 @@ class PostFarmScavengerStage(RunbrickPyStage):
         """Take tasks that failed from the postfarm stage and put them in the queue
         """
         self.add_tasks_from_previous_queue('Failed')
-
-class FarmStage(QdoCentricStage):
-    auto_create_queue = True
-
-    def add_tasks(self):
-        self.add_tasks_from_previous_queues(3, 'Succeeded')
-
-    def schedule_one_job(self, nodes, hrs, dryrun=True):
-        script_path = gen_farm_script(FARM_QNAME, nodes, int(hrs*60), 'regular',
-                IMAGE_TAG, SDO_SCRIPT_DIR, 'haswell', 64)
-        command = 'sbatch {}'.format(script_path)
-        command += " --bbf={}".format(BBF) if BURST_BUFFER else ""
-        if dryrun:
-            print(command)
-        else:
-            output = run_command(command)
-            self.record_job(output)
-
-    def number_of_jobs_in_queue(self):
-        return len(self.get_jobs_in_queue()) / 2

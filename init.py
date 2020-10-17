@@ -14,10 +14,6 @@ def init():
     except sqlite3.OperationalError:
         print('jobs TABLE already exists, skipping')
     try:
-        c.execute("CREATE TABLE farm_timeouts (brick VARCHAR NOT NULL)")
-    except sqlite3.OperationalError:
-        print('farm_timeouts TABLE already exists, skipping')
-    try:
         c.execute("CREATE TABLE retries (stage VARCHAR NOT NULL, brick VARCHAR NOT NULL, count INT DEFAULT 0)")
     except sqlite3.OperationalError:
         print('retries TABLE already exists, skipping')
@@ -30,19 +26,9 @@ def init():
 
     # Read templates
     runbrick_script = read_template('runbrick/runbrick-shifter.sh')
-    launch_farm_script = read_template('farm/launch-farm.sh')
-    launch_worker_script = read_template('farm/launch-worker.sh')
 
-    # Copy mpi_bugfix.sh
-    copyfile('templates/farm/mpi_bugfix.sh', 'scripts/mpi_bugfix.sh')
-    # Copy launch-worker.sh
-    copyfile('templates/farm/launch-worker.sh', 'scripts/launch-worker.sh')
     # Copy qdo_login.sh
     copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
-
-    fout = open('scripts/launch-farm.sh', 'w')
-    fout.write(launch_farm_script.format(LEGACY_SURVEY_DIR, FARM_QNAME, SDO_SCRIPT_DIR, SDO_DIR))
-    fout.close()
 
     # Write runbrick script
     def write_runbrick(qname, ncores, stage, mem):
