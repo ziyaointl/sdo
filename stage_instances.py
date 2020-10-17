@@ -18,6 +18,7 @@ def gen_stages(stages_def, default_def):
             job_duration=sdef['job_duration'],
             arch=sdef['arch'],
             max_nodes_per_job=sdef['max_nodes_per_job'],
+            allocation=sdef['allocation'],
         )
         stages_list.append(curr_stage)
         stages_dict[sdef['name']] = curr_stage

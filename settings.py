@@ -14,10 +14,6 @@ PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr9m2/south'
             # also copy them to this location
 EXTRA_PARAMS = '--release 9010' # Additional parameter to be passed to runbrick ONLY
 
-# Allocations
-KNL_ACCT = 'desi'
-HASWELL_ACCT = 'desi'
-
 # Burst Buffer
 # How to use:
 # 1. Request a persistent allocation

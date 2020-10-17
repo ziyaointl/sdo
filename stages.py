@@ -55,7 +55,7 @@ class QdoCentricStage(Stage):
     def __init__(self, name, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
-        cores_per_worker_actual=17, mem_per_worker=93750000):
+        cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi'):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
@@ -67,6 +67,7 @@ class QdoCentricStage(Stage):
         self.max_nodes_per_job = max_nodes_per_job
         self.cores_per_worker_actual = cores_per_worker_actual
         self.mem_per_worker = mem_per_worker
+        self.allocation = allocation
         try:
             self.queue = qdo.connect(name)
         except ValueError:
@@ -264,10 +265,9 @@ class RunbrickPyStage(QdoCentricStage):
         # {6} image profile
         script_path = os.path.join(SDO_SCRIPT_DIR, '{}.sh'.format(self.name))
         profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
-        account = KNL_ACCT if self.arch == 'knl' else HASWELL_ACCT
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
-        batchopts = "--image=docker:legacysurvey/legacypipe:{} --account={}".format(IMAGE_TAG, account)
+        batchopts = "--image=docker:legacysurvey/legacypipe:{} --account={}".format(IMAGE_TAG, self.allocation)
         batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
