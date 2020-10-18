@@ -19,7 +19,8 @@ def gen_stages(stages_def, default_def):
             arch=sdef['arch'],
             max_nodes_per_job=sdef['max_nodes_per_job'],
             allocation=sdef['allocation'],
-            max_number_of_jobs=sdef['max_number_of_jobs']
+            max_number_of_jobs=sdef['max_number_of_jobs'],
+            qos=sdef['qos'],
         )
         stages_list.append(curr_stage)
         stages_dict[sdef['name']] = curr_stage
@@ -69,8 +70,8 @@ stage_instances = gen_stages(
         'max_nodes_per_job': 80,
     }],
     {
-        'allocation': 'desi', # TODO
-        'queue': 'regular', # TODO
+        'allocation': 'desi',
+        'qos': 'regular',
         'class': PostFarmScavengerStage,
         'max_number_of_jobs': 10,
     }

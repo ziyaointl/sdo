@@ -55,7 +55,8 @@ class QdoCentricStage(Stage):
     def __init__(self, name, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
-        cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi'):
+        cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi',
+        qos='regular'):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
@@ -68,6 +69,7 @@ class QdoCentricStage(Stage):
         self.cores_per_worker_actual = cores_per_worker_actual
         self.mem_per_worker = mem_per_worker
         self.allocation = allocation
+        self.qos = qos
         try:
             self.queue = qdo.connect(name)
         except ValueError:
@@ -269,9 +271,10 @@ class RunbrickPyStage(QdoCentricStage):
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
         batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
+        batchopts += " -q {}".format(self.qos)
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
-            '--batchqueue=regular --keep_env '
+            '--keep_env '
             '--batchopts "{6}" '
             '--script "{3}"')
         command = command.format(self.name, self.cores_per_worker, int(hrs * 60),
