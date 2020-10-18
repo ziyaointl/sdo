@@ -267,7 +267,7 @@ class RunbrickPyStage(QdoCentricStage):
         profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
-        batchopts = "--image=docker:legacysurvey/legacypipe:{} --account={}".format(IMAGE_TAG, self.allocation)
+        batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
         batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
