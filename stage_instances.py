@@ -35,6 +35,21 @@ KNL_MEM = 93750000
 # Generate stage instances
 stage_instances = gen_stages(
     [{
+        'name': PREFIX + '0',
+        'prev_stage': None,
+        'tasks_per_nodehr': 3.5,
+        'cores_per_worker': 17,
+        'cores_per_worker_actual': 17,
+        'mem_per_worker': KNL_MEM // 4,
+        'job_duration': 0.5,
+        'arch': 'knl',
+        'max_nodes_per_job': 30,
+        'max_number_of_jobs': 1,
+        'stage': 'tims',
+        'write_stage': 'tims',
+        'qos': 'debug',
+    },
+    {
         'name': PREFIX + '1',
         'prev_stage': None,
         'tasks_per_nodehr': 3.5,
@@ -45,9 +60,6 @@ stage_instances = gen_stages(
         'arch': 'knl',
         'max_nodes_per_job': 80,
         'max_number_of_jobs': 1,
-        'stage': 'tims',
-        'write_stage': 'tims',
-        'qos': 'regular',
     },
     {
         'name': PREFIX + '2',
