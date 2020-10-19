@@ -6,10 +6,11 @@
 # Arguments:
 # {0}: LEGACY_SURVEY_DIR
 # {1}: ncores
-# {2}: stage and write-stage
+# {2}: stage
 # {3}: run argument / telescope
 # {4}: maxmem, in KB (93750000 total for knl, 125000000 total for haswell)
 # {5}: additional params
+# {6}: writestage
 
 # export LEGACY_SURVEY_DIR=/global/cscratch1/sd/ziyaoz/farm-playground
 export LEGACY_SURVEY_DIR={0}
@@ -80,7 +81,8 @@ python -O legacypipe/runbrick.py \
      --skip \
      --skip-calibs \
      --threads ${ncores} \
-     --write-stage srcs \
+     --stage {2} \
+     --write-stage {6} \
      --checkpoint ${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle \
      --pickle "$DW_PERSISTENT_STRIPED_DR9m/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --outdir $outdir \

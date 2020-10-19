@@ -56,7 +56,7 @@ class QdoCentricStage(Stage):
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
         cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi',
-        qos='regular'):
+        qos='regular', stage='writecat', write_stage='srcs'):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
@@ -70,6 +70,8 @@ class QdoCentricStage(Stage):
         self.mem_per_worker = mem_per_worker
         self.allocation = allocation
         self.qos = qos
+        self.stage = stage
+        self.write_stage=write_stage
         try:
             self.queue = qdo.connect(name)
         except ValueError:

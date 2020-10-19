@@ -33,7 +33,6 @@ HASWELL_MEM = 125000000
 KNL_MEM = 93750000
 
 # Generate stage instances
-# TODO: Writecat
 stage_instances = gen_stages(
     [{
         'name': PREFIX + '1',
@@ -46,6 +45,8 @@ stage_instances = gen_stages(
         'arch': 'knl',
         'max_nodes_per_job': 80,
         'max_number_of_jobs': 1,
+        'stage': 'tims',
+        'write_stage': 'tims',
     },
     {
         'name': PREFIX + '2',
@@ -74,5 +75,7 @@ stage_instances = gen_stages(
         'qos': 'regular',
         'class': PostFarmScavengerStage,
         'max_number_of_jobs': 10,
+        'stage': 'writecat',
+        'write_stage': 'srcs',
     }
 )

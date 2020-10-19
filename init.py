@@ -31,12 +31,12 @@ def init():
     copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
 
     # Write runbrick script
-    def write_runbrick(qname, ncores, stage, mem):
+    def write_runbrick(qname, ncores, stage, mem, write_stage):
         fout = open('scripts/{}.sh'.format(qname), 'w')
-        fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS))
+        fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS, write_stage))
         fout.close()
 
     for s in stage_instances:
-        write_runbrick(s.name, s.cores_per_worker_actual, 'writecat', s.mem_per_worker)
+        write_runbrick(s.name, s.cores_per_worker_actual, s.stage, s.mem_per_worker, s.write_stage)
 
     run_command('chmod +x -v scripts/*')
