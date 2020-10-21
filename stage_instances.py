@@ -23,6 +23,7 @@ def gen_stages(stages_def, default_def):
             qos=sdef['qos'],
             stage=sdef['stage'],
             write_stage=sdef['write_stage'],
+            revive_all=sdef['revive_all']
         )
         stages_list.append(curr_stage)
         stages_dict[sdef['name']] = curr_stage
@@ -50,6 +51,7 @@ stage_instances = gen_stages(
         'stage': 'tims',
         'write_stage': 'tims',
         'qos': 'debug',
+        'revive_all': True,
     },
     {
         'name': PREFIX + '1',
@@ -92,5 +94,6 @@ stage_instances = gen_stages(
         'max_number_of_jobs': 10,
         'stage': 'writecat',
         'write_stage': 'srcs',
+        'revive_all': False,
     }
 )
