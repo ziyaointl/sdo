@@ -277,7 +277,7 @@ class RunbrickPyStage(QdoCentricStage):
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
         batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
-        batchopts += " -q {}".format(self.qos)
+        batchopts += " " + self.qos
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
             '--cores_per_worker {1} --walltime=0:{2}:00 '
             '--keep_env '

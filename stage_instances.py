@@ -35,6 +35,19 @@ PREFIX = 'ziyao-dr9m-south-'
 HASWELL_MEM = 125000000
 KNL_MEM = 93750000
 
+# QOS choices
+def regular():
+    return "-q regular"
+
+def debug():
+    return "-q debug"
+
+def realtime():
+    return "-q realtime --exclusive"
+
+def reservation(name):
+    return "--reservation " + name
+
 # Generate stage instances
 stage_instances = gen_stages(
     [{
@@ -50,7 +63,7 @@ stage_instances = gen_stages(
         'max_number_of_jobs': 4,
         'stage': 'tims',
         'write_stage': 'tims',
-        'qos': 'debug',
+        'qos': debug(),
         'revive_all': True,
     },
     {
@@ -89,7 +102,7 @@ stage_instances = gen_stages(
     }],
     {
         'allocation': 'desi',
-        'qos': 'regular',
+        'qos': regular(),
         'class': PostFarmScavengerStage,
         'max_number_of_jobs': 10,
         'stage': 'writecat',
