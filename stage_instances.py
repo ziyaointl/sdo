@@ -21,6 +21,8 @@ def gen_stages(stages_def, default_def):
             allocation=sdef['allocation'],
             max_number_of_jobs=sdef['max_number_of_jobs'],
             qos=sdef['qos'],
+            stage=sdef['stage'],
+            write_stage=sdef['write_stage'],
         )
         stages_list.append(curr_stage)
         stages_dict[sdef['name']] = curr_stage
