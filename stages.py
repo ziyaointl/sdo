@@ -56,7 +56,7 @@ class QdoCentricStage(Stage):
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
         cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi',
-        qos='regular', stage='writecat', write_stage='srcs', revive_all=False):
+        qos='regular', stage='writecat', write_stage=None, revive_all=False):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
