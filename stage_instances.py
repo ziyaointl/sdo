@@ -76,6 +76,7 @@ stage_instances = gen_stages(
         'mem_per_worker': KNL_MEM // 4,
         'job_duration': 4,
         'arch': 'knl',
+        'write_stage': 'srcs',
         'max_nodes_per_job': 80,
         'max_number_of_jobs': 1,
     },
@@ -91,6 +92,7 @@ stage_instances = gen_stages(
     #    'max_nodes_per_job': 340,
     #    'max_number_of_jobs': 1,
     #    'class': PostFarmStage,
+    #    'write_stage': 'srcs'
     #    'qos': reservation('dr9_priority'),
     #},
     {
@@ -108,6 +110,20 @@ stage_instances = gen_stages(
         'write_stage': 'fitblobs',
         'class': PostFarmStage,
         'qos': reservation('dr9_priority'),
+    },
+    {
+        'name': PREFIX + '5',
+        'prev_stage': None,
+        'tasks_per_nodehr': 2,
+        'cores_per_worker': 8,
+        'cores_per_worker_actual': 8,
+        'mem_per_worker': KNL_MEM // 8,
+        'job_duration': 4,
+        'arch': 'knl',
+        'max_nodes_per_job': 20,
+        'max_number_of_jobs': 1,
+        'class': PostFarmStage,
+        'qos': reservation('dr9_priority'),
     }],
     #{
     #    'name': PREFIX + '3',
@@ -117,6 +133,7 @@ stage_instances = gen_stages(
     #    'cores_per_worker_actual': 8,
     #    'mem_per_worker': HASWELL_MEM // 4,
     #    'job_duration': 6,
+    #    'write_stage': 'srcs',
     #    'arch': 'haswell',
     #    'max_nodes_per_job': 80,
     #}],
@@ -126,7 +143,7 @@ stage_instances = gen_stages(
         'class': PostFarmScavengerStage,
         'max_number_of_jobs': 10,
         'stage': 'writecat',
-        'write_stage': 'srcs',
+        'write_stage': None,
         'revive_all': False,
     }
 )
