@@ -59,7 +59,7 @@ class QdoCentricStage(Stage):
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
         cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi',
-        qos='regular', stage='writecat', write_stage=None, revive_all=False):
+        qos='regular', stage='writecat', write_stage=None, revive_all=False, task_srcs=[]):
         """name: name of the qdo queue; also used for calling the default
         job scheudling script and for distinguishing jobs scheduled by
         different stages
@@ -76,6 +76,8 @@ class QdoCentricStage(Stage):
         self.stage = stage
         self.write_stage=write_stage
         self.revive_all=revive_all
+        self.task_srcs=task_srcs
+
         try:
             self.queue = qdo.connect(name)
         except ValueError:
@@ -227,24 +229,12 @@ class QdoCentricStage(Stage):
     def number_of_jobs_in_queue(self):
         return len(self.get_jobs_in_queue())
 
-    def add_tasks_from_previous_queue(self, task_state, condition=lambda x: True):
-        """If previous stage is QdoCentricStage, add tasks of a certain state
-        from the previous stage's queue to this stage's queue
-        """
-        self.add_tasks_from_previous_queues(1, task_state, condition)
-
-    def add_tasks_from_previous_queues(self, queues, task_state, condition=lambda x: True):
-        prev_stage = self.previous_stage
-        for _ in range(queues):
-            if isinstance(self.previous_stage, SentinelStage):
-                return
-            assert isinstance(self.previous_stage,
-                QdoCentricStage), "Previous stage is not QdoCentricStage"
-            transfer_queue(self.queue, prev_stage.queue, task_state, condition)
-            prev_stage = prev_stage.previous_stage
-
     def print_status(self):
         pprint(self.queue.status())
+
+    def add_tasks(self):
+        for src in self.task_srcs:
+            transfer_queue(self.queue, qdo.connect(src.name), src.states, lambda x: True)
 
     def record_job(self, command_output):
         """Record the scheduled job id into database

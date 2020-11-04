@@ -24,7 +24,8 @@ def gen_stages(stages_def, default_def):
             qos=sdef['qos'],
             stage=sdef['stage'],
             write_stage=sdef['write_stage'],
-            revive_all=sdef['revive_all']
+            revive_all=sdef['revive_all'],
+            task_srcs=sdef['task_srcs'],
         )
         stages_list.append(curr_stage)
         stages_dict[sdef['name']] = curr_stage
@@ -174,6 +175,9 @@ stage_instances = gen_stages(
     {   # fitblobs for south < -28
         'name': PREFIX + '9',
         'prev_stage': PREFIX + '8',
+        'task_srcs': [
+            TaskSource(PREFIX + '8', ['Succeeded'])
+        ],
         'tasks_per_nodehr': 1,
         'cores_per_worker': 17,
         'cores_per_worker_actual': 17,
@@ -189,6 +193,9 @@ stage_instances = gen_stages(
     {   # post-fitblobs for south < -28
         'name': PREFIX + '10',
         'prev_stage': PREFIX + '9',
+        'task_srcs': [
+            TaskSource(PREFIX + '9', ['Succeeded']),
+        ],
         'tasks_per_nodehr': 1,
         'cores_per_worker': 8,
         'cores_per_worker_actual': 8,
@@ -220,6 +227,7 @@ stage_instances = gen_stages(
         'max_number_of_jobs': 10,
         'stage': 'writecat',
         'write_stage': [],
+        'task_srcs': [],
         'revive_all': False,
     }
 )
