@@ -3,6 +3,7 @@ from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
 from pprint import pprint
+from collections import namedtuple
 import math
 import subprocess
 import qdo
@@ -12,6 +13,8 @@ import csv
 import os
 import io
 import re
+
+TaskSource = namedtuple('TaskSource', ['name', 'states'])
 
 class Stage:
     def __init__(self, name, previous_stage, tasks_per_nodehr):
