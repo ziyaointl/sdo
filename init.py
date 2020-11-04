@@ -33,7 +33,9 @@ def init():
     # Write runbrick script
     def write_runbrick(qname, ncores, stage, mem, write_stage):
         fout = open('scripts/{}.sh'.format(qname), 'w')
-        write_stage = '' if write_stage is None else '--write-stage ' + write_stage
+        write_stage = ' '.join('--write-stage ' + s for s in write_stage)
+        if write_stage == '':
+            write_stage = '--no-write'
         fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS, write_stage))
         fout.close()
 
