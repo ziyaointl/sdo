@@ -201,8 +201,8 @@ class QdoCentricStage(Stage):
         print('Node hrs to schedule:', node_hrs_to_schedule)
         # Schedule new jobs
         # Only schedule new jobs when previous stage is done
-        if self.previous_stage.is_done():
-            self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=(self.previous_stage.is_done()
+        #if self.previous_stage.is_done():
+        self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=(self.previous_stage.is_done()
                     and self.number_of_jobs_in_queue() == 0))
 
     def schedule_nodehrs(self, nodehrs, schedule_remainder=False):
