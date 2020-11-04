@@ -15,10 +15,10 @@ def main():
         print('-'*separator_len)
 
         s.add_tasks() # Add tasks from previous stage
-        s.revive_or_archive() # Revive killed tasks or move them to failed
+        #s.revive_or_archive() # Revive killed tasks or move them to failed
         s.schedule_jobs() # Schedule new jobs if needed
         s.print_status()
         print('='*separator_len + '\n')
-    render(stage_instances)
+    #render(stage_instances)
 
 main()
