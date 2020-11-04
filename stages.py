@@ -53,7 +53,7 @@ class SentinelStage(Stage):
 
 class QdoCentricStage(Stage):
     # TODO: Move cores_per_worker and arch to RunbrickPyStage
-    auto_create_queue = False
+    auto_create_queue = True
 
     def __init__(self, name, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
