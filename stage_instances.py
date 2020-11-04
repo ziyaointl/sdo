@@ -1,4 +1,4 @@
-from stages import SentinelStage, PostFarmStage, PostFarmScavengerStage
+from stages import SentinelStage, RunbrickPyStage, TaskSource
 
 def gen_stages(stages_def, default_def):
     """Given stage definitions, generate a list of stage instances
@@ -169,7 +169,6 @@ stage_instances = gen_stages(
         'stage': 'tims',
         'max_nodes_per_job': 20,
         'max_number_of_jobs': 0,
-        'class': PostFarmStage,
         'qos': debug(),
     },
     {   # fitblobs for south < -28
@@ -185,7 +184,6 @@ stage_instances = gen_stages(
         'stage': 'fitblobs',
         'max_nodes_per_job': 10,
         'max_number_of_jobs': 25,
-        'class': PostFarmStage,
         'qos': reservation('dr9_south'),
     },
     {   # post-fitblobs for south < -28
@@ -201,7 +199,6 @@ stage_instances = gen_stages(
         'stage': 'writecat',
         'max_nodes_per_job': 10,
         'max_number_of_jobs': 0,
-        'class': PostFarmStage,
         'qos': reservation('dr9_haswell'),
     }],
     #{
@@ -219,7 +216,7 @@ stage_instances = gen_stages(
     {
         'allocation': 'desi',
         'qos': regular(),
-        'class': PostFarmScavengerStage,
+        'class': RunbrickPyStage,
         'max_number_of_jobs': 10,
         'stage': 'writecat',
         'write_stage': [],

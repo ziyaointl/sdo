@@ -295,31 +295,3 @@ class RunbrickPyStage(QdoCentricStage):
             self.record_job(output)
             print(output)
 
-class PreFarmStage(RunbrickPyStage):
-    def add_tasks(self):
-        """No need to add tasks
-        Bricks that needs to be processed are manually stored in a qdo queue
-        named self.name
-        """
-        pass
-
-class PreFarmScavengerStage(RunbrickPyStage):
-    auto_create_queue = True
-    def add_tasks(self):
-        self.add_tasks_from_previous_queue('Failed')
-
-class PostFarmStage(RunbrickPyStage):
-    auto_create_queue = True
-    def add_tasks(self):
-        """Take tasks that are done from the farm stage and put them in
-        the queue
-        """
-        self.add_tasks_from_previous_queue('Succeeded')
-        self.add_tasks_from_previous_queue('Failed')
-
-class PostFarmScavengerStage(RunbrickPyStage):
-    auto_create_queue = True
-    def add_tasks(self):
-        """Take tasks that failed from the postfarm stage and put them in the queue
-        """
-        self.add_tasks_from_previous_queue('Failed')
