@@ -25,6 +25,7 @@ def gen_stages(stages_def, default_def):
             stage=sdef['stage'],
             write_stage=sdef['write_stage'],
             revive_all=sdef['revive_all'],
+            mem_per_worker=sdef['mem_per_worker'],
             task_srcs=sdef['task_srcs'],
         )
         stages_list.append(curr_stage)
@@ -49,6 +50,9 @@ def realtime():
 
 def reservation(name):
     return "--reservation " + name
+
+def bigmem():
+    return "-q bigmem --clusters escori"
 
 # Generate stage instances
 stage_instances = gen_stages(
@@ -140,6 +144,20 @@ stage_instances = gen_stages(
         'max_number_of_jobs': 1,
         'arch': 'haswell',
         'qos': reservation('dr9_haswell')
+    },
+    {
+        'name': PREFIX + 'bigmem',
+        'prev_stage': None,
+        'tasks_per_nodehr': 0.01,
+        'cores_per_worker': 32,
+        'mem_per_worker': HASWELL_MEM*10,
+        'write_stage': ['srcs'],
+        'cores_per_worker_actual': 16,
+        'job_duration': 12,
+        'max_nodes_per_job': 1,
+        'max_number_of_jobs': 1,
+        'arch': 'haswell',
+        'qos': bigmem()
     },
     #{
     #    'name': PREFIX + '7',

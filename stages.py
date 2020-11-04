@@ -266,6 +266,7 @@ class RunbrickPyStage(QdoCentricStage):
         # {6} image profile
         script_path = os.path.join(SDO_SCRIPT_DIR, '{}.sh'.format(self.name))
         profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
+        profile = profile if 'bigmem' not in self.qos else 'cori-bigmem-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
