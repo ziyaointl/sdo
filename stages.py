@@ -55,7 +55,7 @@ class QdoCentricStage(Stage):
     # TODO: Move cores_per_worker and arch to RunbrickPyStage
     auto_create_queue = True
 
-    def __init__(self, name, previous_stage, tasks_per_nodehr=4,
+    def __init__(self, name, qname, previous_stage, tasks_per_nodehr=4,
         job_duration=2, max_number_of_jobs=15,
         cores_per_worker=17, arch='knl', max_nodes_per_job=20,
         cores_per_worker_actual=17, mem_per_worker=93750000, allocation='desi',
@@ -77,12 +77,13 @@ class QdoCentricStage(Stage):
         self.write_stage=write_stage
         self.revive_all=revive_all
         self.task_srcs=task_srcs
+        self.qname = qname
 
         try:
-            self.queue = qdo.connect(name)
+            self.queue = qdo.connect(qname)
         except ValueError:
             if self.auto_create_queue:
-                self.queue = qdo.create(name)
+                self.queue = qdo.create(qname)
             else:
                 raise
         super().__init__(name, previous_stage, tasks_per_nodehr)
@@ -277,7 +278,7 @@ class RunbrickPyStage(QdoCentricStage):
             '--keep_env '
             '--batchopts "{6}" '
             '--script "{3}"')
-        command = command.format(self.name, self.cores_per_worker, int(hrs * 60),
+        command = command.format(self.qname, self.cores_per_worker, int(hrs * 60),
                                     script_path, nworkers, profile, batchopts)
         if dryrun:
             print(command)
