@@ -53,7 +53,7 @@ def reservation(name):
     return "--reservation " + name
 
 def bigmem():
-    return "-q bigmem --clusters escori"
+    return "-q bigmem --cluster escori"
 
 # Generate stage instances
 stage_instances = gen_stages(
