@@ -268,6 +268,7 @@ class RunbrickPyStage(QdoCentricStage):
         script_path = os.path.join(SDO_SCRIPT_DIR, '{}.sh'.format(self.name))
         profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
         profile = profile if 'bigmem' not in self.qos else 'cori-bigmem-shifter'
+        profile = profile if 'amd' != self.arch else 'cori-cmem-shifter'
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
@@ -281,6 +282,8 @@ class RunbrickPyStage(QdoCentricStage):
             '--script "{3}"')
         command = command.format(self.qname, self.cores_per_worker, int(hrs * 60),
                                     script_path, nworkers, profile, batchopts)
+        if self.arch == 'amd':
+            command = 'module load cmem; ' + command
         if dryrun:
             print(command)
         else:
