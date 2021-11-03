@@ -20,7 +20,7 @@ git clone https://github.com/ziyaointl/sdo.git
 2. Create an output folder. A sample layout of which is shown below.
 <img width="1108" alt="Sample directory structure" src="https://user-images.githubusercontent.com/18119047/62730680-5531a400-b9d5-11e9-971d-b6ae29dc3b42.png">
 
-3. Edit settings.py
+3. Edit settings.py for general settings. Edit stage_instances.py for specifying individual stages. I recommend starting with one stage and add/enable more stages after the first one finishes. This is due to the fact that only the first two jobs in a given user's slurm queue accrue priority, so adding more stages upfront is not very useful.
 
 4. Run
 ```bash
