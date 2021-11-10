@@ -1,25 +1,51 @@
 from stages import SentinelStage, RunbrickPyStage, TaskSource
 from collections import namedtuple
 
+# QOS choices
+def regular():
+    return "-q regular"
+
+def debug():
+    return "-q debug"
+
+def realtime():
+    return "-q realtime --exclusive"
+
+def reservation(name):
+    return "--reservation " + name
+
+def bigmem():
+    return "-q bigmem --cluster escori"
+
+
 TaskSource = namedtuple('TaskSource', ['name', 'states'])
 StageDefinition = namedtuple('StageDefinition',
     [
+        # Basic info
         'name', # Name of the stage
         'qname', # qdo queue for the stage
+        'prev_stage', # Optional: name of the previous stage; this stage would not start scheduling if previous stage did not finish
+        'task_srcs', # Optional: automatically import tasks from previous queues; format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
+        # Resource allocation per brick
         'tasks_per_nodehr', # Estimated number of bricks completed per nodehr
         'cores_per_worker', # Number of cores to allocated per brick
         'cores_per_worker_actual', # Number of cores actually allowed per brick (to prevent memory exhaustion) # TODO: Find a better abstraction
         'mem_per_worker', # Amount of memory to allocate per worker # TODO: automate this?
+        # Job configuration
         'job_duration', # Duration of a job, in hours
         'max_nodes_per_job', # Max number of nodes to request per job
+        'max_number_of_jobs', # Max number of jobs that the queue can contain at a time # TODO: Remove this?
         'arch', # Architecture of the nodes to request, could be haswell, knl, or amd
         'qos', # NERSC queue type, should be a call to QOS functions below
+        'allocation', # Which NERSC allocation to use for this stage
+        # Runbrick configuration
         'stage', # Stop runbrick at this stage; For stage names, see https://github.com/legacysurvey/legacypipe/blob/main/py/legacypipe/runbrick.py
         'write_stage', # A list of stages at which we'd like checkpoint
+        # Job automation
         'revive_all', # Whether to revive killed tasks; TODO: deprecate?
-        'task_srcs', # Optional: automatically import tasks from previous queues; format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
     ]
 )
+
 
 def gen_stages(stages_def, default_def):
     """Given stage definitions, generate a list of stage instances
@@ -59,22 +85,6 @@ def gen_stages(stages_def, default_def):
 PREFIX = 'ziyao-dr9m-south-'
 HASWELL_MEM = 125000000
 KNL_MEM = 93750000
-
-# QOS choices
-def regular():
-    return "-q regular"
-
-def debug():
-    return "-q debug"
-
-def realtime():
-    return "-q realtime --exclusive"
-
-def reservation(name):
-    return "--reservation " + name
-
-def bigmem():
-    return "-q bigmem --cluster escori"
 
 stage_instances = gen_stages(
     [

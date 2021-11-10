@@ -3,7 +3,6 @@ from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
 from pprint import pprint
-from collections import namedtuple
 import math
 import qdo
 import sqlite3
@@ -203,9 +202,9 @@ class QdoCentricStage(Stage):
         print('Node hrs to schedule:', node_hrs_to_schedule)
         # Schedule new jobs
         # Only schedule new jobs when previous stage is done
-        #if self.previous_stage.is_done():
-        self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=(self.previous_stage.is_done()
-                    and self.number_of_jobs_in_queue() == 0))
+        if self.previous_stage.is_done():
+            self.schedule_nodehrs(node_hrs_to_schedule, schedule_remainder=(self.previous_stage.is_done()
+                        and self.number_of_jobs_in_queue() == 0))
 
     def schedule_nodehrs(self, nodehrs, schedule_remainder=False):
         """Schedule a specified number of nodehrs
