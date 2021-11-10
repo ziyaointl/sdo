@@ -1,4 +1,25 @@
 from stages import SentinelStage, RunbrickPyStage, TaskSource
+from collections import namedtuple
+
+TaskSource = namedtuple('TaskSource', ['name', 'states'])
+StageDefinition = namedtuple('StageDefinition',
+    [
+        'name', # Name of the stage
+        'qname', # qdo queue for the stage
+        'tasks_per_nodehr', # Estimated number of bricks completed per nodehr
+        'cores_per_worker', # Number of cores to allocated per brick
+        'cores_per_worker_actual', # Number of cores actually allowed per brick (to prevent memory exhaustion) # TODO: Find a better abstraction
+        'mem_per_worker', # Amount of memory to allocate per worker # TODO: automate this?
+        'job_duration', # Duration of a job, in hours
+        'max_nodes_per_job', # Max number of nodes to request per job
+        'arch', # Architecture of the nodes to request, could be haswell, knl, or amd
+        'qos', # NERSC queue type, should be a call to QOS functions below
+        'stage', # Stop runbrick at this stage; For stage names, see https://github.com/legacysurvey/legacypipe/blob/main/py/legacypipe/runbrick.py
+        'write_stage', # A list of stages at which we'd like checkpoint
+        'revive_all', # Whether to revive killed tasks; TODO: deprecate?
+        'task_srcs', # Optional: automatically import tasks from previous queues; format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
+    ]
+)
 
 def gen_stages(stages_def, default_def):
     """Given stage definitions, generate a list of stage instances

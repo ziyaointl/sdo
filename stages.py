@@ -12,8 +12,6 @@ import os
 import io
 import re
 
-TaskSource = namedtuple('TaskSource', ['name', 'states'])
-
 class Stage:
     def __init__(self, name, previous_stage, tasks_per_nodehr):
         self.name = name
