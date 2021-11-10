@@ -5,9 +5,7 @@ from datetime import timedelta
 from pprint import pprint
 from collections import namedtuple
 import math
-import subprocess
 import qdo
-import qdo_util
 import sqlite3
 import csv
 import os
@@ -272,7 +270,6 @@ class RunbrickPyStage(QdoCentricStage):
         cores = 68 if self.arch == 'knl' else 32
         nworkers = (cores // self.cores_per_worker) * nodes
         batchopts = "--image={} --account={}".format(IMAGE_TAG, self.allocation)
-        batchopts += " --bbf={}".format(BBF) if BURST_BUFFER else ""
         batchopts += " " + self.qos
         batchopts += " " + '-J ' + self.name
         command = ('QDO_BATCH_PROFILE={5} qdo launch -v {0} {4} '
@@ -290,4 +287,3 @@ class RunbrickPyStage(QdoCentricStage):
             output = run_command(command)
             self.record_job(output)
             print(output)
-
