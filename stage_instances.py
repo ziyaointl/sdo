@@ -42,7 +42,7 @@ class StageDefinition:
     max_nodes_per_job: int # Max number of nodes to request per job
     max_number_of_jobs: int # Max number of jobs that the queue can contain at a time # TODO: Remove this?
     arch: str # Architecture of the nodes to request, could be haswell, knl, or amd # TODO: Create an enum/class for this
-    qos: str # NERSC queue type, should be a call to QOS functions below
+    qos: str # NERSC queue type, should be a call to QOS functions above
     allocation: str # Which NERSC allocation to use for this stage
     # Runbrick configuration
     stage: str # Stop runbrick at this stage; For stage names, see https://github.com/legacysurvey/legacypipe/blob/main/py/legacypipe/runbrick.py
