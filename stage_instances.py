@@ -47,12 +47,9 @@ StageDefinition = namedtuple('StageDefinition',
 )
 
 
-def gen_stages(stages_def, default_def):
+def gen_stages(stages_def):
     """Given stage definitions, generate a list of stage instances
     """
-    # Merge stage defs with default; if a field is contained in both, the default one is overwritten
-    stages_def = [ {**default_def, **sdef} for sdef in stages_def ]
-
     stages_dict = {}
     stages_list = []
 
@@ -429,28 +426,5 @@ stage_instances = gen_stages(
         'max_nodes_per_job': 1,
         'max_number_of_jobs': 0,
         'qos': reservation('dr9_haswell'),
-    }],
-    #{
-    #    'name': PREFIX + '3',
-    #    'prev_stage': PREFIX + '2',
-    #    'tasks_per_nodehr': 1/6,
-    #    'cores_per_worker': 32,
-    #    'cores_per_worker_actual': 8,
-    #    'mem_per_worker': HASWELL_MEM // 4,
-    #    'job_duration': 6,
-    #    'write_stage': 'srcs',
-    #    'arch': 'haswell',
-    #    'max_nodes_per_job': 80,
-    #}],
-    {
-        'allocation': 'desi',
-        #'allocation': 'm3592',
-        'qos': regular(),
-        'class': RunbrickPyStage,
-        'max_number_of_jobs': 10,
-        'stage': 'writecat',
-        'write_stage': [],
-        'task_srcs': [],
-        'revive_all': False,
-    }
+    }]
 )
