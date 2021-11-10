@@ -1,6 +1,6 @@
-from stages import SentinelStage, RunbrickPyStage, TaskSource
-from collections import namedtuple
-from typing import List
+from stages import SentinelStage, RunbrickPyStage
+from dataclasses import dataclass
+from typing import Dict, List, Union
 
 # QOS choices
 def regular():
@@ -18,41 +18,44 @@ def reservation(name):
 def bigmem():
     return "-q bigmem --cluster escori"
 
+@dataclass
+class TaskSource:
+    """Format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
+    """
+    name: str
+    states: List[str]
 
-TaskSource = namedtuple('TaskSource', ['name', 'states'])
-StageDefinition = namedtuple('StageDefinition',
-    [
-        # Basic info
-        'name', # Name of the stage
-        'qname', # qdo queue for the stage
-        'prev_stage', # Optional: name of the previous stage; this stage would not start scheduling if previous stage did not finish
-        'task_srcs', # Optional: automatically import tasks from previous queues; format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
-        # Resource allocation per brick
-        'tasks_per_nodehr', # Estimated number of bricks completed per nodehr
-        'cores_per_worker', # Number of cores to allocated per brick
-        'cores_per_worker_actual', # Number of cores actually allowed per brick (to prevent memory exhaustion) # TODO: Find a better abstraction
-        'mem_per_worker', # Amount of memory to allocate per brick # TODO: automate this?
-        # Job configuration
-        'job_duration', # Duration of a job, in hours
-        'max_nodes_per_job', # Max number of nodes to request per job
-        'max_number_of_jobs', # Max number of jobs that the queue can contain at a time # TODO: Remove this?
-        'arch', # Architecture of the nodes to request, could be haswell, knl, or amd
-        'qos', # NERSC queue type, should be a call to QOS functions below
-        'allocation', # Which NERSC allocation to use for this stage
-        # Runbrick configuration
-        'stage', # Stop runbrick at this stage; For stage names, see https://github.com/legacysurvey/legacypipe/blob/main/py/legacypipe/runbrick.py
-        'write_stage', # A list of stages at which we'd like checkpoint
-        # Job automation
-        'revive_all', # Whether to revive killed tasks; TODO: deprecate?
-    ]
-)
+@dataclass
+class StageDefinition:
+    # Basic info
+    name: str # Name of the stage
+    qname: str # qdo queue for the stage
+    prev_stage: Union[str, None] # Optional: name of the previous stage; this stage would not start scheduling if previous stage did not finish
+    task_srcs: List[TaskSource] # Optional: automatically import tasks from previous queues
+    # Resource allocation per brick
+    tasks_per_nodehr: int # Estimated number of bricks completed per nodehr
+    cores_per_worker: int # Number of cores to allocated per brick
+    cores_per_worker_actual: int # Number of cores actually allowed per brick (to prevent memory exhaustion)
+    mem_per_worker: int # Amount of memory to allocate per brick # TODO: automate this?
+    # Job configuration
+    job_duration: float # Duration of a job, in hours
+    max_nodes_per_job: int # Max number of nodes to request per job
+    max_number_of_jobs: int # Max number of jobs that the queue can contain at a time # TODO: Remove this?
+    arch: str # Architecture of the nodes to request, could be haswell, knl, or amd # TODO: Create an enum/class for this
+    qos: str # NERSC queue type, should be a call to QOS functions below
+    allocation: str # Which NERSC allocation to use for this stage
+    # Runbrick configuration
+    stage: str # Stop runbrick at this stage; For stage names, see https://github.com/legacysurvey/legacypipe/blob/main/py/legacypipe/runbrick.py
+    write_stage: List[str] # A list of stages at which we'd like checkpoint
+    # Job automation
+    revive_all: bool # Whether to revive killed tasks; TODO: deprecate?
 
 
-def gen_stages(stages_def: List[StageDefinition]) -> :
+def gen_stages(stages_def: List[StageDefinition]) -> List[RunbrickPyStage]:
     """Given stage definitions, generate a list of stage instances
     """
-    stages_dict = {}
-    stages_list = []
+    stages_dict: Dict[str, RunbrickPyStage] = {}
+    stages_list: List[RunbrickPyStage] = []
 
     for sdef in stages_def:
         curr_stage = RunbrickPyStage(
@@ -75,7 +78,7 @@ def gen_stages(stages_def: List[StageDefinition]) -> :
             task_srcs=sdef.task_srcs,
         )
         stages_list.append(curr_stage)
-        stages_dict[sdef['name']] = curr_stage
+        stages_dict[sdef.name] = curr_stage
 
     return stages_list
 
@@ -94,7 +97,7 @@ stage_instances = gen_stages(
         cores_per_worker=8,
         cores_per_worker_actual=8,
         mem_per_worker=HASWELL_MEM // 4,
-        job_duratioin=2,
+        job_duration=2,
         max_nodes_per_job=40,
         max_number_of_jobs=10,
         arch='haswell',
