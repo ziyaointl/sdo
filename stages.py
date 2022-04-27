@@ -4,7 +4,6 @@ from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
 from pprint import pprint
-import queue
 import math
 import qdo
 import sqlite3
@@ -235,7 +234,7 @@ class QdoCentricStage(Stage):
             if isinstance(src, QueueTaskSource):
                 transfer_queue(self.queue, qdo.connect(src.name), src.states, lambda x: True)
             elif isinstance(src, FileTaskSource):
-                if not len(self.queue.tasks()):
+                if len(self.queue.tasks()):
                     return
                 with open(src.file_path) as f:
                     bricks = []
@@ -244,7 +243,7 @@ class QdoCentricStage(Stage):
                         if not brick:
                             continue
                         bricks.append(brick)
-                    queue.add_multiple(bricks)
+                    self.queue.add_multiple(bricks)
 
     def record_job(self, command_output):
         """Record the scheduled job id into database
