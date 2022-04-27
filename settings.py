@@ -12,7 +12,7 @@ TELESCOPE = 'south'
 PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr10/south'
             # In addition to storing reports to reports/history and reports/current,
             # also copy them to this location
-EXTRA_PARAMS = '--release 9010' # Additional parameter to be passed to runbrick ONLY
+EXTRA_PARAMS = '' # Additional parameter to be passed to runbrick ONLY
 
 ### Generated fields
 SDO_SCRIPT_DIR = os.path.join(SDO_DIR, 'scripts')
