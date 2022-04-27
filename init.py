@@ -27,9 +27,6 @@ def init():
     # Read templates
     runbrick_script = read_template('runbrick/runbrick-shifter.sh')
 
-    # Copy qdo_login.sh
-    copyfile(QDO_LOGIN_PATH, 'scripts/qdo_login.sh')
-
     # Write runbrick script
     def write_runbrick(qname, ncores, stage, mem, write_stage):
         fout = open('scripts/{}.sh'.format(qname), 'w')

@@ -8,7 +8,6 @@ MAX_RETRIES = 1 # Number of times to run qdo recover when pending tasks reaches 
 LEGACY_SURVEY_DIR = "/global/cscratch1/sd/ziyaoz/dr10/south"
 SDO_DIR = "/global/cscratch1/sd/ziyaoz/sdo-dr10"
 IMAGE_TAG = "docker:legacysurvey/legacypipe:DR9.10.1"
-QDO_LOGIN_PATH = '/global/homes/z/ziyaoz/qdo.sh'
 TELESCOPE = 'south'
 PUBLIC_REPORT_PATH = '/global/cfs/cdirs/desi/users/ziyaoz/dr10/south'
             # In addition to storing reports to reports/history and reports/current,
