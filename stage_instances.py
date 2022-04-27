@@ -1,41 +1,7 @@
 from stages import SentinelStage, RunbrickPyStage
 from dataclasses import dataclass
 from typing import Dict, List, Union
-
-# QOS choices
-def regular():
-    return "-q regular"
-
-def debug():
-    return "-q debug"
-
-def realtime():
-    return "-q realtime --exclusive"
-
-def reservation(name):
-    return "--reservation " + name
-
-def bigmem():
-    return "-q bigmem --cluster escori"
-
-class TaskSource:
-    pass
-
-@dataclass
-class QueueTaskSource(TaskSource):
-    """Format: QueueTaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
-    """
-    name: str
-    states: List[str]
-
-@dataclass
-class FileTaskSource(TaskSource):
-    """Format: FileTaskSource(file_path)
-    If the path can be either absolute or relative to the sdo directory
-    The format is one brick per line
-    Only works when the current queue is empty
-    """
-    file_path: str
+from lib import *
 
 @dataclass
 class StageDefinition:
@@ -95,7 +61,7 @@ def gen_stages(stages_def: List[StageDefinition]) -> List[RunbrickPyStage]:
     return stages_list
 
 # Constants
-PREFIX = 'ziyao-dr9m-south-'
+PREFIX = 'ziyao-dr10-south-'
 HASWELL_MEM = 125000000
 KNL_MEM = 93750000
 
@@ -104,7 +70,7 @@ stage_instances = gen_stages(
         name=PREFIX + '0',
         qname=PREFIX + '0',
         prev_stage=None,
-        task_srcs=[],
+        task_srcs=[FileTaskSource("dr10-test.txt")],
         tasks_per_nodehr=8,
         cores_per_worker=8,
         cores_per_worker_actual=8,
