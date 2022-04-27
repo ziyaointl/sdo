@@ -68,10 +68,7 @@ export KMP_AFFINITY=disabled
 ncores={1}
 
 brick="$1"
-# strip whitespace from front and back
-#brick="${brick#"${brick%%[![:space:]]*}"}"
-#brick="${brick%"${brick##*[![:space:]]}"}"
-bri=${brick:0:3}
+bri=$(echo $brick | head -c 3)
 
 mkdir -p "$outdir/logs/$bri"
 mkdir -p "$outdir/metrics/$bri"
