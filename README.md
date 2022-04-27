@@ -23,7 +23,7 @@ git clone https://github.com/ziyaointl/sdo
 	2. `conda activate sdo-dr10`
 	3. `cd <qdo dir>`
 	4. `python3 -m pip install .`
-	5. `python3 -m pip install psycopg2`
+	5. `python3 -m pip install psycopg2 jinja2 bokeh`
 
 At this point, you probably wanto to verify that your qdo is set up correctly by running `qdo list`. If you a list of queues, congratulations! You are ready to move on to the next step. Otherwise, you may need to double check your database access.
 
