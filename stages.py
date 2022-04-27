@@ -1,4 +1,7 @@
+import imp
+import queue
 from settings import *
+from stage_instances import QueueTaskSource, FileTaskSource
 from util import run_command, cached_run_command, parse_timedelta, hours
 from qdo_util import transfer_queue, set_all_tasks_with_state, record_all_tasks_with_state, get_tasks_with_state
 from datetime import timedelta
@@ -230,7 +233,19 @@ class QdoCentricStage(Stage):
 
     def add_tasks(self):
         for src in self.task_srcs:
-            transfer_queue(self.queue, qdo.connect(src.name), src.states, lambda x: True)
+            if isinstance(src, QueueTaskSource):
+                transfer_queue(self.queue, qdo.connect(src.name), src.states, lambda x: True)
+            elif isinstance(src, FileTaskSource):
+                if not len(self.queue.tasks()):
+                    return
+                with open(src.file_path) as f:
+                    bricks = []
+                    for l in f:
+                        brick = l.strip()
+                        if not brick:
+                            continue
+                        bricks.append(brick)
+                    queue.add_multiple(bricks)
 
     def record_job(self, command_output):
         """Record the scheduled job id into database

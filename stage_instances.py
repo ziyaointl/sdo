@@ -18,12 +18,24 @@ def reservation(name):
 def bigmem():
     return "-q bigmem --cluster escori"
 
-@dataclass
 class TaskSource:
-    """Format: TaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
+    pass
+
+@dataclass
+class QueueTaskSource(TaskSource):
+    """Format: QueueTaskSource(queue_name, ['Failed', 'Running', 'Succeeded', 'Killed'])
     """
     name: str
     states: List[str]
+
+@dataclass
+class FileTaskSource(TaskSource):
+    """Format: FileTaskSource(file_path)
+    If the path can be either absolute or relative to the sdo directory
+    The format is one brick per line
+    Only works when the current queue is empty
+    """
+    file_path: str
 
 @dataclass
 class StageDefinition:
