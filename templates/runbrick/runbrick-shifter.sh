@@ -10,7 +10,6 @@
 # {5}: additional params
 # {6}: '--writestage <writestage>'
 
-export LEGACY_SURVEY_DIR={0}
 
 # Burst-buffer!
 #if [ "x$DW_PERSISTENT_STRIPED_DR9" == x ]; then
@@ -27,7 +26,7 @@ export LEGACY_SURVEY_DIR={0}
 # outdir=$CSCRATCH/dr10-mem
 
 # Using (depth-cut) v4 CCDs file
-export LEGACY_SURVEY_DIR=$CSCRATCH/dr10b
+export LEGACY_SURVEY_DIR={0}
 outdir=$LEGACY_SURVEY_DIR/
 
 export CACHE_DIR=$CSCRATCH/dr10-cache
