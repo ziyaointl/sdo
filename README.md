@@ -25,7 +25,7 @@ git clone https://github.com/ziyaointl/sdo
 	4. `python3 -m pip install .`
 	5. `python3 -m pip install psycopg2 jinja2 bokeh`
 
-At this point, you probably wanto to verify that your qdo is set xup correctly by running `qdo list`. If you see a list of queues, congratulations! You are ready to move on to the next step. Otherwise, you may need to double check your database access.
+At this point, you probably wanto to verify that your qdo is set up correctly by running `qdo list`. If you see a list of queues, congratulations! You are ready to move on to the next step. Otherwise, you may need to double check your database access.
 
 (Optional tip) once you have the above working, the following script can be used as a qdo executable. Though for sdo to work, you'll still need to run `conda activate sdo-dr10`.
 ```
