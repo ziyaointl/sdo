@@ -274,7 +274,7 @@ class RunbrickPyStage(QdoCentricStage):
         # {5} profile
         # {6} image profile
         script_path = os.path.join(SDO_SCRIPT_DIR, '{}.sh'.format(self.name))
-        profile = 'cori-knl-shifter' if self.arch == 'knl' else 'cori-shifter'
+        profile = 'cori-knl-shifter-mem' if self.arch == 'knl' else 'cori-shifter-mem-rocfs'
         profile = profile if 'bigmem' not in self.qos else 'cori-bigmem-shifter'
         profile = profile if 'amd' != self.arch else 'cori-cmem-shifter'
         cores = 68 if self.arch == 'knl' else 32
