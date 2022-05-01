@@ -11,45 +11,34 @@
 # {6}: '--writestage <writestage>'
 
 
-# Burst-buffer!
+# we're not using the burst-buffer, but here's how one would use it, where "DR9" is the name of your BB:
 #if [ "x$DW_PERSISTENT_STRIPED_DR9" == x ]; then
-# No burst buffer -- use scratch
 
-# # DR10a --
-# # using survey-ccds-dr10-v3-cut.kd.fits
-# # aka Eddie's PROPID-cut CCD list
-# export LEGACY_SURVEY_DIR=$CSCRATCH/dr10a
-# outdir=$LEGACY_SURVEY_DIR/out-v3-cut
-#
-# # DR10 (uncut)
-# export LEGACY_SURVEY_DIR=$COSMO/work/legacysurvey/dr10
-# outdir=$CSCRATCH/dr10-mem
+export SCR=/global/cscratch1/sd/dstn
 
-# Using (depth-cut) v4 CCDs file
+# Using (depth-cut) v4 CCDs file, and v3 skies
 export LEGACY_SURVEY_DIR={0}
 outdir=$LEGACY_SURVEY_DIR/
 
-export CACHE_DIR=$CSCRATCH/dr10-cache
+export CACHE_DIR=$SCR/dr10-cache
 
 #export GAIA_CAT_DIR=/global/cfs/cdirs/desi/target/gaia_edr3/healpix
-export GAIA_CAT_DIR=$CSCRATCH/gaia-edr3-healpix/healpix
+export GAIA_CAT_DIR=$SCR/gaia-edr3-healpix/healpix
 export GAIA_CAT_PREFIX=healpix
 export GAIA_CAT_SCHEME=nested
 export GAIA_CAT_VER=E
 
 #export DUST_DIR=/global/cfs/cdirs/cosmo/data/dust/v0_1
-export DUST_DIR=$CSCRATCH/dr10-cache/dust-v0_1
-#export UNWISE_COADDS_DIR=/global/cfs/cdirs/cosmo/work/wise/outputs/merge/neo7/fulldepth:/global/cfs/cdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
+export DUST_DIR=$CACHE_DIR/dust-v0_1
 export UNWISE_COADDS_DIR=/global/cfs/cdirs/cosmo/data/unwise/neo7/unwise-coadds/fulldepth:/global/cfs/cdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
 export UNWISE_COADDS_TIMERESOLVED_DIR=/global/cfs/cdirs/cosmo/work/wise/outputs/merge/neo7
-#export UNWISE_MODEL_SKY_DIR=/global/cfs/cdirs/cosmo/work/wise/unwise_catalog/dr3/mod
 export UNWISE_MODEL_SKY_DIR=/global/cfs/cdirs/cosmo/data/unwise/neo7/unwise-catalog/mod
 
 #export TYCHO2_KD_DIR=/global/cfs/cdirs/cosmo/staging/tycho2
 #export LARGEGALAXIES_CAT=/global/cfs/cdirs/cosmo/staging/largegalaxies/v3.0/SGA-ellipse-v3.0.kd.fits
-export TYCHO2_KD_DIR=$CSCRATCH/dr10-cache/tycho2
-export LARGEGALAXIES_CAT=$CSCRATCH/dr10-cache/SGA-ellipse-v3.0.kd.fits
-export SKY_TEMPLATE_DIR=$CSCRATCH/dr10-cache/calib/sky_pattern
+export TYCHO2_KD_DIR=$CACHE_DIR/tycho2
+export LARGEGALAXIES_CAT=$CACHE_DIR/SGA-ellipse-v3.0.kd.fits
+export SKY_TEMPLATE_DIR=$CACHE_DIR/calib/sky_pattern
 unset BLOB_MASK_DIR
 unset PS1CAT_DIR
 unset GALEX_DIR
@@ -113,7 +102,7 @@ python -O $LEGACYPIPE_DIR/legacypipe/runbrick.py \
      --checkpoint-period 120 \
      --pickle "${outdir}/pickles/${bri}/runbrick-%(brick)s-%%(stage)s.pickle" \
      --no-wise-ceres \
-     --release 10200 \
+     --release 10300 \
      --cache-outliers \
      --max-memory-gb 20 \
      {5} $2 \
