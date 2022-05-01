@@ -9,36 +9,38 @@
 # {4}: maxmem, in KB (93750000 total for knl, 125000000 total for haswell)
 # {5}: additional params
 # {6}: '--writestage <writestage>'
+# {7}: outdir
 
-
-# we're not using the burst-buffer, but here's how one would use it, where "DR9" is the name of your BB:
-#if [ "x$DW_PERSISTENT_STRIPED_DR9" == x ]; then
+if [ ${RO_CFS_PATH}x == x ]; then
+    echo The environment variable RO_CFS_PATH is not set.
+    echo This script only works inside a Shifter container, on a compute node,
+    echo   using the \"shifter --module=ro-cfs\" command-line argument.
+    exit -1
+fi
 
 export SCR=/global/cscratch1/sd/dstn
 
-# Using (depth-cut) v4 CCDs file, and v3 skies
+#$RO_CFS_PATH = /ro-cfs/
+export COSMO=$RO_CFS_PATH/cosmo
+export DESI=$RO_CFS_PATH/desi
+
 export LEGACY_SURVEY_DIR={0}
-outdir=$LEGACY_SURVEY_DIR/
+export outdir={7}
 
-export CACHE_DIR=$SCR/dr10-cache
-
-#export GAIA_CAT_DIR=/global/cfs/cdirs/desi/target/gaia_edr3/healpix
-export GAIA_CAT_DIR=$SCR/gaia-edr3-healpix/healpix
+export GAIA_CAT_DIR=$DESI/target/gaia_edr3/healpix
 export GAIA_CAT_PREFIX=healpix
 export GAIA_CAT_SCHEME=nested
 export GAIA_CAT_VER=E
 
-#export DUST_DIR=/global/cfs/cdirs/cosmo/data/dust/v0_1
-export DUST_DIR=$CACHE_DIR/dust-v0_1
-export UNWISE_COADDS_DIR=/global/cfs/cdirs/cosmo/data/unwise/neo7/unwise-coadds/fulldepth:/global/cfs/cdirs/cosmo/data/unwise/allwise/unwise-coadds/fulldepth
-export UNWISE_COADDS_TIMERESOLVED_DIR=/global/cfs/cdirs/cosmo/work/wise/outputs/merge/neo7
-export UNWISE_MODEL_SKY_DIR=/global/cfs/cdirs/cosmo/data/unwise/neo7/unwise-catalog/mod
+export DUST_DIR=$COSMO/data/dust/v0_1
+export UNWISE_COADDS_DIR=$COSMO/data/unwise/neo7/unwise-coadds/fulldepth:$COSMO/data/unwise/allwise/unwise-coadds/fulldepth
+export UNWISE_COADDS_TIMERESOLVED_DIR=$COSMO/work/wise/outputs/merge/neo7
+export UNWISE_MODEL_SKY_DIR=$COSMO/data/unwise/neo7/unwise-catalog/mod
 
-#export TYCHO2_KD_DIR=/global/cfs/cdirs/cosmo/staging/tycho2
-#export LARGEGALAXIES_CAT=/global/cfs/cdirs/cosmo/staging/largegalaxies/v3.0/SGA-ellipse-v3.0.kd.fits
-export TYCHO2_KD_DIR=$CACHE_DIR/tycho2
-export LARGEGALAXIES_CAT=$CACHE_DIR/SGA-ellipse-v3.0.kd.fits
-export SKY_TEMPLATE_DIR=$CACHE_DIR/calib/sky_pattern
+export TYCHO2_KD_DIR=$COSMO/staging/tycho2
+export LARGEGALAXIES_CAT=$COSMO/staging/largegalaxies/v3.0/SGA-ellipse-v3.0.kd.fits
+export SKY_TEMPLATE_DIR=$COSMO/work/legacysurvey/dr10/calib/sky_pattern
+
 unset BLOB_MASK_DIR
 unset PS1CAT_DIR
 unset GALEX_DIR
@@ -96,7 +98,6 @@ python -O $LEGACYPIPE_DIR/legacypipe/runbrick.py \
      --rgb-stretch 1.5 \
      --nsatur 2 \
      --survey-dir "$LEGACY_SURVEY_DIR" \
-     --cache-dir "$CACHE_DIR" \
      --outdir "$outdir" \
      --checkpoint "${outdir}/checkpoints/${bri}/checkpoint-${brick}.pickle" \
      --checkpoint-period 120 \
@@ -107,12 +108,6 @@ python -O $LEGACYPIPE_DIR/legacypipe/runbrick.py \
      --max-memory-gb 20 \
      {5} $2 \
      >> "$log" 2>&1
-
-#--zoom 1000 2000 1000 2000 \
-# 8 threads -> 14 gb
-#--run south \
-#     --ps "${outdir}/metrics/${bri}/ps-${brick}-${SLURM_JOB_ID}.fits" \
-#     --ps-t0
 
 # Save the return value from the python command -- otherwise we
 # exit 0 because the rm succeeds!

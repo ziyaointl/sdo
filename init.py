@@ -33,7 +33,7 @@ def init():
         write_stage = ' '.join('--write-stage ' + s for s in write_stage)
         if write_stage == '':
             write_stage = '--no-write'
-        fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS, write_stage))
+        fout.write(runbrick_script.format(LEGACY_SURVEY_DIR, ncores, stage, TELESCOPE, mem, EXTRA_PARAMS, write_stage, OUTDIR))
         fout.close()
 
     for s in stage_instances:
