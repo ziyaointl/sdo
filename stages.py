@@ -165,7 +165,10 @@ class QdoCentricStage(Stage):
         return done
 
     def get_jobs_in_queue(self):
-        command = 'squeue -u ziyaoz --format=%all'
+        username = os.getenv("USER")
+        if not username:
+            raise RuntimeError("Cannot read username from environment variable")
+        command = f'squeue -u {username} --format=%all'
         output = cached_run_command(command)
         if 'error' in output:
             raise RuntimeError('Slurm not available')
