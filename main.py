@@ -19,6 +19,6 @@ def main():
         s.schedule_jobs() # Schedule new jobs if needed
         s.print_status()
         print('='*separator_len + '\n')
-    #render(stage_instances)
+    render(stage_instances)
 
 main()
