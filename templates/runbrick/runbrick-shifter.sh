@@ -22,12 +22,11 @@ export SCR=/global/cscratch1/sd/dstn
 
 #$RO_CFS_PATH = /ro-cfs/
 export COSMO=$RO_CFS_PATH/cosmo
-export DESI=$RO_CFS_PATH/desi
 
 export LEGACY_SURVEY_DIR={0}
 export outdir={7}
 
-export GAIA_CAT_DIR=$DESI/target/gaia_edr3/healpix
+export GAIA_CAT_DIR=$COSMO/data/gaia/edr3/healpix
 export GAIA_CAT_PREFIX=healpix
 export GAIA_CAT_SCHEME=nested
 export GAIA_CAT_VER=E
