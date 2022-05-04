@@ -113,6 +113,17 @@ python -O $LEGACYPIPE_DIR/legacypipe/runbrick.py \
 # exit 0 because the rm succeeds!
 status=$?
 
+if [ "{2}" = "writecat" ]; then
+    # tractor file exists and program exited normally
+    if [ -f ${outdir}/tractor/${bri}/brick-${brick}.sha256sum ] && [ $status -eq 0 ]; then
+        echo "$brick finished, removing checkpoints"
+        python $LEGACYPIPE_DIR/legacypipe/rmckpt.py --brick $brick --outdir $outdir
+    else
+        echo "$brick did not finish, runbrick error code $status"
+        #status=-1 # In case status -eq 0 but tractor file not found
+    fi
+fi
+
 # /Config directory nonsense
 rm -R $TMPCACHE
 
